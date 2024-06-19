@@ -13,6 +13,95 @@
                     ></mp-field-visualization>
                     <div style="margin-top:18px;margin-left:20px;">
                     </div>
+                    
+                    <semantic-table 
+                        style="margin-bottom: 100px;"
+                        id='table-result'
+                        query='SELECT DISTINCT ?subject ?document ?imageIRI WHERE { 
+                        ?page custom:part_of ?subject;
+                            crm:P129i_is_subject_of ?document;
+                            custom:index ?index;
+                            
+                        optional {
+                            ?page crm:P183i_has_representation ?imageIRI.
+                        }
+
+                            BIND(xsd:integer(?index) as ?index_num)
+                        } ORDER BY ASC(?index_num)'
+
+                        column-configuration='[
+                        {
+                            "displayName": "Text",
+                            "cellTemplate": "{{> text}}"
+                        }]'
+                        options='{
+                            "showTableHeading": false
+                        }'
+                        number-of-displayed-rows="10">
+
+                        <template id="text">
+                      <rs-text-annotation-workspace
+                        storage="belle_green"
+                        document-iri="{{document.value}}"
+                        annotation-subject-template="https://belle-greene.com/annotation/{{{{raw}}}}{{UUID}}{{{{/raw}}}}"
+                        image-iri="{{imageIRI.value}}"
+                        fallback-template="{{> fallback-template}}"
+                        annotation-tooltip="{{> annotation-tooltip}}">
+
+                        <template id="fallback-template">
+                            Missing type for annotation <semantic-link iri="{{ iri.value }}"></semantic-link>
+                        </template>
+
+                        <template id="annotation-tooltip">
+                          <div>
+                            {{#if allowEdit}}
+                            <button
+                              name="edit"
+                              class="btn btn-xs btn-default"
+                              data-annotation="{{ iri.value }}"
+                              title="Edit annotation"
+                            >
+                              <span class="fa fa-pencil" style="pointer-events: none;"></span>
+                            </button>
+                            {{else}}
+                            <button
+                              name="edit"
+                              class="btn btn-xs btn-default"
+                              disabled
+                              title="Edit annotation"
+                            >
+                              <span class="fa fa-pencil" style="pointer-events: none;"></span>
+                            </button>
+                            {{/if}}
+                            {{#if allowDelete}}
+                            <button
+                              name="delete"
+                              class="btn btn-xs btn-default"
+                              data-annotation="{{ iri.value }}"
+                              title="Delete annotation"
+                            >
+                              <span class="fa fa-trash" style="pointer-events: none;"></span>
+                            </button>
+                            {{else}}
+                            <button
+                              name="delete"
+                              class="btn btn-xs btn-default"
+                              disabled
+                              title="Delete annotation"
+                            >
+                              <span class="fa fa-trash" style="pointer-events: none;"></span>
+                            </button>
+                            {{/if}}
+                          </div>
+                        </template>
+
+                      </rs-text-annotation-workspace>
+                    </template>
+
+                    </semantic-table>
+
+                    <div style="margin-top:18px;margin-left:20px;">
+                    </div>
                 </div>
             </div>
         </div>
