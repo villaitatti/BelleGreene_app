@@ -69,6 +69,10 @@
                     {
                         "iri": "<http://www.cidoc-crm.org/cidoc-crm/E53_Place>",
                         "label": "Place"
+                    },
+                    {
+                        "iri": "<http://www.cidoc-crm.org/cidoc-crm/E21_Person>",
+                        "label": "Person"
                     }
                 ],
                 "relations": [
@@ -79,18 +83,23 @@
                         "hasRange": "<http://www.w3.org/2001/XMLSchema#date>"
                     },
                     {
+                        "iri": "<https://bellegreene.itatti.harvard.edu/resource/place>",
+                        "label": "Place",
+                        "hasDomain": "<https://bellegreene.itatti.harvard.edu/resource/Letter>",
+                        "hasRange": "<http://www.cidoc-crm.org/cidoc-crm/E53_Place>"
+                    },
+                    {
                         "iri": "<http://www.cidoc-crm.org/cidoc-crm/P129_is_about>",
                         "label": "Subjects",
                         "hasDomain": "<https://bellegreene.itatti.harvard.edu/resource/Letter>",
                         "hasRange": "<https://bellegreene.itatti.harvard.edu/resource/Subject>"
                     },
                     {
-                        "iri": "<https://bellegreene.itatti.harvard.edu/resource/place>",
-                        "label": "Writing place",
+                        "iri": "<http://www.cidoc-crm.org/cidoc-crm/P67_refers_to>",
+                        "label": "Person",
                         "hasDomain": "<https://bellegreene.itatti.harvard.edu/resource/Letter>",
-                        "hasRange": "<http://www.cidoc-crm.org/cidoc-crm/E53_Place>"
-                    }
-                ]
+                        "hasRange": "<http://www.cidoc-crm.org/cidoc-crm/E21_Person>"
+                    }]
                 }'>
 
                 <semantic-search-query-constant
