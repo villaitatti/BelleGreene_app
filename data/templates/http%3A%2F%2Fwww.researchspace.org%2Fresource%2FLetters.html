@@ -25,19 +25,31 @@
             </button>
         </div>
     </div>
-    <semantic-search 
-        categories='{
-            "<http://www.w3.org/2001/XMLSchema#date>": [{
-                "kind": "date-range",
-                "datatype": "http://www.w3.org/2001/XMLSchema#date",
-                "queryPattern": "
-                    {
-                        $subject crm:P108i_was_produced_by ?production .
-                        ?production crm:P4_has_time-span ?timeSpan .
-                        ?timeSpan crm:P82a_begin_of_the_begin ?date .
-                        FILTER(?date <= ?__dateEndValue__) .
-                        FILTER(?date >= ?__dateBeginValue__) .
-                    }"
+    <div class="container-fluid">
+
+        <semantic-search 
+            categories='{
+                "<http://www.w3.org/2001/XMLSchema#date>": [{
+                    "kind": "date-range",
+                    "datatype": "http://www.w3.org/2001/XMLSchema#date",
+                    "queryPattern": "
+                        {
+                            $subject crm:P108i_was_produced_by ?production .
+                            ?production crm:P4_has_time-span ?timeSpan .
+                            ?timeSpan crm:P82a_begin_of_the_begin ?date .
+                            FILTER(?date <= ?__dateEndValue__) .
+                            FILTER(?date >= ?__dateBeginValue__) .
+                        }"
+                    }]
+                }'
+            relations='{
+                "<https://bellegreene.itatti.harvard.edu/resource/place>": [{
+                    "kind": "resource",
+                    "queryPattern": "
+                        {
+                            $subject crm:P108i_was_produced_by ?production .
+                            ?production crm:P7_took_place_at ?__value__ .
+                        }"
                 }]
             }'
             search-profile='{ 
@@ -55,8 +67,8 @@
                         "label": "Date"
                     },
                     {
-                        "iri": "<https://bellegreene.itatti.harvard.edu/resource/Person>",
-                        "label": "Person"
+                        "iri": "<http://www.cidoc-crm.org/cidoc-crm/E53_Place>",
+                        "label": "Place"
                     }
                 ],
                 "relations": [
@@ -71,52 +83,60 @@
                         "label": "Subjects",
                         "hasDomain": "<https://bellegreene.itatti.harvard.edu/resource/Letter>",
                         "hasRange": "<https://bellegreene.itatti.harvard.edu/resource/Subject>"
+                    },
+                    {
+                        "iri": "<https://bellegreene.itatti.harvard.edu/resource/place>",
+                        "label": "Writing place",
+                        "hasDomain": "<https://bellegreene.itatti.harvard.edu/resource/Letter>",
+                        "hasRange": "<http://www.cidoc-crm.org/cidoc-crm/E53_Place>"
                     }
                 ]
-            }'>
+                }'>
 
-            <semantic-search-query-constant
-                domain='<https://bellegreene.itatti.harvard.edu/resource/Letter>'
-                query="
-                    SELECT ?subject WHERE { 
-                        ?subject a bg:Letter
-                    }">
-            </semantic-search-query-constant>
+                <semantic-search-query-constant
+                    domain='<https://bellegreene.itatti.harvard.edu/resource/Letter>'
+                    query="
+                        SELECT ?subject WHERE { 
+                            ?subject a bg:Letter
+                        }">
+                </semantic-search-query-constant>
 
-                    <div data-flex-layout="row stretch-stretch">
-                        <div data-flex-self="size-1of3" style="flex: 0 0 20px;">
-                            <semantic-search-facet
-                                open-by-default="true"
-                            ></semantic-search-facet>
-                        </div>
-                        <semantic-search-result-holder>
-                            <div data-flex-self="md-full">
-                                <semantic-search-result>
-                                    <mp-sparql-result-counts 
-                                        id='query-count'
-                                        query="SELECT DISTINCT * {}"
-                                        template='{{#if hasLimit}} <bs-alert bs-style="warning">
-                                            Showing {{numberOfResults}} of {{totalNumberOfResults}} matches. <strong>Please, refine your search.</strong> </bs-alert>
-                                        {{else}}<span> Showing {{numberOfResults}} Letters </span>{{/if}}'>
-                                    </mp-sparql-result-counts>
-                                </semantic-search-result>
-
-                                <semantic-search-result>
-                                    <semantic-table 
-                                        id='table-result'
-                                        query='SELECT DISTINCT ?subject WHERE { } ORDER BY ASC(?subject)'
-                                        options='{
-                                            "showFilter":true, 
-                                            "resultsPerPage":10,
-                                            "showTableHeading":false
-                                        }'  >
-                                    </semantic-table>
-                                </semantic-search-result>
-
+                        <div data-flex-layout="row stretch-stretch">
+                            <div data-flex-self="size-1of3" style="flex: 0 0 20px;">
+                                <semantic-search-facet
+                                    open-by-default="true"
+                                ></semantic-search-facet>
                             </div>
-                        </semantic-search-result-holder>
-                    </div>
-    </semantic-search>
+                            <semantic-search-result-holder>
+                                <div data-flex-self="md-full">
+                                    <semantic-search-result>
+                                        <mp-sparql-result-counts 
+                                            id='query-count'
+                                            query="SELECT DISTINCT * {}"
+                                            template='{{#if hasLimit}} <bs-alert bs-style="warning">
+                                                Showing {{numberOfResults}} of {{totalNumberOfResults}} matches. <strong>Please, refine your search.</strong> </bs-alert>
+                                            {{else}}<span> Showing {{numberOfResults}} Letters </span>{{/if}}'>
+                                        </mp-sparql-result-counts>
+                                    </semantic-search-result>
+
+                                    <semantic-search-result>
+                                        <semantic-table 
+                                            id='table-result'
+                                            query='SELECT DISTINCT ?subject WHERE { } ORDER BY ASC(?subject)'
+                                            options='{
+                                                "showFilter":true, 
+                                                "resultsPerPage":10,
+                                                "showTableHeading":false
+                                            }'  >
+                                        </semantic-table>
+                                    </semantic-search-result>
+
+                                </div>
+                            </semantic-search-result-holder>
+                        </div>
+        </semantic-search>
+
+    </div>
 
     <style>
         .facet__category-selector-holder {
