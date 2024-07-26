@@ -1,0 +1,46 @@
+<semantic-query
+    query="SELECT ?subject ?label WHERE { 
+                ?subject rdfs:label ?label  
+                BIND(<[[this]]> as ?subject)
+            }"
+    template="{{> person}}"
+>
+
+    <template id="person">
+        {{#each bindings}}
+            <div id="person_result">
+                <div class="container-fluid">
+                    <h1>{{label.value}}</h1>
+
+                    <strong>Mentioned in:</strong>
+                    <semantic-query
+                        query="SELECT DISTINCT ?letter WHERE { 
+                            ?letter crm:P67_refers_to <[[this]]> 
+                        }"
+                        template="{{> documents}}"
+                    >
+                        <template id="documents">
+                            <ul>
+                                {{#each bindings}}
+                                    <li>
+                                        <semantic-link iri="{{letter.value}}"></semantic-link>
+                                    </li>
+                                {{/each}}
+                            </ul>
+                        </template>
+
+                    </semantic-query>
+
+                </div>
+            </div>
+        {{/each}}
+    
+</semantic-query>
+
+
+<style>
+    #person_result {
+        margin-top: 100px;
+    }
+    
+</style>

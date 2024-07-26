@@ -4,30 +4,33 @@
 
             <semantic-query
                 query='
-                    SELECT DISTINCT ?title ?sender ?recipient ?place ?begin_date ?end_date WHERE { 
-                        <[[this]]> crm:P16i_was_used_for ?exchange_activity;
+                    SELECT DISTINCT ?letter ?title ?sender ?recipient ?place ?begin_date ?end_date WHERE { 
+                        ?letter crm:P16i_was_used_for ?exchange_activity;
                             crm:P108i_was_produced_by ?production;
                             rdfs:label ?title.
 
-                    ?production crm:P7_took_place_at ?place;
-                        crm:P4_has_time-span ?production_time_span.
+                        optional {
+                            ?production crm:P7_took_place_at ?place;
+                        }
+                        ?production crm:P4_has_time-span ?production_time_span.
                     
-                    ?production_time_span crm:P82a_begin_of_the_begin ?begin_date;
-                        crm:P82b_end_of_the_end ?end_date.
+                        ?production_time_span crm:P82a_begin_of_the_begin ?begin_date;
+                            crm:P82b_end_of_the_end ?end_date.
 
-                    ?exchange_activity rdf:type crm:E7_Activity;
-                        crm:P01i_is_domain_of ?sender_activity;
-                        crm:P01i_is_domain_of ?recipient_activity.
+                        ?exchange_activity rdf:type crm:E7_Activity;
+                            crm:P01i_is_domain_of ?sender_activity;
+                            crm:P01i_is_domain_of ?recipient_activity.
 
-                    ?sender_activity a crm:PC14_carried_out_by;
-                        crm:P14.1_in_the_role_of  <https://bellegreene.itatti.harvard.edu/resource/type/Sender>;
-                        crm:P02_has_range ?sender.
+                        ?sender_activity a crm:PC14_carried_out_by;
+                            crm:P14.1_in_the_role_of  <https://bellegreene.itatti.harvard.edu/resource/type/Sender>;
+                            crm:P02_has_range ?sender.
 
-                    ?recipient_activity a crm:PC14_carried_out_by;
-                        crm:P14.1_in_the_role_of  <https://bellegreene.itatti.harvard.edu/resource/type/Recipient>;
-                        crm:P02_has_range ?recipient.
+                        ?recipient_activity a crm:PC14_carried_out_by;
+                            crm:P14.1_in_the_role_of  <https://bellegreene.itatti.harvard.edu/resource/type/Recipient>;
+                            crm:P02_has_range ?recipient.
 
-                    }'
+                        BIND(<[[this]]> as ?letter)
+                        }'
                 template="{{> metadata}}"
             >
 
@@ -44,9 +47,11 @@
                             <div style="margin-top:18px;margin-left:20px;">
                                 <ul>
                                     <li> <strong>Date: </strong> {{begin_date.value}}</li>
-                                    <li> <strong>Sender: </strong> <semantic-link iri="{{sender.value}}"></semantic-link></li>
-                                    <li> <strong>Recipient: </strong> <semantic-link iri="{{recipient.value}}"></semantic-link></li>
-                                    <li> <strong>Written in: </strong> <semantic-link iri="{{place.value}}"></semantic-link></li>
+                                    <li> <strong>Sender: </strong> <mp-label iri="{{sender.value}}"></mp-label></li>
+                                    <li> <strong>Recipient: </strong> <mp-label iri="{{recipient.value}}"></mp-label></li>
+                                    {{#if place.value}}
+                                        <li> <strong>Written in: </strong> <mp-label iri="{{place.value}}"></mp-label></li>
+                                    {{/if}}
                                     
                                     <!-- People mentioned -->
                                     <semantic-query
@@ -91,14 +96,16 @@
                                 style="margin-bottom: 100px;"
                                 id='table-result'
                                 query='SELECT DISTINCT ?subject ?document ?imageIRI WHERE { 
-                                ?page custom:part_of ?subject;
-                                    crm:P129i_is_subject_of ?document;
-                                    custom:index ?index;
-                                    crm:P183i_has_representation ?imageIRI.
+                                    ?page bg:part_of ?subject;
+                                        crm:P129i_is_subject_of ?document;
+                                        bg:index ?index;
+                                        crm:P183i_has_representation ?imageIRI.
 
-                                ?imageIRI crm:P2_has_type custom:thumbnail_img.
+                                    ?imageIRI crm:P2_has_type bg:thumbnail_img.
 
                                     BIND(xsd:integer(?index) as ?index_num)
+                                    BIND(<[[this]]> as ?subject)
+
                                 } ORDER BY ASC(?index_num)'
 
                                 column-configuration='[
@@ -192,3 +199,9 @@
     </div>
 
 </div>
+
+<style>
+    .template-content {
+        margin-top: 100px;
+    }
+</style>
