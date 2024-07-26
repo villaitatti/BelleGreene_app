@@ -4,9 +4,16 @@
 
             <semantic-query
                 query='
-                    SELECT DISTINCT ?title ?sender ?recipient WHERE { 
+                    SELECT DISTINCT ?title ?sender ?recipient ?place ?begin_date ?end_date WHERE { 
                         <[[this]]> crm:P16i_was_used_for ?exchange_activity;
+                            crm:P108i_was_produced_by ?production;
                             rdfs:label ?title.
+
+                    ?production crm:P7_took_place_at ?place;
+                        crm:P4_has_time-span ?production_time_span.
+                    
+                    ?production_time_span crm:P82a_begin_of_the_begin ?begin_date;
+                        crm:P82b_end_of_the_end ?end_date.
 
                     ?exchange_activity rdf:type crm:E7_Activity;
                         crm:P01i_is_domain_of ?sender_activity;
@@ -36,8 +43,10 @@
 
                             <div style="margin-top:18px;margin-left:20px;">
                                 <ul>
+                                    <li> <strong>Date: </strong> {{begin_date.value}}</li>
                                     <li> <strong>Sender: </strong> <semantic-link iri="{{sender.value}}"></semantic-link></li>
                                     <li> <strong>Recipient: </strong> <semantic-link iri="{{recipient.value}}"></semantic-link></li>
+                                    <li> <strong>Written in: </strong> <semantic-link iri="{{place.value}}"></semantic-link></li>
                                     
                                     <!-- People mentioned -->
                                     <semantic-query
@@ -58,7 +67,6 @@
                                     </semantic-query> 
 
                                     <!-- subjects -->
-
                                     <semantic-query
                                         query='
                                             SELECT DISTINCT ?tag WHERE { 
