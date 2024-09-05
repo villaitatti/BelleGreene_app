@@ -114,9 +114,10 @@
                             ?page bg:part_of ?subject;
                                 bg:index '1';
                                 crm:P183i_has_representation ?image.
-  
+            
                             ?image crm:P2_has_type bg:thumbnail_img 
-                        }">
+
+                        } ">
                 </semantic-search-query-constant>
 
                         <div data-flex-layout="row stretch-stretch">
@@ -140,16 +141,22 @@
                                     <semantic-search-result>
                                         <semantic-table 
                                             id='table-result'
-                                            query='SELECT DISTINCT ?subject ?image ?identifier WHERE { } ORDER BY ASC(?subject)'
+                                            query=' 
+                                                SELECT DISTINCT ?subject ?image ?identifier (count(?pages) as ?n_pages) WHERE { 
+                                                        ?pages bg:part_of ?subject.
+                                                } 
+                                                GROUP BY ?subject ?image ?identifier
+                                                ORDER BY ASC(?subject) '
                                             column-configuration='[
                                                 {"displayName": "Image", "cellTemplate": "<img src={{image.value}} style=\"width: 100px;\" />"},
                                                 {"displayName": "Identifier", "cellTemplate": "<span>Letter {{identifier.value}}</span>"},
-                                                {"variableName": "subject", "displayName": "Letter"}
+                                                {"variableName": "subject", "displayName": "Letter"},
+                                                {"variableName": "n_pages", "displayName": "Number of Pages"}
                                             ]'
                                             options='{
                                                 "showFilter":true, 
                                                 "resultsPerPage":10,
-                                                "showTableHeading":false
+                                                "showTableHeading":true
                                             }'  >
                                         </semantic-table>
                                     </semantic-search-result>
