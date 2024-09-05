@@ -4,10 +4,13 @@
 
             <semantic-query
                 query='
-                    SELECT DISTINCT ?letter ?title ?sender ?recipient ?place ?begin_date ?end_date WHERE { 
+                    SELECT DISTINCT ?letter ?identifier ?title ?sender ?recipient ?place ?begin_date ?end_date WHERE { 
                         ?letter crm:P16i_was_used_for ?exchange_activity;
                             crm:P108i_was_produced_by ?production;
-                            rdfs:label ?title.
+                            rdfs:label ?title;
+                            crm:P48_has_preferred_identifier ?identifier_node.
+  
+                        ?identifier_node rdfs:label ?identifier.
 
                         optional {
                             ?production crm:P7_took_place_at ?place;
@@ -46,6 +49,7 @@
 
                             <div style="margin-top:18px;margin-left:20px;">
                                 <ul>
+                                    <li> <strong>Letter ID: </strong> {{identifier.value}}</li>
                                     <li> <strong>Date: </strong> {{begin_date.value}}</li>
                                     <li> <strong>Sender: </strong> <mp-label iri="{{sender.value}}"></mp-label></li>
                                     <li> <strong>Recipient: </strong> <mp-label iri="{{recipient.value}}"></mp-label></li>
@@ -203,5 +207,13 @@
 <style>
     .template-content {
         margin-top: 100px;
+    }
+    
+    ul {
+        list-style: none;
+    }
+
+    .active::after {
+        content: none;
     }
 </style>
