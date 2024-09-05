@@ -105,8 +105,17 @@
                 <semantic-search-query-constant
                     domain='<https://bellegreene.itatti.harvard.edu/resource/Letter>'
                     query="
-                        SELECT ?subject WHERE { 
-                            ?subject a bg:Letter
+                        SELECT ?subject ?image ?identifier WHERE { 
+                            ?subject a bg:Letter;
+                                crm:P48_has_preferred_identifier ?identifier_node.
+
+                            ?identifier_node rdfs:label ?identifier.
+
+                            ?page bg:part_of ?subject;
+                                bg:index '1';
+                                crm:P183i_has_representation ?image.
+  
+                            ?image crm:P2_has_type bg:thumbnail_img 
                         }">
                 </semantic-search-query-constant>
 
@@ -131,7 +140,12 @@
                                     <semantic-search-result>
                                         <semantic-table 
                                             id='table-result'
-                                            query='SELECT DISTINCT ?subject WHERE { } ORDER BY ASC(?subject)'
+                                            query='SELECT DISTINCT ?subject ?image ?identifier WHERE { } ORDER BY ASC(?subject)'
+                                            column-configuration='[
+                                                {"displayName": "Image", "cellTemplate": "<img src={{image.value}} style=\"width: 100px;\" />"},
+                                                {"displayName": "Identifier", "cellTemplate": "<span>Letter {{identifier.value}}</span>"},
+                                                {"variableName": "subject", "displayName": "Letter"}
+                                            ]'
                                             options='{
                                                 "showFilter":true, 
                                                 "resultsPerPage":10,
