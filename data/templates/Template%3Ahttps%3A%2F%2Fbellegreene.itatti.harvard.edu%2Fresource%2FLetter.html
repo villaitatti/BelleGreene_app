@@ -41,13 +41,13 @@
 
                 {{#each bindings}}
 
-                    <div class="workInfoContainer">
+                    <div id="page_list" class="workInfoContainer">
                         <div data-flex-layout="row center-left">
-                            <h3>{{title.value}}</h3>
+                            <h2>{{title.value}}</h2>
                         </div>
                         <div class="rs-page__summary-content table-responsive">
 
-                            <div style="margin-top:18px;margin-left:20px;">
+                            <div style="margin-top:18px;margin-left:20px;margin-bottom:20px;">
                                 <ul>
                                     <li> <strong>Letter ID: </strong> {{identifier.value}}</li>
                                     <li> <strong>Date: </strong> {{begin_date.value}}</li>
@@ -95,97 +95,122 @@
 
                                 </ul>
                             </div>
-                            
+
                             <semantic-table 
-                                style="margin-bottom: 100px;"
+                                style="margin: 100px 5px;"
                                 id='table-result'
-                                query='SELECT DISTINCT ?subject ?document ?imageIRI WHERE { 
+                                query='SELECT DISTINCT ?subject ?document ?imageIRI ?imageIIIF ?page WHERE { 
                                     ?page bg:part_of ?subject;
                                         crm:P129i_is_subject_of ?document;
                                         bg:index ?index;
-                                        crm:P183i_has_representation ?imageIRI.
+                                        crm:P183i_has_representation ?imageIRI;
+                                        crm:P183i_has_representation ?imageIIIF.
 
                                     ?imageIRI crm:P2_has_type bg:thumbnail_img.
+                                    ?imageIIIF crm:P2_has_type bg:iiif_img.
 
                                     BIND(xsd:integer(?index) as ?index_num)
                                     BIND(<[[this]]> as ?subject)
 
                                 } ORDER BY ASC(?index_num)'
 
-                                column-configuration='[
-                                {
-                                    "displayName": "Text",
-                                    "cellTemplate": "{{> text}}"
-                                }]'
+                                tuple-template="{{> table-row}}"
                                 options='{
                                     "showTableHeading": false,
                                     "showFilter": false
                                 }'
                                 number-of-displayed-rows="10">
 
+                                <template id="table-row">
+                                    <bs-row class="row">
+                                        <bs-col sm="7" md="7">
+                                            {{>text}}
+                                        </bs-col>
+                                        <bs-col sm="4" md="4">
+                                            {{>image}}
+                                        </bs-col>
+                                    </bs-row>
+                                </template>
+
                                 <template id="text">
-                            <rs-text-annotation-workspace
-                                storage="bellegreene"
-                                document-iri="{{document.value}}"
-                                annotation-subject-template="https://belle-greene.com/annotation/{{{{raw}}}}{{UUID}}{{{{/raw}}}}"
-                                image-iri="{{imageIRI.value}}"
-                                fallback-template="{{> fallback-template}}"
-                                annotation-tooltip="{{> annotation-tooltip}}">
+                                    <rs-text-annotation-workspace
+                                        storage="bellegreene"
+                                        document-iri="{{document.value}}"
+                                        annotation-subject-template="https://belle-greene.com/annotation/{{{{raw}}}}{{UUID}}{{{{/raw}}}}"
+                                        fallback-template="{{> fallback-template}}"
+                                        annotation-tooltip="{{> annotation-tooltip}}">
 
-                                <template id="fallback-template">
-                                    Missing type for annotation <semantic-link iri="{{ iri.value }}"></semantic-link>
+                                        <template id="fallback-template">
+                                            Missing type for annotation <semantic-link iri="{{ iri.value }}"></semantic-link>
+                                        </template>
+
+                                        <template id="annotation-tooltip">
+                                        <div>
+                                            {{#if allowEdit}}
+                                            <button
+                                            name="edit"
+                                            class="btn btn-xs btn-default"
+                                            data-annotation="{{ iri.value }}"
+                                            title="Edit annotation"
+                                            >
+                                            <span class="fa fa-pencil" style="pointer-events: none;"></span>
+                                            </button>
+                                            {{else}}
+                                            <button
+                                            name="edit"
+                                            class="btn btn-xs btn-default"
+                                            disabled
+                                            title="Edit annotation"
+                                            >
+                                            <span class="fa fa-pencil" style="pointer-events: none;"></span>
+                                            </button>
+                                            {{/if}}
+                                            {{#if allowDelete}}
+                                            <button
+                                            name="delete"
+                                            class="btn btn-xs btn-default"
+                                            data-annotation="{{ iri.value }}"
+                                            title="Delete annotation"
+                                            >
+                                            <span class="fa fa-trash" style="pointer-events: none;"></span>
+                                            </button>
+                                            {{else}}
+                                            <button
+                                            name="delete"
+                                            class="btn btn-xs btn-default"
+                                            disabled
+                                            title="Delete annotation"
+                                            >
+                                            <span class="fa fa-trash" style="pointer-events: none;"></span>
+                                            </button>
+                                            {{/if}}
+                                        </div>
+                                        </template>
+
+                                    </rs-text-annotation-workspace>
                                 </template>
 
-                                <template id="annotation-tooltip">
-                                <div>
-                                    {{#if allowEdit}}
-                                    <button
-                                    name="edit"
-                                    class="btn btn-xs btn-default"
-                                    data-annotation="{{ iri.value }}"
-                                    title="Edit annotation"
-                                    >
-                                    <span class="fa fa-pencil" style="pointer-events: none;"></span>
-                                    </button>
-                                    {{else}}
-                                    <button
-                                    name="edit"
-                                    class="btn btn-xs btn-default"
-                                    disabled
-                                    title="Edit annotation"
-                                    >
-                                    <span class="fa fa-pencil" style="pointer-events: none;"></span>
-                                    </button>
-                                    {{/if}}
-                                    {{#if allowDelete}}
-                                    <button
-                                    name="delete"
-                                    class="btn btn-xs btn-default"
-                                    data-annotation="{{ iri.value }}"
-                                    title="Delete annotation"
-                                    >
-                                    <span class="fa fa-trash" style="pointer-events: none;"></span>
-                                    </button>
-                                    {{else}}
-                                    <button
-                                    name="delete"
-                                    class="btn btn-xs btn-default"
-                                    disabled
-                                    title="Delete annotation"
-                                    >
-                                    <span class="fa fa-trash" style="pointer-events: none;"></span>
-                                    </button>
-                                    {{/if}}
-                                </div>
-                                </template>
+                                <template id="image">
 
-                            </rs-text-annotation-workspace>
-                            </template>
+                                    <mp-overlay-dialog title="placeholder" type="modal" bs-size="large">
+                                        <mp-overlay-dialog-trigger><img src="{{imageIRI.value}}" alt=""></mp-overlay-dialog-trigger>
+                                        <mp-overlay-dialog-content>
+
+                                            <rs-iiif-mirador
+                                                image-or-region='{{imageIIIF.value}}'
+                                                image-id-pattern='BIND( {{imageIIIF}} AS ?imageIRI)
+                                                                BIND("image" AS ?type)
+                                                                BIND(REPLACE(STR(REPLACE(STR(?imageIRI),"/full/full/0/default.jpg","")), "(^.*)\\/(.*)$", "$2") AS ?imageID)'
+                                                iiif-server-url="https://iiif.itatti.harvard.edu/iiif/2"
+                                                >
+                                                </rs-iiif-mirador>
+                                        </mp-overlay-dialog-content>
+                                    </mp-overlay-dialog>
+                                    
+                                </template>
 
                             </semantic-table>
 
-                            <div style="margin-top:18px;margin-left:20px;">
-                            </div>
                         </div>
                     </div>
 
@@ -193,12 +218,9 @@
 
             </template>
 
-
-
             </semantic-query>
 
         </div>
-
 
     </div>
 
@@ -220,4 +242,32 @@
     .nav {
         display: none!important;
     }
+
+    .AnnotationSidebar--component {
+        display: none!important;
+    }
+
+    .TextAnnotationEditor--addAnnotationButton{
+        display: none!important;
+    }
+
+    #page_list .griddle-custom-row{
+        display: block!important;
+    }
+    #page_list .row{
+        padding: 10px;
+        margin: 15px;
+        border-top: 1px solid lightgrey!important;
+    }
+
+    #page_list .row img{
+        vertical-align: center;
+        height: 100%;
+    }
+
+    #page_list .badge{
+        margin: 2px 5px;
+    }
+
+    
 </style>
