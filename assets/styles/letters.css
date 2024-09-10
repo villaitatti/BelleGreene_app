@@ -219,7 +219,10 @@ h1{
     border: none;
 }
 
-/* Letters page */
+/* Person page */
+#person {
+    margin-top: 150px;
+}
 
 /* Single letter page */
 
@@ -227,8 +230,7 @@ h1{
     margin-top: 150px;
 }
 
-#letter .heading {
-    margin-bottom: 50px;
+.heading {
     text-align: left;
 }
 
