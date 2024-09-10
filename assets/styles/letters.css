@@ -129,7 +129,6 @@
 
 .table {
   table-layout: fixed;
-  width: 1080px; 
   max-width: 100%; 
   border-collapse: collapse;
 }
@@ -187,4 +186,38 @@ li {
 
 h1{
   text-align: center;
+}
+
+.img-w100{
+  width: 100px;
+}
+
+/* Letters page */
+#letters .search-container {
+    margin-top: 100px;
+}
+
+#letters .facet__category-selector-holder {
+    display: none;
+}
+
+#letters .YearInput--epoch {
+    display: none;
+}
+
+#letters .FacetSlider--handle {
+    display: none;
+}
+
+#letters .facet-relations {
+    margin-top: 82px;
+}
+
+#letters .facet__relation {
+    color: var(--accent);
+}
+
+#letters .facet__relation__header {
+    background-color: var(--base-3)!important;
+    border: none;
 }

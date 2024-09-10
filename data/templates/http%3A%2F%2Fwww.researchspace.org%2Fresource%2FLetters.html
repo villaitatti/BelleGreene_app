@@ -21,11 +21,11 @@
                     accessed through the <a href="https://hollisarchives.lib.harvard.edu/repositories/10/archival_objects/2167675" target="blank">Bernard and Mary Berenson Papers Finding Aid.</a></strong>
             </p>
             <button>
-                <a href="/resource/rsp:Introduction">READ THE FULL INTRO</a>
+                <a href="#letters">BROWSE THE LETTERS</a>
             </button>
         </div>
     </div>
-    <div class="container-fluid">
+    <div id="letters" class="container-fluid">
 
         <semantic-search 
             categories='{
@@ -78,13 +78,13 @@
                 "relations": [
                     {
                         "iri": "<https://bellegreene.itatti.harvard.edu/resource/date>",
-                        "label": "Date",
+                        "label": "Year written",
                         "hasDomain": "<https://bellegreene.itatti.harvard.edu/resource/Letter>",
                         "hasRange": "<http://www.w3.org/2001/XMLSchema#date>"
                     },
                     {
                         "iri": "<https://bellegreene.itatti.harvard.edu/resource/place>",
-                        "label": "Place",
+                        "label": "Place written",
                         "hasDomain": "<https://bellegreene.itatti.harvard.edu/resource/Letter>",
                         "hasRange": "<http://www.cidoc-crm.org/cidoc-crm/E53_Place>"
                     },
@@ -96,7 +96,7 @@
                     },
                     {
                         "iri": "<http://www.cidoc-crm.org/cidoc-crm/P67_refers_to>",
-                        "label": "Person",
+                        "label": "People mentioned",
                         "hasDomain": "<https://bellegreene.itatti.harvard.edu/resource/Letter>",
                         "hasRange": "<http://www.cidoc-crm.org/cidoc-crm/E21_Person>"
                     }]
@@ -123,7 +123,6 @@
                         <div data-flex-layout="row stretch-stretch">
                             <div data-flex-self="size-1of3" style="flex: 0 0 20px;">
                                 <semantic-search-facet
-                                    open-by-default="true"
                                 ></semantic-search-facet>
                             </div>
                             <semantic-search-result-holder>
@@ -148,7 +147,7 @@
                                                 GROUP BY ?subject ?image ?identifier
                                                 ORDER BY ASC(?subject) '
                                             column-configuration='[
-                                                {"displayName": "Image", "cellTemplate": "<img src={{image.value}} style=\"width: 100px;\" />"},
+                                                {"displayName": "Image", "cellTemplate": "<img src={{image.value}} class=\"img-w100\" />"},
                                                 {"displayName": "Identifier", "cellTemplate": "<span>Letter {{identifier.value}}</span>"},
                                                 {"variableName": "subject", "displayName": "Letter"},
                                                 {"variableName": "n_pages", "displayName": "Number of Pages"}
@@ -167,36 +166,5 @@
         </semantic-search>
 
     </div>
-
-    <style>
-        .facet__category-selector-holder {
-            display: none;
-        }
-
-        .show-facet-button__hide {
-            display: none;
-        }
-
-        .YearInput--epoch {
-            display: none;
-        }
-
-        .FacetSlider--handle {
-            display: none;
-        }
-
-        .facet-relations {
-            margin-top: 82px;
-        }
-
-        .facet__relation {
-            color: var(--accent);
-        }
-
-        .facet__relation__header {
-            background-color: var(--base-3)!important;
-            border: none;
-        }
-    </style>
 
 </body>
