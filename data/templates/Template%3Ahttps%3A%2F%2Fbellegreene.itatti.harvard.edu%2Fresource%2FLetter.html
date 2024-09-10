@@ -1,273 +1,228 @@
-<div data-flex-layout='row' style="justify-content: center; align-items: center; display: flex; padding-top: 20vh">
-    <div class='rs-page__summary' style='width:60%;'>
-        <div class='rs-entity-fields'>
+    <semantic-query
+        query='
+            SELECT DISTINCT ?letter ?identifier ?title ?sender ?recipient ?place ?begin_date ?end_date WHERE { 
+                ?letter crm:P16i_was_used_for ?exchange_activity;
+                    crm:P108i_was_produced_by ?production;
+                    rdfs:label ?title;
+                    crm:P48_has_preferred_identifier ?identifier_node.
 
-            <semantic-query
-                query='
-                    SELECT DISTINCT ?letter ?identifier ?title ?sender ?recipient ?place ?begin_date ?end_date WHERE { 
-                        ?letter crm:P16i_was_used_for ?exchange_activity;
-                            crm:P108i_was_produced_by ?production;
-                            rdfs:label ?title;
-                            crm:P48_has_preferred_identifier ?identifier_node.
-  
-                        ?identifier_node rdfs:label ?identifier.
+                ?identifier_node rdfs:label ?identifier.
 
-                        optional {
-                            ?production crm:P7_took_place_at ?place;
-                        }
-                        ?production crm:P4_has_time-span ?production_time_span.
-                    
-                        ?production_time_span crm:P82a_begin_of_the_begin ?begin_date;
-                            crm:P82b_end_of_the_end ?end_date.
+                optional {
+                    ?production crm:P7_took_place_at ?place;
+                }
+                ?production crm:P4_has_time-span ?production_time_span.
+            
+                ?production_time_span crm:P82a_begin_of_the_begin ?begin_date;
+                    crm:P82b_end_of_the_end ?end_date.
 
-                        ?exchange_activity rdf:type crm:E7_Activity;
-                            crm:P01i_is_domain_of ?sender_activity;
-                            crm:P01i_is_domain_of ?recipient_activity.
+                ?exchange_activity rdf:type crm:E7_Activity;
+                    crm:P01i_is_domain_of ?sender_activity;
+                    crm:P01i_is_domain_of ?recipient_activity.
 
-                        ?sender_activity a crm:PC14_carried_out_by;
-                            crm:P14.1_in_the_role_of  <https://bellegreene.itatti.harvard.edu/resource/type/Sender>;
-                            crm:P02_has_range ?sender.
+                ?sender_activity a crm:PC14_carried_out_by;
+                    crm:P14.1_in_the_role_of  <https://bellegreene.itatti.harvard.edu/resource/type/Sender>;
+                    crm:P02_has_range ?sender.
 
-                        ?recipient_activity a crm:PC14_carried_out_by;
-                            crm:P14.1_in_the_role_of  <https://bellegreene.itatti.harvard.edu/resource/type/Recipient>;
-                            crm:P02_has_range ?recipient.
+                ?recipient_activity a crm:PC14_carried_out_by;
+                    crm:P14.1_in_the_role_of  <https://bellegreene.itatti.harvard.edu/resource/type/Recipient>;
+                    crm:P02_has_range ?recipient.
 
-                        BIND(<[[this]]> as ?letter)
-                        }'
-                template="{{> metadata}}"
-            >
+                BIND(<[[this]]> as ?letter)
+                }'
+        template="{{> metadata}}"
+    >
 
-            <template id="metadata">
+    <template id="metadata">
 
-                {{#each bindings}}
+        {{#each bindings}}
 
-                    <div id="page_list" class="workInfoContainer">
-                        <div data-flex-layout="row center-left">
-                            <h2>{{title.value}}</h2>
-                        </div>
-                        <div class="rs-page__summary-content table-responsive">
+            <div id="letter" class="container">
 
-                            <div style="margin-top:18px;margin-left:20px;margin-bottom:20px;">
-                                <ul>
-                                    <li> <strong>Letter ID: </strong> {{identifier.value}}</li>
-                                    <li> <strong>Date: </strong> {{begin_date.value}}</li>
-                                    <li> <strong>Sender: </strong> <mp-label iri="{{sender.value}}"></mp-label></li>
-                                    <li> <strong>Recipient: </strong> <mp-label iri="{{recipient.value}}"></mp-label></li>
-                                    {{#if place.value}}
-                                        <li> <strong>Written in: </strong> <mp-label iri="{{place.value}}"></mp-label></li>
-                                    {{/if}}
-                                    
-                                    <!-- People mentioned -->
-                                    <semantic-query
-                                        query='
-                                            SELECT DISTINCT ?person WHERE { 
-                                                <[[this]]> crm:P67_refers_to ?person.
-                                            }'
-                                        template="{{> people}}"
-                                    >
+                <bs-row>
+                    <bs-col sm="12" md="12">
+                        <h1 class="heading">{{title.value}}</h1>
+                    </bs-col>
+                </bs-row>
 
-                                        <template id="people">
-                                        <li> <strong>People mentioned: </strong> 
-                                            {{#each bindings}}
-                                                <semantic-link iri="{{person.value}}"></semantic-link>;  
-                                            {{/each}}
-                                        </li>
+                <bs-row>
 
-                                    </semantic-query> 
+                    <bs-col sm="6" md="6">
+                        <p>
+                            <strong>Letter ID: </strong> Letter {{identifier.value}} <br>
+                            <strong>Written in (Date): </strong> {{begin_date.value}} <br>
+                            <strong>Written in (place): </strong> <mp-label iri="{{place.value}}"></mp-label>
+                        </p>
+                    </bs-col>
 
-                                    <!-- subjects -->
-                                    <semantic-query
-                                        query='
-                                            SELECT DISTINCT ?tag WHERE { 
-                                                <[[this]]> crm:P129_is_about ?tag.
-                                            }'
-                                        template="{{> subjects}}"
-                                    >
-                                        
-                                        <template id="subjects">
-                                            <li> <strong>Subjects: </strong> 
-                                                {{#each bindings}}
-                                                    <span class="badge text-bg-secondary"><mp-label iri={{tag.value}}></mp-label> </span> 
-                                                {{/each}}
-                                            </li>
-                                        </template>
-                                    </semantic-query>
+                    <bs-col sm="6" md="6">
+                        <p>
+                            <strong>Sender: </strong> <mp-label iri="{{sender.value}}"></mp-label> <br>
+                            <strong>Recipient: </strong> <mp-label iri="{{recipient.value}}"></mp-label> <br>
+                        </p>
+                    </bs-col>
 
-                                </ul>
-                            </div>
+                </bs-row>
 
-                            <semantic-table 
-                                style="margin: 100px 5px;"
-                                id='table-result'
-                                query='SELECT DISTINCT ?subject ?document ?imageIRI ?imageIIIF ?page WHERE { 
-                                    ?page bg:part_of ?subject;
-                                        crm:P129i_is_subject_of ?document;
-                                        bg:index ?index;
-                                        crm:P183i_has_representation ?imageIRI;
-                                        crm:P183i_has_representation ?imageIIIF.
+                <bs-row>
+                    <bs-col sm="12" md="12">
+                        <p>
 
-                                    ?imageIRI crm:P2_has_type bg:thumbnail_img.
-                                    ?imageIIIF crm:P2_has_type bg:iiif_img.
-
-                                    BIND(xsd:integer(?index) as ?index_num)
-                                    BIND(<[[this]]> as ?subject)
-
-                                } ORDER BY ASC(?index_num)'
-
-                                tuple-template="{{> table-row}}"
-                                options='{
-                                    "showTableHeading": false,
-                                    "showFilter": false
-                                }'
-                                number-of-displayed-rows="10">
-
-                                <template id="table-row">
-                                    <bs-row class="row">
-                                        <bs-col sm="7" md="7">
-                                            {{>text}}
-                                        </bs-col>
-                                        <bs-col sm="4" md="4">
-                                            {{>image}}
-                                        </bs-col>
-                                    </bs-row>
+                            <semantic-query
+                                query='
+                                    SELECT DISTINCT ?person WHERE { 
+                                        <[[this]]> crm:P67_refers_to ?person.
+                                    }'
+                                template="{{> people}}"
+                            >
+                                <template id="people">
+                                    <strong>People Mentioned: </strong>
+                                    {{#each bindings}}
+                                        <semantic-link iri="{{person.value}}"></semantic-link>;  
+                                    {{/each}}
+                                    <br>
                                 </template>
-
-                                <template id="text">
-                                    <rs-text-annotation-workspace
-                                        storage="bellegreene"
-                                        document-iri="{{document.value}}"
-                                        annotation-subject-template="https://belle-greene.com/annotation/{{{{raw}}}}{{UUID}}{{{{/raw}}}}"
-                                        fallback-template="{{> fallback-template}}"
-                                        annotation-tooltip="{{> annotation-tooltip}}">
-
-                                        <template id="fallback-template">
-                                            Missing type for annotation <semantic-link iri="{{ iri.value }}"></semantic-link>
-                                        </template>
-
-                                        <template id="annotation-tooltip">
-                                        <div>
-                                            {{#if allowEdit}}
-                                            <button
-                                            name="edit"
-                                            class="btn btn-xs btn-default"
-                                            data-annotation="{{ iri.value }}"
-                                            title="Edit annotation"
-                                            >
-                                            <span class="fa fa-pencil" style="pointer-events: none;"></span>
-                                            </button>
-                                            {{else}}
-                                            <button
-                                            name="edit"
-                                            class="btn btn-xs btn-default"
-                                            disabled
-                                            title="Edit annotation"
-                                            >
-                                            <span class="fa fa-pencil" style="pointer-events: none;"></span>
-                                            </button>
-                                            {{/if}}
-                                            {{#if allowDelete}}
-                                            <button
-                                            name="delete"
-                                            class="btn btn-xs btn-default"
-                                            data-annotation="{{ iri.value }}"
-                                            title="Delete annotation"
-                                            >
-                                            <span class="fa fa-trash" style="pointer-events: none;"></span>
-                                            </button>
-                                            {{else}}
-                                            <button
-                                            name="delete"
-                                            class="btn btn-xs btn-default"
-                                            disabled
-                                            title="Delete annotation"
-                                            >
-                                            <span class="fa fa-trash" style="pointer-events: none;"></span>
-                                            </button>
-                                            {{/if}}
-                                        </div>
-                                        </template>
-
-                                    </rs-text-annotation-workspace>
+                            </semantic-query> 
+                            <semantic-query
+                                query='
+                                    SELECT DISTINCT ?tag WHERE { 
+                                        <[[this]]> crm:P129_is_about ?tag.
+                                    }'
+                                template="{{> subjects}}"
+                            >
+                                <template id="subjects">
+                                    <strong>People Mentioned: </strong>
+                                    {{#each bindings}}
+                                        <span class="badge text-bg-secondary"><mp-label iri={{tag.value}}></mp-label> </span> 
+                                    {{/each}}
                                 </template>
+                            </semantic-query>
+                        </p>
+                    </bs-col>
+                </bs-row>
 
-                                <template id="image">
+                <bs-row>
+                    <bs-col sm="12" md="12">
+                        <semantic-table 
+                            id='table-result'
+                            query='SELECT DISTINCT ?subject ?document ?imageIRI ?imageIIIF ?page WHERE { 
+                                ?page bg:part_of ?subject;
+                                    crm:P129i_is_subject_of ?document;
+                                    bg:index ?index;
+                                    crm:P183i_has_representation ?imageIRI;
+                                    crm:P183i_has_representation ?imageIIIF.
 
-                                    <mp-overlay-dialog title="placeholder" type="modal" bs-size="large">
-                                        <mp-overlay-dialog-trigger><img src="{{imageIRI.value}}" alt=""></mp-overlay-dialog-trigger>
-                                        <mp-overlay-dialog-content>
+                                ?imageIRI crm:P2_has_type bg:thumbnail_img.
+                                ?imageIIIF crm:P2_has_type bg:iiif_img.
 
-                                            <rs-iiif-mirador
-                                                image-or-region='{{imageIIIF.value}}'
-                                                image-id-pattern='BIND( {{imageIIIF}} AS ?imageIRI)
-                                                                BIND("image" AS ?type)
-                                                                BIND(REPLACE(STR(REPLACE(STR(?imageIRI),"/full/full/0/default.jpg","")), "(^.*)\\/(.*)$", "$2") AS ?imageID)'
-                                                iiif-server-url="https://iiif.itatti.harvard.edu/iiif/2"
-                                                >
-                                                </rs-iiif-mirador>
-                                        </mp-overlay-dialog-content>
-                                    </mp-overlay-dialog>
-                                    
-                                </template>
+                                BIND(xsd:integer(?index) as ?index_num)
+                                BIND(<[[this]]> as ?subject)
 
-                            </semantic-table>
+                            } ORDER BY ASC(?index_num)'
 
-                        </div>
-                    </div>
+                            tuple-template="{{> table-row}}"
+                            options='{
+                                "showTableHeading": false,
+                                "showFilter": false
+                            }'
+                            number-of-displayed-rows="10">
 
-                {{/each}}
+                            <template id="table-row">
+                                <bs-row class="row">
+                                    <bs-col sm="7" md="7">
+                                        {{>text}}
+                                    </bs-col>
+                                    <bs-col sm="4" md="4">
+                                        {{>image}}
+                                    </bs-col>
+                                </bs-row>
+                            </template>
 
-            </template>
+                            <template id="text">
+                                <rs-text-annotation-workspace
+                                    storage="bellegreene"
+                                    document-iri="{{document.value}}"
+                                    annotation-subject-template="https://belle-greene.com/annotation/{{{{raw}}}}{{UUID}}{{{{/raw}}}}"
+                                    fallback-template="{{> fallback-template}}"
+                                    annotation-tooltip="{{> annotation-tooltip}}">
 
-            </semantic-query>
+                                    <template id="fallback-template">
+                                        Missing type for annotation <semantic-link iri="{{ iri.value }}"></semantic-link>
+                                    </template>
 
-        </div>
+                                    <template id="annotation-tooltip">
+                                    <div>
+                                        {{#if allowEdit}}
+                                        <button
+                                        name="edit"
+                                        class="btn btn-xs btn-default"
+                                        data-annotation="{{ iri.value }}"
+                                        title="Edit annotation"
+                                        >
+                                        <span class="fa fa-pencil" style="pointer-events: none;"></span>
+                                        </button>
+                                        {{else}}
+                                        <button
+                                        name="edit"
+                                        class="btn btn-xs btn-default"
+                                        disabled
+                                        title="Edit annotation"
+                                        >
+                                        <span class="fa fa-pencil" style="pointer-events: none;"></span>
+                                        </button>
+                                        {{/if}}
+                                        {{#if allowDelete}}
+                                        <button
+                                        name="delete"
+                                        class="btn btn-xs btn-default"
+                                        data-annotation="{{ iri.value }}"
+                                        title="Delete annotation"
+                                        >
+                                        <span class="fa fa-trash" style="pointer-events: none;"></span>
+                                        </button>
+                                        {{else}}
+                                        <button
+                                        name="delete"
+                                        class="btn btn-xs btn-default"
+                                        disabled
+                                        title="Delete annotation"
+                                        >
+                                        <span class="fa fa-trash" style="pointer-events: none;"></span>
+                                        </button>
+                                        {{/if}}
+                                    </div>
+                                    </template>
 
-    </div>
+                                </rs-text-annotation-workspace>
+                            </template>
 
-</div>
+                            <template id="image">
 
-<style>
-    .template-content {
-        margin-top: 100px;
-    }
-    
-    ul {
-        list-style: none;
-    }
+                                <mp-overlay-dialog title="placeholder" type="modal" bs-size="large">
+                                    <mp-overlay-dialog-trigger><img src="{{imageIRI.value}}" alt=""></mp-overlay-dialog-trigger>
+                                    <mp-overlay-dialog-content>
 
-    .active::after {
-        content: none;
-    }
+                                        <rs-iiif-mirador
+                                            image-or-region='{{imageIIIF.value}}'
+                                            image-id-pattern='BIND( {{imageIIIF}} AS ?imageIRI)
+                                                            BIND("image" AS ?type)
+                                                            BIND(REPLACE(STR(REPLACE(STR(?imageIRI),"/full/full/0/default.jpg","")), "(^.*)\\/(.*)$", "$2") AS ?imageID)'
+                                            iiif-server-url="https://iiif.itatti.harvard.edu/iiif/2"
+                                            >
+                                            </rs-iiif-mirador>
+                                    </mp-overlay-dialog-content>
+                                </mp-overlay-dialog>
+                                
+                            </template>
 
-    .nav {
-        display: none!important;
-    }
+                        </semantic-table>
+                    </bs-col>
+                </bs-row>
+            </div>
 
-    .AnnotationSidebar--component {
-        display: none!important;
-    }
 
-    .TextAnnotationEditor--addAnnotationButton{
-        display: none!important;
-    }
+        {{/each}}
 
-    #page_list .griddle-custom-row{
-        display: block!important;
-    }
-    #page_list .row{
-        padding: 10px;
-        margin: 15px;
-        border-top: 1px solid lightgrey!important;
-    }
+    </template>
 
-    #page_list .row img{
-        vertical-align: center;
-        height: 100%;
-    }
-
-    #page_list .badge{
-        margin: 2px 5px;
-    }
-
-    
-</style>
+</semantic-query>

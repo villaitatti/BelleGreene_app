@@ -192,32 +192,96 @@ h1{
   width: 100px;
 }
 
-/* Letters page */
-#letters .search-container {
-    margin-top: 100px;
-}
+/* Shared tables */
 
-#letters .facet__category-selector-holder {
+.facet__category-selector-holder {
     display: none;
 }
 
-#letters .YearInput--epoch {
+.YearInput--epoch {
     display: none;
 }
 
-#letters .FacetSlider--handle {
+.FacetSlider--handle {
     display: none;
 }
 
-#letters .facet-relations {
+.facet-relations {
     margin-top: 82px;
 }
 
-#letters .facet__relation {
+.facet__relation {
     color: var(--accent);
 }
 
-#letters .facet__relation__header {
+.facet__relation__header {
     background-color: var(--base-3)!important;
     border: none;
+}
+
+/* Letters page */
+
+/* Single letter page */
+
+#letter {
+    margin-top: 150px;
+}
+
+#letter .heading {
+    margin-bottom: 50px;
+    text-align: left;
+}
+
+#letter strong {
+    color: var(--accent);
+}
+
+#letter a {
+    color: var(--constrast-3);
+    text-decoration: underline;
+}
+
+#letter a:hover {
+    color: var(--accent);
+}
+
+#letter .griddle-custom-row{
+    display: block!important;
+}
+
+#letter .griddle-custom-row .row{
+    padding: 10px;
+    margin: 15px;
+    border-top: 1px solid lightgrey!important;
+    font-size: 14px;
+}
+
+#letter .row img{
+    vertical-align: center;
+    height: 100%;
+    width: 100%;
+}
+
+#letter ul {
+    list-style: none;
+}
+
+#letter .active::after {
+    content: none;
+}
+
+#letter .nav {
+    display: none!important;
+}
+
+#letter .AnnotationSidebar--component {
+    display: none!important;
+}
+
+#letter .TextAnnotationEditor--addAnnotationButton{
+    display: none!important;
+}
+
+#letter .badge{
+    margin: 2px 5px;
 }
