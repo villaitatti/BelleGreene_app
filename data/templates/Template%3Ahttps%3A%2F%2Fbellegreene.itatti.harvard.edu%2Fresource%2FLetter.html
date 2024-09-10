@@ -197,22 +197,18 @@
                             </template>
 
                             <template id="image">
-
-                                <mp-overlay-dialog title="placeholder" type="modal" bs-size="large">
+                                <mp-overlay-dialog title="Mirador Viewer" type="modal" bs-size="large">
                                     <mp-overlay-dialog-trigger><img src="{{imageIRI.value}}" alt=""></mp-overlay-dialog-trigger>
                                     <mp-overlay-dialog-content>
-
                                         <rs-iiif-mirador
                                             image-or-region='{{imageIIIF.value}}'
                                             image-id-pattern='BIND( {{imageIIIF}} AS ?imageIRI)
                                                             BIND("image" AS ?type)
                                                             BIND(REPLACE(STR(REPLACE(STR(?imageIRI),"/full/full/0/default.jpg","")), "(^.*)\\/(.*)$", "$2") AS ?imageID)'
-                                            iiif-server-url="https://iiif.itatti.harvard.edu/iiif/2"
-                                            >
-                                            </rs-iiif-mirador>
+                                            iiif-server-url="https://iiif.itatti.harvard.edu/iiif/2">
+                                        </rs-iiif-mirador>
                                     </mp-overlay-dialog-content>
                                 </mp-overlay-dialog>
-                                
                             </template>
 
                         </semantic-table>

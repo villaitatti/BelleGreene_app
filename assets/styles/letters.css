@@ -288,6 +288,13 @@ h1{
     margin: 2px 5px;
 }
 
+.mirador{
+    min-height: 800px!important;
+}
+
+.modal-body{
+    padding-right: 30px!important;
+}
 
 #people_mentioned {
     margin-top: 150px;
