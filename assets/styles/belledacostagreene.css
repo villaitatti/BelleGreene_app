@@ -1,8 +1,8 @@
 .page-hero {
   background-color: rgba(255,255,255,0.78);
-  background-image: url(https://bellegreene.francescocipriani.com/wp-content/uploads/2023/02/White-head-back_Princeton.jpg);
+  background-image: url(/assets/images/White-head-back_Princeton.jpg);
   background-size: cover;
-  background-image: linear-gradient(0deg, rgba(255,255,255,0.78),rgba(255,255,255,0.78)), url(https://bellegreene.francescocipriani.com/wp-content/uploads/2023/02/White-head-back_Princeton.jpg);
+  background-image: linear-gradient(0deg, rgba(255,255,255,0.78),rgba(255,255,255,0.78)), url(/assets/images/White-head-back_Princeton.jpg);
   background-position: center top;
   background-repeat: no-repeat;
   padding-right: 400px;

@@ -299,3 +299,11 @@ h1{
 #people_mentioned {
     margin-top: 150px;
 }
+
+#pages .filter {
+    display: none;
+}
+
+#pages .filter:first-child {
+    display: block;
+}
