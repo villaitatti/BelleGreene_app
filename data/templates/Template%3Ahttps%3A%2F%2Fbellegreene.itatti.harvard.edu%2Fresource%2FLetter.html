@@ -101,11 +101,27 @@
                     </bs-col>
                 </bs-row>
 
-                <bs-row>
+                <bs-row class="filter">
+                    <bs-col sm="12" md="12">
+                        <div class="griddle-filter">
+                            <div class="filter-container">
+                              <div class="griddle-filter">
+                                <div class="filter-container">
+                                  <rs-text-annotation-filter placeholder="Find text in letters ..." id="text-annotation-filter"></rs-text-annotation-filter>
+                                </div>
+                              </div>
+
+                            </div>
+                        </div> 
+                    </bs-col>
+                </bs-row>
+
+
+                <bs-row id="pages">
                     <bs-col sm="12" md="12">
                         <semantic-table 
                             id='table-result'
-                            query='SELECT DISTINCT ?subject ?document ?imageIRI ?imageIIIF ?page WHERE { 
+                            query='SELECT DISTINCT ?subject ?index ?document ?imageIRI ?imageIIIF ?page WHERE { 
                                 ?page bg:part_of ?subject;
                                     crm:P129i_is_subject_of ?document;
                                     bg:index ?index;
@@ -129,6 +145,12 @@
 
                             <template id="table-row">
                                 <bs-row class="row">
+                                    <mp-event-proxy 
+                                        id='proxy-page-{{index.value}}' 
+                                        on-event-source='text-annotation-filter' 
+                                        proxy-event-type='TextAnnotation:highlightText' 
+                                        proxy-targets='["page-{{index.value}}"]'
+                                    ></mp-event-proxy>
                                     <bs-col sm="7" md="7">
                                         {{>text}}
                                     </bs-col>
@@ -140,6 +162,7 @@
 
                             <template id="text">
                                 <rs-text-annotation-workspace
+                                    id="page-{{index.value}}"
                                     storage="bellegreene"
                                     document-iri="{{document.value}}"
                                     annotation-subject-template="https://belle-greene.com/annotation/{{{{raw}}}}{{UUID}}{{{{/raw}}}}"
@@ -216,9 +239,10 @@
                 </bs-row>
             </div>
 
-
         {{/each}}
 
     </template>
 
 </semantic-query>
+
+

@@ -307,3 +307,14 @@ h1{
 #pages .filter:first-child {
     display: block;
 }
+
+.hide-long-text {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow-wrap: break-word;
+  font-size: 14px;
+  line-height: 15px;
+  height: 60px;
+  color: #666;
+}

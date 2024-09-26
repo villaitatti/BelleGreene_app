@@ -105,18 +105,31 @@
                 <semantic-search-query-constant
                     domain='<https://bellegreene.itatti.harvard.edu/resource/Letter>'
                     query="
-                        SELECT ?subject ?image ?identifier WHERE { 
-                            ?subject a bg:Letter;
-                                crm:P48_has_preferred_identifier ?identifier_node.
+                        SELECT ?subject ?image ?identifier ?text WHERE { 
+                          ?subject a bg:Letter;
+                                  crm:P48_has_preferred_identifier ?identifier_node.
 
-                            ?identifier_node rdfs:label ?identifier.
+                          ?identifier_node rdfs:label ?identifier.
 
-                            ?page bg:part_of ?subject;
+                          ?page bg:part_of ?subject;
                                 bg:index '1';
                                 crm:P183i_has_representation ?image.
-            
-                            ?image crm:P2_has_type bg:thumbnail_img 
 
+                          ?image crm:P2_has_type bg:thumbnail_img
+                          {
+                            SELECT ?subject (GROUP_CONCAT(?texts; separator=' ') as ?text) WHERE{
+                              ?subject a bg:Letter.
+                              {
+                                SELECT ?subject ?page ?texts WHERE {
+                                  ?page a bg:Page_Letter;
+                                      bg:part_of ?subject;
+                                          rdf:value ?texts;
+                                      bg:index ?index.
+                                    ?subject a bg:Letter.
+                                } ORDER BY ASC(?index)
+                              }
+                            }  GROUP BY ?subject
+                          }
                         } ">
                 </semantic-search-query-constant>
 
@@ -141,16 +154,17 @@
                                         <semantic-table 
                                             id='table-result'
                                             query=' 
-                                                SELECT DISTINCT ?subject ?image ?identifier (count(?pages) as ?n_pages) WHERE { 
+                                                SELECT DISTINCT ?subject ?image ?identifier (count(?pages) as ?n_pages) ?text WHERE { 
                                                         ?pages bg:part_of ?subject.
                                                 } 
-                                                GROUP BY ?subject ?image ?identifier
+                                                GROUP BY ?subject ?image ?identifier ?text
                                                 ORDER BY ASC(?subject) '
                                             column-configuration='[
                                                 {"displayName": "Image", "cellTemplate": "<img src={{image.value}} class=\"img-w100\" />"},
                                                 {"displayName": "Identifier", "cellTemplate": "<span>Letter {{identifier.value}}</span>"},
                                                 {"variableName": "subject", "displayName": "Letter"},
-                                                {"variableName": "n_pages", "displayName": "Number of Pages"}
+                                                {"displayName": "Text", "cellTemplate": "<span class=\"hide-long-text\">{{text.value}}</span>"},
+                                                {"variableName": "n_pages", "displayName": "Pages"}
                                             ]'
                                             options='{
                                                 "showFilter":true, 
