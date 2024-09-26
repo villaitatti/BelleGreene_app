@@ -51,14 +51,26 @@
                         <p>
                             <strong>Letter ID: </strong> Letter {{identifier.value}} <br>
                             <strong>Written in (Date): </strong> {{begin_date.value}} <br>
-                            <strong>Written in (place): </strong> <mp-label iri="{{place.value}}"></mp-label>
+                            <strong>Written in (place): </strong> 
+                            {{#if place}}
+                              <mp-label iri="{{place.value}}"></mp-label>
+                            {{/if}}
+                            
                         </p>
                     </bs-col>
 
                     <bs-col sm="6" md="6">
                         <p>
-                            <strong>Sender: </strong> <mp-label iri="{{sender.value}}"></mp-label> <br>
-                            <strong>Recipient: </strong> <mp-label iri="{{recipient.value}}"></mp-label> <br>
+                            <strong>Sender: </strong> 
+                            {{#if sender}}
+                              <mp-label iri="{{sender.value}}"></mp-label> 
+                            {{/if}}
+                            <br>
+                            <strong>Recipient: </strong> 
+                            {{#if recipient}}
+                              <mp-label iri="{{recipient.value}}"></mp-label>
+                            {{/if}}
+                            <br>
                         </p>
                     </bs-col>
 
