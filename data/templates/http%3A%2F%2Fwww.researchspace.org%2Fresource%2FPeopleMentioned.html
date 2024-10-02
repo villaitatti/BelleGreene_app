@@ -6,7 +6,7 @@
                 id='table-result'
                 query=' 
                     SELECT DISTINCT ?subject (count(?letter) as ?n_letters) WHERE { 
-                        ?subject a bg:person.
+                        ?subject a bg:Person.
                         ?letter crm:P67_refers_to ?subject.
                     } 
                     GROUP BY ?subject 
