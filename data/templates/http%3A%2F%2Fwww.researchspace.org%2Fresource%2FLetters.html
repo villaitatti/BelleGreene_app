@@ -99,25 +99,33 @@
                 <semantic-search-query-constant
                     domain='<https://bellegreene.itatti.harvard.edu/resource/Letter>'
                     query="
-                        SELECT DISTINCT ?subject ?image ?identifier ?summary WHERE { 
+                        SELECT ?subject ?image ?identifier ?summary ?tags WHERE { 
                           ?subject a bg:Letter;
-                            crm:P48_has_preferred_identifier ?identifier_node.
+                          crm:P48_has_preferred_identifier ?identifier_node.
 
-                            ?identifier_node rdfs:label ?identifier.
+                          ?identifier_node rdfs:label ?identifier.
 
-                            ?page bg:part_of ?subject;
-                            bg:index '1';
-                            crm:P183i_has_representation ?image.
+                          ?page bg:part_of ?subject;
+                          bg:index '1';
+                          crm:P183i_has_representation ?image.
 
-                            ?image crm:P2_has_type bg:thumbnail_img.
-                            
-                            OPTIONAL {
-                              SELECT DISTINCT ?subject (GROUP_CONCAT(?content_lbl) as ?summary) WHERE {
-                                ?subject crm:P129i_is_subject_of ?content.
-                                ?content rdfs:label ?content_lbl
-                              } GROUP BY ?subject
-                            }
-                        } ">
+                          ?image crm:P2_has_type bg:thumbnail_img.
+                          
+                          OPTIONAL {
+                            SELECT ?subject (GROUP_CONCAT(DISTINCT ?content_lbl; SEPARATOR='; ') as ?summary) WHERE {
+                              ?subject crm:P129i_is_subject_of ?content.
+                              ?content rdfs:label ?content_lbl.
+                            } GROUP BY ?subject
+                          }
+                          
+                          OPTIONAL {
+                            SELECT ?subject (GROUP_CONCAT(DISTINCT ?tag_name; SEPARATOR='; ') as ?tags) WHERE{
+                              ?subject crm:P129_is_about ?tag.
+                              ?tag rdf:type bg:Subject;
+                                  rdfs:label ?tag_name.
+                            } GROUP BY ?subject
+                          } 
+                        } GROUP BY ?subject ?image ?identifier">
                 </semantic-search-query-constant>
 
                         <div data-flex-layout="row stretch-stretch">
@@ -142,14 +150,14 @@
                                         <semantic-table 
                                             id='table-result'
                                             query=' 
-                                                SELECT DISTINCT ?subject ?image ?identifier ?summary WHERE { 
-                                                        ?pages bg:part_of ?subject.
-                                                }
+                                                SELECT DISTINCT *  WHERE { 
+                                                        ?pages bg:part_of ?subject.}
                                                 ORDER BY ASC(?subject) '
                                             column-configuration='[
                                                 {"displayName": "", "cellTemplate": "{{>image}}"},
                                                 {"variableName": "subject", "displayName": "Letter"},
-                                                {"variableName": "summary", "displayName": "Summary"}
+                                                {"variableName": "summary", "displayName": "Summary"},
+                                                {"variableName": "tags", "displayName": "Subjects"}
                                             ]'
                                             options='{
                                                 "showFilter":true, 
