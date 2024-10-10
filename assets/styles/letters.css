@@ -234,12 +234,8 @@ h1{
     text-align: left;
 }
 
-#letter strong {
-    color: var(--accent);
-}
-
 #letter a {
-    color: var(--constrast-3);
+    color: var(--accent);
     text-decoration: underline;
 }
 
@@ -270,10 +266,6 @@ h1{
 
 #letter .active::after {
     content: none;
-}
-
-#letter .nav {
-    display: none!important;
 }
 
 #letter .AnnotationSidebar--component {
