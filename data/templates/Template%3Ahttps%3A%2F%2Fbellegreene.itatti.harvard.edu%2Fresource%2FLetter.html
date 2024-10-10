@@ -1,6 +1,6 @@
     <semantic-query
         query='
-            SELECT DISTINCT ?letter ?identifier ?title ?recipient ?place ?begin_date ?letterhead ?n_pages ?notes ?material WHERE { 
+            SELECT DISTINCT ?letter ?identifier ?title ?recipient ?place ?begin_date ?letterhead ?n_pages ?notes ?material ?itatti_letter_number ?letter_number ?folder_number ?box_number WHERE { 
 
                 ?letter crm:P16i_was_used_for ?exchange_activity;
                     crm:P108i_was_produced_by ?production;
@@ -32,6 +32,26 @@
                 OPTIONAL {
                   ?letter crm:P1_is_identified_by ?material.
                   ?material crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/accompanying_material>.
+                }
+
+                OPTIONAL {
+                  ?letter crm:P1_is_identified_by ?letter_number.
+                  ?letter_number crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/letter_number>.
+                }
+
+                OPTIONAL {
+                  ?letter crm:P1_is_identified_by ?box_number.
+                  ?box_number crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/box_number>.
+                }
+
+                OPTIONAL {
+                  ?letter crm:P1_is_identified_by ?folder_number.
+                  ?folder_number crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/folder_number>.
+                }
+
+                OPTIONAL {
+                  ?letter crm:P1_is_identified_by ?itatti_letter_number.
+                  ?itatti_letter_number crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/itatti_letter_number>.
                 }
 
                 ?production crm:P4_has_time-span ?production_time_span.
@@ -157,10 +177,10 @@
 
                   <bs-tab event-key="2" title="ARCHIVAL REFERENCES">
                     <p>
-                      {{#if letter_n}}<strong>Letter Number: </strong>{{letter_n.value}}{{/if}}
-                      {{#if box_n}}<br><strong>Box Number: </strong>{{box_n.value}}{{/if}}
-                      {{#if folder_n}}<br><strong>Folder Number: </strong>{{folder_n.value}}{{/if}}
-                      {{#if itatti_n}}<br><strong>I Tatti Letter Number: </strong>{{itatti_n.value}}{{/if}}
+                      {{#if letter_number}}<strong>Letter Number: </strong><mp-label iri="{{letter_number.value}}"></mp-label>{{/if}}
+                      {{#if box_number}}<br><strong>Box Number: </strong><mp-label iri="{{box_number.value}}"></mp-label>{{/if}}
+                      {{#if folder_number}}<br><strong>Folder Number: </strong><mp-label iri="{{folder_number.value}}"></mp-label>{{/if}}
+                      {{#if itatti_letter_number}}<br><strong>I Tatti Letter Number: </strong><mp-label iri="{{itatti_letter_number.value}}"></mp-label>{{/if}}
                     </p>
                     <p>
                       {{#if cite}}<br><strong>Cite as: </strong>{{cite.value}}{{/if}}
