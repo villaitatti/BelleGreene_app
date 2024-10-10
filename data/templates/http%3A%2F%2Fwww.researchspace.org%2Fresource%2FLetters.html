@@ -8,23 +8,15 @@
     </head>
     <div class="page-hero">
         <div class="inside-page-hero grid-container grid-parent">
-            <h1>
-                The Letters of<br>
-                Belle da Costa Greene<br>
-                and Bernard Berenson
-            </h1>
             <p>
                 The more than 600 letters exchanged between Belle da Costa Greene and Bernard Berenson comprise one of the twentieth century’s most fascinating sets of correspondence.<br>Written by the formidable
                 and brilliant Librarian and Director of the Morgan Library to the preeminent art historian of the age, the letters open a window onto the compelling world of rare books, art, and society in New York,
-                1910–1950.<br><br> This website presents high-resolution images and full-text transcriptions of Belle Greene’s 600+ letters to Bernard Berenson. 
+                1910–1950.<br>
                 
                 <!--<strong>Phase One, amounting to the first fifty letters,
                     is currently available, with the remainder of the correspondence slated to be published online by October 2024. High resolution images for the entire corpus of Greene's letters to Berenson can be
                     accessed through the <a href="https://hollisarchives.lib.harvard.edu/repositories/10/archival_objects/2167675" target="blank">Bernard and Mary Berenson Papers Finding Aid.</a></strong>-->
             </p>
-            <button>
-                <a href="#letters">BROWSE THE LETTERS</a>
-            </button>
         </div>
     </div>
     <div id="letters" class="container-fluid">
@@ -107,31 +99,24 @@
                 <semantic-search-query-constant
                     domain='<https://bellegreene.itatti.harvard.edu/resource/Letter>'
                     query="
-                        SELECT ?subject ?image ?identifier ?text WHERE { 
+                        SELECT DISTINCT ?subject ?image ?identifier ?summary WHERE { 
                           ?subject a bg:Letter;
-                                  crm:P48_has_preferred_identifier ?identifier_node.
+                            crm:P48_has_preferred_identifier ?identifier_node.
 
-                          ?identifier_node rdfs:label ?identifier.
+                            ?identifier_node rdfs:label ?identifier.
 
-                          ?page bg:part_of ?subject;
-                                bg:index '1';
-                                crm:P183i_has_representation ?image.
+                            ?page bg:part_of ?subject;
+                            bg:index '1';
+                            crm:P183i_has_representation ?image.
 
-                          ?image crm:P2_has_type bg:thumbnail_img
-                          {
-                            SELECT ?subject (GROUP_CONCAT(?texts; separator=' ') as ?text) WHERE{
-                              ?subject a bg:Letter.
-                              {
-                                SELECT ?subject ?page ?texts WHERE {
-                                  ?page a bg:Page_Letter;
-                                      bg:part_of ?subject;
-                                          rdf:value ?texts;
-                                      bg:index ?index.
-                                    ?subject a bg:Letter.
-                                } ORDER BY ASC(?index)
-                              }
-                            }  GROUP BY ?subject
-                          }
+                            ?image crm:P2_has_type bg:thumbnail_img.
+                            
+                            OPTIONAL {
+                              SELECT DISTINCT ?subject (GROUP_CONCAT(?content_lbl) as ?summary) WHERE {
+                                ?subject crm:P129i_is_subject_of ?content.
+                                ?content rdfs:label ?content_lbl
+                              } GROUP BY ?subject
+                            }
                         } ">
                 </semantic-search-query-constant>
 
@@ -157,23 +142,25 @@
                                         <semantic-table 
                                             id='table-result'
                                             query=' 
-                                                SELECT DISTINCT ?subject ?image ?identifier (count(?pages) as ?n_pages) ?text WHERE { 
+                                                SELECT DISTINCT ?subject ?image ?identifier ?summary WHERE { 
                                                         ?pages bg:part_of ?subject.
-                                                } 
-                                                GROUP BY ?subject ?image ?identifier ?text
+                                                }
                                                 ORDER BY ASC(?subject) '
                                             column-configuration='[
-                                                {"displayName": "Image", "cellTemplate": "<img src={{image.value}} class=\"img-w100\" />"},
-                                                {"displayName": "Identifier", "cellTemplate": "<span>Letter {{identifier.value}}</span>"},
+                                                {"displayName": "", "cellTemplate": "{{>image}}"},
                                                 {"variableName": "subject", "displayName": "Letter"},
-                                                {"displayName": "Text", "cellTemplate": "<span class=\"hide-long-text\">{{text.value}}</span>"},
-                                                {"variableName": "n_pages", "displayName": "Pages"}
+                                                {"variableName": "summary", "displayName": "Summary"}
                                             ]'
                                             options='{
                                                 "showFilter":true, 
                                                 "resultsPerPage":10,
                                                 "showTableHeading":true
                                             }'  >
+
+                                            <template id="image">
+                                              <img src={{image.value}} class="img-w100" alt="Letter {{identifier.value}}" />
+                                              <p>Letter {{identifier.value}}</p>
+                                            </template>
                                         </semantic-table>
                                     </semantic-search-result>
 

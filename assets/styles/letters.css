@@ -3,10 +3,10 @@
   background-size: cover;
   background-repeat: no-repeat;
   text-align: center;
-  min-height: 100vh;
   display: -webkit-flex;
   display: -ms-flex;
   display: flex;
+  min-height: 200px;
   -webkit-box: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -14,6 +14,12 @@
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
+}
+.page-hero .inside-page-hero{
+  max-width: 960px !important;
+  width: 100%;
+  margin-top: 150px;
+  margin-bottom: 20px;
 }
 
 .no-sidebar .entry-content .alignfull {
@@ -27,12 +33,6 @@
   margin-bottom: 100px;
 }
 
-.page-hero .inside-page-hero{
-  max-width: 960px !important
-}
-.page-hero .inside-page-hero {
-  width: 100%;
-}
 .gb-grid-wrapper-0f1bd015 {
   margin-left: -20px;
 }
