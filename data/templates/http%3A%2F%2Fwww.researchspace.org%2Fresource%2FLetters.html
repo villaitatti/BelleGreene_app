@@ -102,7 +102,7 @@
                   <semantic-search-query-constant
                       domain='<https://bellegreene.itatti.harvard.edu/resource/Letter>'
                       query="
-                          SELECT ?subject ?image ?identifier ?summary ?tags WHERE { 
+                          SELECT DISTINCT ?subject ?image ?identifier ?summary ?tags WHERE { 
                             ?subject a bg:Letter;
                             crm:P48_has_preferred_identifier ?identifier_node.
 
@@ -115,14 +115,14 @@
                             ?image crm:P2_has_type bg:thumbnail_img.
                             
                             OPTIONAL {
-                              SELECT ?subject (GROUP_CONCAT(DISTINCT ?content_lbl; SEPARATOR='; ') as ?summary) WHERE {
+                              SELECT DISTINCT ?subject (GROUP_CONCAT(DISTINCT ?content_lbl; SEPARATOR='; ') as ?summary) WHERE {
                                 ?subject crm:P129i_is_subject_of ?content.
                                 ?content rdfs:label ?content_lbl.
                               } GROUP BY ?subject
                             }
                             
                             OPTIONAL {
-                              SELECT ?subject (GROUP_CONCAT(DISTINCT ?tag_name; SEPARATOR='; ') as ?tags) WHERE{
+                              SELECT DISTINCT ?subject (GROUP_CONCAT(DISTINCT ?tag_name; SEPARATOR='; ') as ?tags) WHERE{
                                 ?subject crm:P129_is_about ?tag.
                                 ?tag rdf:type bg:Subject;
                                     rdfs:label ?tag_name.
@@ -153,7 +153,7 @@
                                           <semantic-table 
                                               id='table-result'
                                               query=' 
-                                                  SELECT DISTINCT *  WHERE { 
+                                                  SELECT DISTINCT ?subject ?image ?identifier ?summary ?tags  WHERE { 
                                                           ?pages bg:part_of ?subject.}
                                                   ORDER BY ASC(?subject) '
                                               column-configuration='[
