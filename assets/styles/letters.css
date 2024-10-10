@@ -1,4 +1,4 @@
-.page-hero {
+#letters .page-hero {
   background-image: url(/assets/images/letters/image001.jpg);
   background-size: cover;
   background-repeat: no-repeat;
@@ -15,7 +15,7 @@
   -ms-flex-direction: column;
   flex-direction: column;
 }
-.page-hero .inside-page-hero{
+#letters .page-hero .inside-page-hero{
   max-width: 960px !important;
   width: 100%;
   margin-top: 150px;

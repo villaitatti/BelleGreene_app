@@ -6,176 +6,181 @@
         <link rel="stylesheet" href="/assets/styles/header.css" />
         <link rel="stylesheet" href="/assets/styles/letters.css" />
     </head>
-    <div class="page-hero">
-        <div class="inside-page-hero grid-container grid-parent">
-            <p>
-                The more than 600 letters exchanged between Belle da Costa Greene and Bernard Berenson comprise one of the twentieth century’s most fascinating sets of correspondence.<br>Written by the formidable
-                and brilliant Librarian and Director of the Morgan Library to the preeminent art historian of the age, the letters open a window onto the compelling world of rare books, art, and society in New York,
-                1910–1950.<br>
-                
-                <!--<strong>Phase One, amounting to the first fifty letters,
-                    is currently available, with the remainder of the correspondence slated to be published online by October 2024. High resolution images for the entire corpus of Greene's letters to Berenson can be
-                    accessed through the <a href="https://hollisarchives.lib.harvard.edu/repositories/10/archival_objects/2167675" target="blank">Bernard and Mary Berenson Papers Finding Aid.</a></strong>-->
-            </p>
-        </div>
-    </div>
-    <div id="letters" class="container-fluid">
+    <div id="letters">
 
-        <semantic-search 
-            categories='{
-                "<http://www.w3.org/2001/XMLSchema#date>": [{
-                    "kind": "date-range",
-                    "datatype": "http://www.w3.org/2001/XMLSchema#date",
-                    "queryPattern": "
-                        {
-                            $subject crm:P108i_was_produced_by ?production .
-                            ?production crm:P4_has_time-span ?timeSpan .
-                            ?timeSpan crm:P82a_begin_of_the_begin ?date .
-                            FILTER(?date <= ?__dateEndValue__) .
-                            FILTER(?date >= ?__dateBeginValue__) .
-                        }"
-                    }]
-                }'
-            relations='{
-                "<https://bellegreene.itatti.harvard.edu/resource/place>": [{
-                    "kind": "resource",
-                    "queryPattern": "
-                        {
-                            $subject crm:P108i_was_produced_by ?production .
-                            ?production crm:P7_took_place_at ?__value__ .
-                        }"
-                }]
-            }'
-            search-profile='{ 
-                "categories": [
-                    {
-                        "iri": "<https://bellegreene.itatti.harvard.edu/resource/Letter>",
-                        "label": "Letter"
-                    },
-                    {
-                        "iri": "<https://bellegreene.itatti.harvard.edu/resource/Subject>",
-                        "label": "Subject"
-                    },
-                    {
-                        "iri": "<http://www.w3.org/2001/XMLSchema#date>",
-                        "label": "Date"
-                    },
-                    {
-                        "iri": "<http://www.cidoc-crm.org/cidoc-crm/E53_Place>",
-                        "label": "Place"
-                    },
-                    {
-                        "iri": "<http://www.cidoc-crm.org/cidoc-crm/E21_Person>",
-                        "label": "Person"
-                    }
-                ],
-                "relations": [
-                    {
-                        "iri": "<https://bellegreene.itatti.harvard.edu/resource/date>",
-                        "label": "Year written",
-                        "hasDomain": "<https://bellegreene.itatti.harvard.edu/resource/Letter>",
-                        "hasRange": "<http://www.w3.org/2001/XMLSchema#date>"
-                    },
-                    {
-                        "iri": "<https://bellegreene.itatti.harvard.edu/resource/place>",
-                        "label": "Place written",
-                        "hasDomain": "<https://bellegreene.itatti.harvard.edu/resource/Letter>",
-                        "hasRange": "<http://www.cidoc-crm.org/cidoc-crm/E53_Place>"
-                    },
-                    {
-                        "iri": "<http://www.cidoc-crm.org/cidoc-crm/P129_is_about>",
-                        "label": "Subjects",
-                        "hasDomain": "<https://bellegreene.itatti.harvard.edu/resource/Letter>",
-                        "hasRange": "<https://bellegreene.itatti.harvard.edu/resource/Subject>"
-                    },
-                    {
-                        "iri": "<http://www.cidoc-crm.org/cidoc-crm/P67_refers_to>",
-                        "label": "People mentioned",
-                        "hasDomain": "<https://bellegreene.itatti.harvard.edu/resource/Letter>",
-                        "hasRange": "<http://www.cidoc-crm.org/cidoc-crm/E21_Person>"
-                    }]
-                }'>
+      <div class="page-hero">
+          <div class="inside-page-hero grid-container grid-parent">
+              <p>
+                  The more than 600 letters exchanged between Belle da Costa Greene and Bernard Berenson comprise one of the twentieth century’s most fascinating sets of correspondence.<br>Written by the formidable
+                  and brilliant Librarian and Director of the Morgan Library to the preeminent art historian of the age, the letters open a window onto the compelling world of rare books, art, and society in New York,
+                  1910–1950.<br>
+                  
+                  <!--<strong>Phase One, amounting to the first fifty letters,
+                      is currently available, with the remainder of the correspondence slated to be published online by October 2024. High resolution images for the entire corpus of Greene's letters to Berenson can be
+                      accessed through the <a href="https://hollisarchives.lib.harvard.edu/repositories/10/archival_objects/2167675" target="blank">Bernard and Mary Berenson Papers Finding Aid.</a></strong>-->
+              </p>
+          </div>
+      </div>
 
-                <semantic-search-query-constant
-                    domain='<https://bellegreene.itatti.harvard.edu/resource/Letter>'
-                    query="
-                        SELECT ?subject ?image ?identifier ?summary ?tags WHERE { 
-                          ?subject a bg:Letter;
-                          crm:P48_has_preferred_identifier ?identifier_node.
+      <div class="container-fluid">
 
-                          ?identifier_node rdfs:label ?identifier.
+          <semantic-search 
+              categories='{
+                  "<http://www.w3.org/2001/XMLSchema#date>": [{
+                      "kind": "date-range",
+                      "datatype": "http://www.w3.org/2001/XMLSchema#date",
+                      "queryPattern": "
+                          {
+                              $subject crm:P108i_was_produced_by ?production .
+                              ?production crm:P4_has_time-span ?timeSpan .
+                              ?timeSpan crm:P82a_begin_of_the_begin ?date .
+                              FILTER(?date <= ?__dateEndValue__) .
+                              FILTER(?date >= ?__dateBeginValue__) .
+                          }"
+                      }]
+                  }'
+              relations='{
+                  "<https://bellegreene.itatti.harvard.edu/resource/place>": [{
+                      "kind": "resource",
+                      "queryPattern": "
+                          {
+                              $subject crm:P108i_was_produced_by ?production .
+                              ?production crm:P7_took_place_at ?__value__ .
+                          }"
+                  }]
+              }'
+              search-profile='{ 
+                  "categories": [
+                      {
+                          "iri": "<https://bellegreene.itatti.harvard.edu/resource/Letter>",
+                          "label": "Letter"
+                      },
+                      {
+                          "iri": "<https://bellegreene.itatti.harvard.edu/resource/Subject>",
+                          "label": "Subject"
+                      },
+                      {
+                          "iri": "<http://www.w3.org/2001/XMLSchema#date>",
+                          "label": "Date"
+                      },
+                      {
+                          "iri": "<http://www.cidoc-crm.org/cidoc-crm/E53_Place>",
+                          "label": "Place"
+                      },
+                      {
+                          "iri": "<http://www.cidoc-crm.org/cidoc-crm/E21_Person>",
+                          "label": "Person"
+                      }
+                  ],
+                  "relations": [
+                      {
+                          "iri": "<https://bellegreene.itatti.harvard.edu/resource/date>",
+                          "label": "Year written",
+                          "hasDomain": "<https://bellegreene.itatti.harvard.edu/resource/Letter>",
+                          "hasRange": "<http://www.w3.org/2001/XMLSchema#date>"
+                      },
+                      {
+                          "iri": "<https://bellegreene.itatti.harvard.edu/resource/place>",
+                          "label": "Place written",
+                          "hasDomain": "<https://bellegreene.itatti.harvard.edu/resource/Letter>",
+                          "hasRange": "<http://www.cidoc-crm.org/cidoc-crm/E53_Place>"
+                      },
+                      {
+                          "iri": "<http://www.cidoc-crm.org/cidoc-crm/P129_is_about>",
+                          "label": "Subjects",
+                          "hasDomain": "<https://bellegreene.itatti.harvard.edu/resource/Letter>",
+                          "hasRange": "<https://bellegreene.itatti.harvard.edu/resource/Subject>"
+                      },
+                      {
+                          "iri": "<http://www.cidoc-crm.org/cidoc-crm/P67_refers_to>",
+                          "label": "People mentioned",
+                          "hasDomain": "<https://bellegreene.itatti.harvard.edu/resource/Letter>",
+                          "hasRange": "<http://www.cidoc-crm.org/cidoc-crm/E21_Person>"
+                      }]
+                  }'>
 
-                          ?page bg:part_of ?subject;
-                          bg:index '1';
-                          crm:P183i_has_representation ?image.
+                  <semantic-search-query-constant
+                      domain='<https://bellegreene.itatti.harvard.edu/resource/Letter>'
+                      query="
+                          SELECT ?subject ?image ?identifier ?summary ?tags WHERE { 
+                            ?subject a bg:Letter;
+                            crm:P48_has_preferred_identifier ?identifier_node.
 
-                          ?image crm:P2_has_type bg:thumbnail_img.
-                          
-                          OPTIONAL {
-                            SELECT ?subject (GROUP_CONCAT(DISTINCT ?content_lbl; SEPARATOR='; ') as ?summary) WHERE {
-                              ?subject crm:P129i_is_subject_of ?content.
-                              ?content rdfs:label ?content_lbl.
-                            } GROUP BY ?subject
-                          }
-                          
-                          OPTIONAL {
-                            SELECT ?subject (GROUP_CONCAT(DISTINCT ?tag_name; SEPARATOR='; ') as ?tags) WHERE{
-                              ?subject crm:P129_is_about ?tag.
-                              ?tag rdf:type bg:Subject;
-                                  rdfs:label ?tag_name.
-                            } GROUP BY ?subject
-                          } 
-                        } GROUP BY ?subject ?image ?identifier">
-                </semantic-search-query-constant>
+                            ?identifier_node rdfs:label ?identifier.
 
-                        <div data-flex-layout="row stretch-stretch">
-                            <div data-flex-self="size-1of3" style="flex: 0 0 20px;">
-                                <semantic-search-facet
-                                  open-by-default="true"
-                                ></semantic-search-facet>
-                            </div>
-                            <semantic-search-result-holder>
-                                <div data-flex-self="md-full">
-                                    <semantic-search-result>
-                                        <mp-sparql-result-counts 
-                                            id='query-count'
-                                            query="SELECT DISTINCT * {}"
-                                            template='{{#if hasLimit}} <bs-alert bs-style="warning">
-                                                Showing {{numberOfResults}} of {{totalNumberOfResults}} matches. <strong>Please, refine your search.</strong> </bs-alert>
-                                            {{else}}<span> Showing {{numberOfResults}} Letters </span>{{/if}}'>
-                                        </mp-sparql-result-counts>
-                                    </semantic-search-result>
+                            ?page bg:part_of ?subject;
+                            bg:index '1';
+                            crm:P183i_has_representation ?image.
 
-                                    <semantic-search-result>
-                                        <semantic-table 
-                                            id='table-result'
-                                            query=' 
-                                                SELECT DISTINCT *  WHERE { 
-                                                        ?pages bg:part_of ?subject.}
-                                                ORDER BY ASC(?subject) '
-                                            column-configuration='[
-                                                {"displayName": "", "cellTemplate": "{{>image}}"},
-                                                {"variableName": "subject", "displayName": "Letter"},
-                                                {"variableName": "summary", "displayName": "Summary"},
-                                                {"variableName": "tags", "displayName": "Subjects"}
-                                            ]'
-                                            options='{
-                                                "showFilter":true, 
-                                                "resultsPerPage":10,
-                                                "showTableHeading":true
-                                            }'  >
+                            ?image crm:P2_has_type bg:thumbnail_img.
+                            
+                            OPTIONAL {
+                              SELECT ?subject (GROUP_CONCAT(DISTINCT ?content_lbl; SEPARATOR='; ') as ?summary) WHERE {
+                                ?subject crm:P129i_is_subject_of ?content.
+                                ?content rdfs:label ?content_lbl.
+                              } GROUP BY ?subject
+                            }
+                            
+                            OPTIONAL {
+                              SELECT ?subject (GROUP_CONCAT(DISTINCT ?tag_name; SEPARATOR='; ') as ?tags) WHERE{
+                                ?subject crm:P129_is_about ?tag.
+                                ?tag rdf:type bg:Subject;
+                                    rdfs:label ?tag_name.
+                              } GROUP BY ?subject
+                            } 
+                          } GROUP BY ?subject ?image ?identifier">
+                  </semantic-search-query-constant>
 
-                                            <template id="image">
-                                              <img src={{image.value}} class="img-w100" alt="Letter {{identifier.value}}" />
-                                              <p>Letter {{identifier.value}}</p>
-                                            </template>
-                                        </semantic-table>
-                                    </semantic-search-result>
+                          <div data-flex-layout="row stretch-stretch">
+                              <div data-flex-self="size-1of3" style="flex: 0 0 20px;">
+                                  <semantic-search-facet
+                                    open-by-default="true"
+                                  ></semantic-search-facet>
+                              </div>
+                              <semantic-search-result-holder>
+                                  <div data-flex-self="md-full">
+                                      <semantic-search-result>
+                                          <mp-sparql-result-counts 
+                                              id='query-count'
+                                              query="SELECT DISTINCT * {}"
+                                              template='{{#if hasLimit}} <bs-alert bs-style="warning">
+                                                  Showing {{numberOfResults}} of {{totalNumberOfResults}} matches. <strong>Please, refine your search.</strong> </bs-alert>
+                                              {{else}}<span> Showing {{numberOfResults}} Letters </span>{{/if}}'>
+                                          </mp-sparql-result-counts>
+                                      </semantic-search-result>
 
-                                </div>
-                            </semantic-search-result-holder>
-                        </div>
-        </semantic-search>
+                                      <semantic-search-result>
+                                          <semantic-table 
+                                              id='table-result'
+                                              query=' 
+                                                  SELECT DISTINCT *  WHERE { 
+                                                          ?pages bg:part_of ?subject.}
+                                                  ORDER BY ASC(?subject) '
+                                              column-configuration='[
+                                                  {"displayName": "", "cellTemplate": "{{>image}}"},
+                                                  {"variableName": "subject", "displayName": "Letter"},
+                                                  {"variableName": "summary", "displayName": "Summary"},
+                                                  {"variableName": "tags", "displayName": "Subjects"}
+                                              ]'
+                                              options='{
+                                                  "showFilter":true, 
+                                                  "resultsPerPage":10,
+                                                  "showTableHeading":true
+                                              }'  >
+
+                                              <template id="image">
+                                                <img src={{image.value}} class="img-w100" alt="Letter {{identifier.value}}" />
+                                                <p>Letter {{identifier.value}}</p>
+                                              </template>
+                                          </semantic-table>
+                                      </semantic-search-result>
+
+                                  </div>
+                              </semantic-search-result-holder>
+                          </div>
+          </semantic-search>
+
+      </div>
 
     </div>
 
