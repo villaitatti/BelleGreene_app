@@ -1,6 +1,6 @@
-    <semantic-query
+<semantic-query
         query='
-            SELECT DISTINCT ?letter ?identifier ?title ?recipient ?place ?begin_date ?letterhead ?n_pages ?notes ?material ?itatti_letter_number ?letter_number ?folder_number ?box_number WHERE { 
+            SELECT DISTINCT ?letter ?identifier ?title ?recipient ?place ?begin_date ?letterhead ?n_pages ?notes ?material ?itatti_letter_number ?letter_number ?folder_number ?box_number ?next ?prev WHERE { 
 
                 ?letter crm:P16i_was_used_for ?exchange_activity;
                     crm:P108i_was_produced_by ?production;
@@ -54,6 +54,14 @@
                   ?itatti_letter_number crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/itatti_letter_number>.
                 }
 
+                OPTIONAL {
+                  ?letter <https://bellegreene.itatti.harvard.edu/resource/next> ?next.
+                }
+
+                OPTIONAL {
+                  ?letter <https://bellegreene.itatti.harvard.edu/resource/prev> ?prev.
+                }
+
                 ?production crm:P4_has_time-span ?production_time_span.
             
                 ?production_time_span rdfs:label ?begin_date.
@@ -75,6 +83,20 @@
         {{#each bindings}}
 
             <div id="letter" class="container">
+
+              <bs-row class="buttons">
+                <bs-col sm="3">
+                  {{#if prev}}
+                    <semantic-link iri="{{prev.value}}" class="btn btn-primary">Previous letter</semantic-link> 
+                  {{/if}}
+                </bs-col>
+
+                <bs-col sm-offset="6" sm="3" style="text-align: right;">
+                  {{#if next}}
+                    <semantic-link iri="{{next.value}}" class="btn btn-primary">Next letter</semantic-link>
+                  {{/if}}
+                </bs-col>
+              </bs-row>
 
               <bs-row>
                   <bs-col sm="12" md="12">
