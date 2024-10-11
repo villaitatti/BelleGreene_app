@@ -234,6 +234,11 @@ h1{
     text-align: left;
 }
 
+#letter div[role="textbox"] p {
+  font-size: 18px;
+  margin-bottom: .5em;
+}
+
 #letter a {
     color: var(--accent);
     text-decoration: underline;
