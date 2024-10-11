@@ -102,8 +102,9 @@
                   <semantic-search-query-constant
                       domain='<https://bellegreene.itatti.harvard.edu/resource/Letter>'
                       query="
-                          SELECT DISTINCT ?subject ?image ?identifier ?summary ?tags WHERE { 
+                          SELECT DISTINCT ?subject ?image ?identifier ?summary ?tags ?label WHERE { 
                             ?subject a bg:Letter;
+                            rdfs:label ?label;
                             crm:P48_has_preferred_identifier ?identifier_node.
 
                             ?identifier_node rdfs:label ?identifier.
@@ -153,12 +154,11 @@
                                           <semantic-table 
                                               id='table-result'
                                               query=' 
-                                                  SELECT DISTINCT ?subject ?image ?identifier ?summary ?tags  WHERE { 
-                                                          ?pages bg:part_of ?subject.}
+                                                  SELECT DISTINCT ?subject ?image ?identifier ?summary ?tags ?label WHERE { }
                                                   ORDER BY ASC(?subject) '
                                               column-configuration='[
                                                   {"displayName": "", "cellTemplate": "{{>image}}"},
-                                                  {"variableName": "subject", "displayName": "Letter"},
+                                                  {"displayName": "Letter", "cellTemplate": "{{>letter}}"},
                                                   {"variableName": "summary", "displayName": "Summary"},
                                                   {"variableName": "tags", "displayName": "Subjects"}
                                               ]'
@@ -171,6 +171,9 @@
                                               <template id="image">
                                                 <img src={{image.value}} class="img-w100" alt="Letter {{identifier.value}}" />
                                                 <p>Letter {{identifier.value}}</p>
+                                              </template>
+                                              <template id="letter">
+                                                <a href="/resource/letter/{{identifier.value}}">{{label.value}}</a>
                                               </template>
                                           </semantic-table>
                                       </semantic-search-result>

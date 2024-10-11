@@ -1,6 +1,6 @@
 <semantic-query
         query='
-            SELECT DISTINCT ?letter ?identifier ?title ?recipient ?place ?begin_date ?letterhead ?n_pages ?notes ?material ?itatti_letter_number ?letter_number ?folder_number ?box_number ?next ?prev WHERE { 
+            SELECT DISTINCT ?letter ?identifier ?title ?recipient ?place ?begin_date ?letterhead ?n_pages ?notes ?material ?itatti_letter_number ?letter_number ?folder_number ?box_number ?next_label ?prev_label WHERE { 
 
                 ?letter crm:P16i_was_used_for ?exchange_activity;
                     crm:P108i_was_produced_by ?production;
@@ -56,10 +56,14 @@
 
                 OPTIONAL {
                   ?letter <https://bellegreene.itatti.harvard.edu/resource/next> ?next.
+                  ?next crm:P48_has_preferred_identifier ?next_id.
+                  ?next_id rdfs:label ?next_label.
                 }
 
                 OPTIONAL {
                   ?letter <https://bellegreene.itatti.harvard.edu/resource/prev> ?prev.
+                  ?prev crm:P48_has_preferred_identifier ?prev_id.
+                  ?prev_id rdfs:label ?prev_label.
                 }
 
                 ?production crm:P4_has_time-span ?production_time_span.
@@ -86,14 +90,14 @@
 
               <bs-row class="buttons">
                 <bs-col sm="3">
-                  {{#if prev}}
-                    <semantic-link iri="{{prev.value}}" class="btn btn-primary">Previous letter</semantic-link> 
+                  {{#if prev_label}}
+                    <a href="/resource/letter/{{prev_label.value}}" class="btn btn-primary">Previous letter</a> 
                   {{/if}}
                 </bs-col>
 
                 <bs-col sm-offset="6" sm="3" style="text-align: right;">
-                  {{#if next}}
-                    <semantic-link iri="{{next.value}}" class="btn btn-primary">Next letter</semantic-link>
+                  {{#if next_label}}
+                    <a href="/resource/letter/{{next_label.value}}" class="btn btn-primary">Next letter</a>
                   {{/if}}
                 </bs-col>
               </bs-row>
