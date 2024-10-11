@@ -280,6 +280,25 @@ h1{
     margin: 2px 5px;
 }
 
+#letter_metadata .tab-content{
+  padding: 20px;
+  font-size: 15px;
+  background-color: rgb(245, 239, 228);
+}
+
+#letter_metadata .active{
+  box-shadow: none;
+  background-color: rgb(245, 239, 228);;
+}
+
+#letter_metadata li[role="presentation"] a{
+  color: black!important;
+}
+
+#letter_metadata a{
+  text-decoration: none;
+}
+
 .mirador{
     min-height: 800px!important;
 }
