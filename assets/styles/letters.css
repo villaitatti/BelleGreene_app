@@ -298,7 +298,7 @@ h1{
 
 #letter_metadata .active{
   box-shadow: none;
-  background-color: rgb(245, 239, 228);;
+  background-color: rgb(245, 239, 228);
 }
 
 #letter_metadata li[role="presentation"] a{
@@ -307,6 +307,15 @@ h1{
 
 #letter_metadata a{
   text-decoration: none;
+}
+
+#letters a{
+  color: var(--accent)!important;
+}
+
+#letters .letter_id {
+  margin-left: 3px;
+  color: var(--accent);
 }
 
 .mirador{
