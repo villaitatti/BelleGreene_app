@@ -112,14 +112,24 @@
               <bs-row id="letter_metadata">
                 <bs-tabs>
                   <bs-tab event-key="1" title="GENERAL INFORMATION">
+                    <bs-row>
+                      <bs-col sm="6" md="6">
+                        <p>
+                          {{#if begin_date}}<strong>Date: </strong>{{begin_date.value}}{{/if}}
+                          {{#if recipient}}<br><strong>Recipient: </strong><mp-label iri="{{recipient.value}}"></mp-label>{{/if}}
+                          {{#if place}}<br><strong>Place letter was written: </strong><mp-label iri="{{place.value}}"></mp-label>{{/if}}
+                          {{#if letterhead}}<br><strong>Letterhead: </strong><mp-label iri="{{letterhead.value}}"></mp-label>{{/if}}
+                        </p>
+                      </bs-col>
+                      <bs-col sm="6" md="6">
+                        <p>
+                          {{#if n_pages}}<strong>Number of pages: </strong>{{n_pages.value}}{{/if}}
+                          {{#if notes}}<br><strong>Notes: </strong><mp-label iri="{{notes.value}}"></mp-label>{{/if}}
+                          {{#if material}}<br><strong>Accompanying Material: </strong><mp-label iri="{{material.value}}"></mp-label>{{/if}}
+                        </p>
+                      </bs-col>
+                    </bs-row>
                     <p>
-                      {{#if begin_date}}<strong>Date: </strong>{{begin_date.value}}{{/if}}
-                      {{#if recipient}}<br><strong>Recipient: </strong><mp-label iri="{{recipient.value}}"></mp-label>{{/if}}
-                      {{#if place}}<br><strong>Place letter was written: </strong><mp-label iri="{{place.value}}"></mp-label>{{/if}}
-                      {{#if letterhead}}<br><strong>Letterhead: </strong><mp-label iri="{{letterhead.value}}"></mp-label>{{/if}}
-                      {{#if n_pages}}<br><strong>Number of pages: </strong>{{n_pages.value}}{{/if}}
-                      {{#if notes}}<br><strong>Notes: </strong><mp-label iri="{{notes.value}}"></mp-label>{{/if}}
-                      {{#if material}}<br><strong>Accompanying Material: </strong><mp-label iri="{{material.value}}"></mp-label>{{/if}}
                      <semantic-query
                         query='
                             SELECT DISTINCT ?transcriber WHERE { 
