@@ -194,15 +194,16 @@
                     <p>
                       <semantic-query
                         query='
-                            SELECT DISTINCT ?sub WHERE { 
+                            SELECT DISTINCT ?sub_lbl ?sub WHERE { 
                                 <[[this]]> crm:P129_is_about ?sub.
+                                ?sub rdfs:label ?sub_lbl.
                             }'
                         template="{{> subjects}}"
                       >
                         <template id="subjects">
                             {{#if bindings}}
                               <strong>Subjects: </strong>
-                              {{#each bindings}}<semantic-link iri="{{sub.value}}"></semantic-link>; {{/each}}
+                              {{#each bindings}}<a href='/resource/Letters?semanticSearch={"id":"semantic-search-bg"}'>{{sub_lbl.value}}</a>; {{/each}}
                             {{/if}}
                             <br>
                         </template>
