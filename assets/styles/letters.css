@@ -352,3 +352,7 @@ h1{
 p span.colon:last-of-type {
   display: none;
 }
+
+.admin-login-button {
+  display: none;
+}
