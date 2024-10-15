@@ -348,3 +348,7 @@ h1{
   height: 60px;
   color: #666;
 }
+
+p span.colon:last-of-type {
+  display: none;
+}

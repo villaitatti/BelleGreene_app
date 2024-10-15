@@ -148,7 +148,7 @@
                             {{#if bindings}}
                               <br><strong>Transcribers </strong>
                               {{#each bindings}}
-                                  <mp-label iri="{{transcriber.value}}"></mp-label>;  
+                                  <mp-label iri="{{transcriber.value}}"></mp-label> <span class="colon">; </span>
                               {{/each}}
                             {{/if}}
                             <br>
@@ -166,7 +166,7 @@
                             {{#if bindings}}
                               <strong>People Mentioned: </strong>
                               {{#each bindings}}
-                                  <semantic-link iri="{{person.value}}"></semantic-link>;  
+                                  <semantic-link iri="{{person.value}}"></semantic-link> <span class="colon">; </span>
                               {{/each}}
                             {{/if}}
                             <br>
@@ -185,7 +185,7 @@
                         <template id="contents">
                             {{#if bindings}}
                               <strong>Letter contents: </strong>
-                              {{#each bindings}}<span>{{content_lbl.value}}; </span>{{/each}}
+                              {{#each bindings}}<span>{{content_lbl.value}} <span class="colon">; </span> </span>{{/each}}
                             {{/if}}
                             <br>
                         </template>
@@ -203,7 +203,7 @@
                         <template id="subjects">
                             {{#if bindings}}
                               <strong>Subjects: </strong>
-                              {{#each bindings}}<a href='/resource/Letters?semanticSearch={"id":"semantic-search-bg"}'>{{sub_lbl.value}}</a>; {{/each}}
+                              {{#each bindings}}<a href='/resource/Letters?semanticSearch={"id":"semantic-search-bg"}'>{{sub_lbl.value}}</a> <span class="colon">; </span> {{/each}}
                             {{/if}}
                             <br>
                         </template>
