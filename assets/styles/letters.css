@@ -356,3 +356,12 @@ p span.colon:last-of-type {
 .admin-login-button {
   display: none;
 }
+
+
+#letters tbody{
+  text-align: center;
+}
+
+.img-w150 {
+  width: 150px;
+}
