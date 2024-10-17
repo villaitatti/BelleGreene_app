@@ -61,16 +61,18 @@
 			<semantic-simple-search
         query='
           SELECT ?label ?resource WHERE {
-              ?resource a bg:Letter.
+              ?resource a bg:Letter;
+                rdfs:label ?resource_label.
               ?page bg:part_of ?resource;
                     rdf:value ?label.
             FILTER REGEX(?label, ?__token__, "i")
           } LIMIT 10
         '
         resource-binding-name="resource"
-        input-placeholder='Search'
+        input-placeholder='Search within letters'
         min-search-term-length="3"
-			></semantic-simple-search>
+			>
+      </semantic-simple-search>
       <mp-overlay-dialog title="Menu" class="mobile-menu">
         <mp-overlay-dialog-trigger>
 					<label class="dropdown-button">
