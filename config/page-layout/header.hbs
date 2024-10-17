@@ -59,16 +59,17 @@
                 </div>
 			</nav>
 			<semantic-simple-search
-			query='
-				SELECT ?label ?resource WHERE {
-					?resource a <https://belle-greene.com/resource/custom/Letter>.
-					?resource rdfs:label ?label.
-					FILTER REGEX(?label, ?__token__, "i")
-				} LIMIT 10
-			'
-			resource-binding-name="resource"
-			input-placeholder='Search'
-			min-search-term-length="3"
+        query='
+          SELECT ?label ?resource WHERE {
+              ?resource a bg:Letter.
+              ?page bg:part_of ?resource;
+                    rdf:value ?label.
+            FILTER REGEX(?label, ?__token__, "i")
+          } LIMIT 10
+        '
+        resource-binding-name="resource"
+        input-placeholder='Search'
+        min-search-term-length="3"
 			></semantic-simple-search>
       <mp-overlay-dialog title="Menu" class="mobile-menu">
         <mp-overlay-dialog-trigger>
