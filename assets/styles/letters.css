@@ -358,7 +358,7 @@ p span.colon:last-of-type {
 }
 
 
-#letters tbody{
+#letters td:has(> img) {
   text-align: center;
 }
 
