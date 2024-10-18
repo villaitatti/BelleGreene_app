@@ -88,7 +88,7 @@
 
             <div id="letter" class="container">
 
-              <bs-row class="buttons">
+              <bs-row class="metadata-buttons">
                 <bs-col sm="3">
                   {{#if prev_label}}
                     <a href="/resource/letter/{{prev_label.value}}" class="btn btn-primary">Previous letter</a> 
@@ -194,16 +194,18 @@
                     <p>
                       <semantic-query
                         query='
-                            SELECT DISTINCT ?sub_lbl ?sub WHERE { 
+                            SELECT DISTINCT ?sub_lbl ?sub ?sub_id_lbl WHERE { 
                                 <[[this]]> crm:P129_is_about ?sub.
-                                ?sub rdfs:label ?sub_lbl.
+                                ?sub rdfs:label ?sub_lbl;
+                                  crm:P48_has_preferred_identifier ?sub_id.
+                                ?sub_id rdfs:label ?sub_id_lbl.
                             }'
                         template="{{> subjects}}"
                       >
                         <template id="subjects">
                             {{#if bindings}}
                               <strong>Subjects: </strong>
-                              {{#each bindings}}<a href='/resource/Letters?semanticSearch={"id":"semantic-search-bg"}'>{{sub_lbl.value}}</a> <span class="colon">; </span> {{/each}}
+                              {{#each bindings}}<a target="_blank" href='/resource/subject/{{sub_id_lbl.value}}'>{{sub_lbl.value}}</a> <span class="colon">; </span> {{/each}}
                             {{/if}}
                             <br>
                         </template>

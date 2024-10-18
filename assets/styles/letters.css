@@ -281,7 +281,7 @@ h1{
     display: none!important;
 }
 
-#letter .buttons .btn-primary{
+.metadata-buttons .btn-primary{
   background-color: rgb(245, 239, 228);
   border-color: rgb(245, 239, 228);
 }
