@@ -5,14 +5,20 @@
             <semantic-table 
                 id='table-result'
                 query=' 
-                    SELECT DISTINCT ?subject (count(?letter) as ?n_letters) WHERE { 
-                        ?subject a bg:Person.
+                    SELECT DISTINCT ?subject ?label ?image (count(?letter) as ?n_letters) WHERE { 
+                        ?subject a bg:Person;
+                          rdfs:label ?label.
                         ?letter crm:P67_refers_to ?subject.
+
+                          OPTIONAL {
+                            ?subject crm:P183i_has_representation ?image
+                          }
                     } 
-                    GROUP BY ?subject 
+                    GROUP BY ?subject ?image ?label
                     ORDER BY DESC(?n_letters)'
                 column-configuration='[
-                    {"variableName": "subject", "displayName": "Person"},
+                    {"displayName": "", "cellTemplate": "{{>image}}"},
+                    {"displayName": "Name", "cellTemplate": "{{>person}}"},
                     {"variableName": "n_letters", "displayName": "Number of letters"}
                 ]'
                 options='{
@@ -20,6 +26,17 @@
                     "resultsPerPage":10,
                     "showTableHeading":true
                 }'  >
+                <template id="image">
+                  {{#if image}}
+                    <img src={{image.value}} class="img-w150" alt="Person {{subject.value}}" />
+                  {{else}}
+                    <img src="../../assets/images/150x150.png" class="img-w150" alt=" Unavailable" />
+                  {{/if}}
+                  
+                </template>
+                <template id="person">
+                  <a target="_blank" href="/resource/person/{{identifier.value}}">{{label.value}}</a>
+                </template>
             </semantic-table>
         </bs-col>
     </bs-row>

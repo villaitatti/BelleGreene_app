@@ -364,4 +364,6 @@ p span.colon:last-of-type {
 
 .img-w150 {
   width: 150px;
+  height: 150px;
+  object-fit: cover;
 }
