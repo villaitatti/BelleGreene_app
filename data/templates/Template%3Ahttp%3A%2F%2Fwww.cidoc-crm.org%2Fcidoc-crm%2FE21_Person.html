@@ -4,10 +4,17 @@
         <semantic-query
             query='
             PREFIX bg_type: <https://bellegreene.itatti.harvard.edu/resource/type/>
-            SELECT DISTINCT ?subject ?description_lbl ?dates_lbl ?nickname_lbl WHERE { 
+            SELECT DISTINCT ?subject ?description_lbl ?dates_lbl ?nickname_lbl ?image WHERE { 
                 ?subject 
                     crm:P1_is_identified_by ?dates;
                     crm:P1_is_identified_by ?description.
+
+                OPTIONAL {
+                  ?subject crm:P183i_has_representation ?image.
+                  ?image a rso:EX_Digital_Image;
+                    rdfs:label ?image_lbl.
+                }
+                
 
                 ?description crm:P2_has_type bg_type:biographical_description;
                     rdfs:label ?description_lbl.
@@ -31,8 +38,15 @@
                     <bs-row>
                         <bs-col md="12">
                             <div>
+                                {{#if image}}
+                                  <img class="img-thumbnail" style="max-width: 150px;" src="{{image.value}}" alt=""> 
+                                {{else}}
+                                  <img class="img-thumbnail" style="max-width: 150px;" src="../../assets/images/150x150.png" alt=""> 
+                                {{/if}}
                                 <h1 class="heading"><mp-label iri="{{subject.value}}"></mp-label></h1>
                                 <h4>{{dates_lbl.value}}</h4>
+                                
+                                
                             </div>
                             <div>
                                 <p>{{description_lbl.value}}</p>
