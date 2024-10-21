@@ -5,7 +5,7 @@
             <semantic-table 
                 id='table-result'
                 query=' 
-                    SELECT DISTINCT ?subject ?label ?image ?identifier_label (count(?letter) as ?n_letters) WHERE { 
+                    SELECT DISTINCT ?subject ?label ?image ?identifier_label ?description_label ?dates_label (count(?letter) as ?n_letters) WHERE { 
                         ?subject a bg:Person;
                           rdfs:label ?label;
                           crm:P1_is_identified_by ?identifier.
@@ -17,12 +17,26 @@
                           OPTIONAL {
                             ?subject crm:P183i_has_representation ?image
                           }
+
+                          OPTIONAL {
+                            ?subject crm:P1_is_identified_by ?description.
+                            ?description crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/biographical_description>;
+                              rdfs:label ?description_label.
+                          }
+
+                          OPTIONAL {
+                            ?subject crm:P1_is_identified_by ?dates.
+                            ?dates crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/life_dates>;
+                              rdfs:label ?dates_label.
+                          }
                     } 
-                    GROUP BY ?subject ?image ?label ?identifier_label
+                    GROUP BY ?subject ?image ?label ?identifier_label ?description_label ?dates_label
                     ORDER BY DESC(?n_letters)'
                 column-configuration='[
                     {"displayName": "", "cellTemplate": "{{>image}}"},
                     {"displayName": "Name", "cellTemplate": "{{>person}}"},
+                    {"variableName": "description_label", "displayName": "Biographical Description"},
+                    {"variableName": "dates_label", "displayName": "Life Dates"},
                     {"variableName": "n_letters", "displayName": "Number of letters"}
                 ]'
                 options='{
@@ -39,7 +53,7 @@
                   
                 </template>
                 <template id="person">
-                  <a target="_blank" href="/resource/person/{{identifier_label.value}}">{{label.value}}</a>
+                  <a style="color: var(--accent);" target="_blank" href="/resource/person/{{identifier_label.value}}">{{label.value}}</a>
                 </template>
             </semantic-table>
         </bs-col>
