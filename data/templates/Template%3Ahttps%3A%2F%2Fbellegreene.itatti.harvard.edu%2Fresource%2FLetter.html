@@ -1,6 +1,6 @@
 <semantic-query
         query='
-            SELECT DISTINCT ?letter ?identifier ?title ?recipient ?place ?begin_date ?letterhead ?n_pages ?notes ?material ?itatti_letter_number ?letter_number ?folder_number ?box_number ?next_label ?prev_label WHERE { 
+            SELECT DISTINCT ?letter ?identifier ?title ?recipient ?place ?begin_date ?letterhead ?n_pages ?notes ?material ?itatti_letter_number ?letter_number ?folder_number ?box_number ?cite ?next_label ?prev_label WHERE { 
 
                 ?letter crm:P16i_was_used_for ?exchange_activity;
                     crm:P108i_was_produced_by ?production;
@@ -52,6 +52,12 @@
                 OPTIONAL {
                   ?letter crm:P1_is_identified_by ?itatti_letter_number.
                   ?itatti_letter_number crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/itatti_letter_number>.
+                }
+
+                OPTIONAL {
+                  ?letter crm:P1_is_identified_by ?citation.
+                  ?citation crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/citation>.
+                  ?citation rdfs:label ?cite.
                 }
 
                 OPTIONAL {
@@ -222,7 +228,7 @@
                       {{#if itatti_letter_number}}<br><strong>I Tatti Letter Number: </strong><mp-label iri="{{itatti_letter_number.value}}"></mp-label>{{/if}}
                     </p>
                     <p>
-                      {{#if cite}}<br><strong>Cite as: </strong>{{cite.value}}{{/if}}
+                      {{#if cite}}<br><strong>Cite as: </strong>{{cite.value}} <a href="https://bellegreene.itatti.harvard.edu/resource/letter/{{identifier.value}}">https://bellegreene.itatti.harvard.edu/resource/letter/{{identifier.value}}</a>.{{/if}}
                     </p>
                   </bs-tab>
                 </bs-tabs>
