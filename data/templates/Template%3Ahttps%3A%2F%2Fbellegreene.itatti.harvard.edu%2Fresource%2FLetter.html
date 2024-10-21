@@ -5,9 +5,14 @@
                 ?letter crm:P16i_was_used_for ?exchange_activity;
                     crm:P108i_was_produced_by ?production;
                     rdfs:label ?title;
+                    crm:P1_is_identified_by ?pages;
                     crm:P48_has_preferred_identifier ?identifier_node.
 
                 ?identifier_node rdfs:label ?identifier.
+
+                ?pages crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/n_pages>;
+                    rdfs:label ?n_pages.
+                
 
                 OPTIONAL {
                     ?production crm:P7_took_place_at ?place;
@@ -16,12 +21,6 @@
                 OPTIONAL {
                   ?letter crm:P1_is_identified_by ?letterhead.
                   ?letterhead crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/letterhead>.
-                }
-
-                OPTIONAL {
-                  SELECT ?letter (count(?pages) as ?n_pages) WHERE {
-                    ?pages bg:part_of ?letter.
-                  } GROUP BY ?letter
                 }
 
                 OPTIONAL {
