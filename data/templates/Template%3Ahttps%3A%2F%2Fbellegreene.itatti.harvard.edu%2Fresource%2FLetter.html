@@ -191,7 +191,7 @@
                         <template id="contents">
                             {{#if bindings}}
                               <strong>Letter contents: </strong>
-                              {{#each bindings}}<span>{{content_lbl.value}} <span class="colon">; </span> </span>{{/each}}
+                              {{#each bindings}} {{content_lbl.value}}<span class="colon">; </span> {{/each}}
                             {{/if}}
                             <br>
                         </template>
