@@ -367,3 +367,7 @@ p span.colon:last-of-type {
   height: 150px;
   object-fit: cover;
 }
+
+.griddle-footer {
+  width: 68%;
+}
