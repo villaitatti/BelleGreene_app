@@ -1,18 +1,15 @@
     <semantic-simple-search
         query='
           SELECT DISTINCT ?label ?index_label ?resource ?req WHERE {
-?resource a bg:Letter;
-            crm:P48_has_preferred_identifier ?index.
-  
-  ?index rdfs:label ?index_label.
-  
-  ?page bg:part_of ?resource;
-
-        rdf:value ?label.
-              
-              FILTER REGEX(?label, ?__token__, "i")
-              BIND(?__token__ AS ?req)
-          } LIMIT 10
+            ?resource a bg:Letter;
+              crm:P48_has_preferred_identifier ?index.
+            ?index rdfs:label ?index_label.  
+            ?page bg:part_of ?resource;
+              rdf:value ?label.
+            FILTER REGEX(?label, ?req, "i")
+            BIND(CONCAT(" ", ?__token__) AS ?req)
+          } ORDER BY ASC(?index_label)
+          LIMIT 10 
         '
         template='{{>line}}'
         input-placeholder='Search within letters'
@@ -21,7 +18,7 @@
         <template id="line">
           <div>
             <strong>Letter {{index_label.value}}</strong>
-            <p>{{label.value}}</p>
+            {{highlightSubstring label.value req.value}}
           </div>
 
         </template>
