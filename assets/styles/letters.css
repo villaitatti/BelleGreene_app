@@ -373,7 +373,6 @@ p span.colon:last-of-type {
 }
 
 .img-w150 {
-  width: 150px;
   height: 150px;
   object-fit: cover;
 }
@@ -390,4 +389,9 @@ p span.colon:last-of-type {
 .search-widget {
   margin-top: 110px;
   margin-left: 20px;
+}
+
+#header-search {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }

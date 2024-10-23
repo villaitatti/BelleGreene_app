@@ -14,10 +14,6 @@
                   The more than 600 letters exchanged between Belle da Costa Greene and Bernard Berenson comprise one of the twentieth century’s most fascinating sets of correspondence.<br>Written by the formidable
                   and brilliant Librarian and Director of the Morgan Library to the preeminent art historian of the age, the letters open a window onto the compelling world of rare books, art, and society in New York,
                   1910–1950.<br>
-                  
-                  <!--<strong>Phase One, amounting to the first fifty letters,
-                      is currently available, with the remainder of the correspondence slated to be published online by October 2024. High resolution images for the entire corpus of Greene's letters to Berenson can be
-                      accessed through the <a href="https://hollisarchives.lib.harvard.edu/repositories/10/archival_objects/2167675" target="blank">Bernard and Mary Berenson Papers Finding Aid.</a></strong>-->
               </p>
           </div>
       </div>
@@ -100,88 +96,135 @@
                       }]
                   }'>
 
-                  <semantic-search-query-constant
-                      domain='<https://bellegreene.itatti.harvard.edu/resource/Letter>'
-                      query="
-                          SELECT DISTINCT ?subject ?image ?identifier ?summary ?tags ?label WHERE { 
-                            ?subject a bg:Letter;
-                            rdfs:label ?label;
-                            crm:P48_has_preferred_identifier ?identifier_node.
+                   <div class="container-fluid" id="header-search">
+                    <bs-row>
+                       
+                        <semantic-search-query-keyword
+                          domain='<https://bellegreene.itatti.harvard.edu/resource/Letter>'
+                          placeholder="Full text search in letters ..."
+                          default-query="
+                            SELECT DISTINCT ?subject ?image ?identifier ?summary ?tags ?label WHERE { 
+                              ?subject a bg:Letter;
+                              rdfs:label ?label;
+                              crm:P48_has_preferred_identifier ?identifier_node.
 
-                            ?identifier_node rdfs:label ?identifier.
+                              ?identifier_node rdfs:label ?identifier.
 
-                            ?page bg:part_of ?subject;
-                            bg:index '1';
-                            crm:P183i_has_representation ?image.
+                              ?page bg:part_of ?subject;
+                              bg:index '1';
+                              crm:P183i_has_representation ?image.
 
-                            ?image crm:P2_has_type bg:thumbnail_img.
-                            
-                            OPTIONAL {
-                              SELECT DISTINCT ?subject (GROUP_CONCAT(DISTINCT ?content_lbl; SEPARATOR='; ') as ?summary) WHERE {
-                                ?subject crm:P129i_is_subject_of ?content.
-                                ?content rdfs:label ?content_lbl.
-                              } GROUP BY ?subject
-                            }
-                            
-                            OPTIONAL {
-                              SELECT DISTINCT ?subject (GROUP_CONCAT(DISTINCT ?tag_name; SEPARATOR='; ') as ?tags) WHERE{
-                                ?subject crm:P129_is_about ?tag.
-                                ?tag rdf:type bg:Subject;
-                                    rdfs:label ?tag_name.
-                              } GROUP BY ?subject
-                            } 
-                          }">
-                  </semantic-search-query-constant>
+                              ?image crm:P2_has_type bg:thumbnail_img.
+                              
+                              OPTIONAL {
+                                SELECT DISTINCT ?subject (GROUP_CONCAT(DISTINCT ?content_lbl; SEPARATOR='; ') as ?summary) WHERE {
+                                  ?subject crm:P129i_is_subject_of ?content.
+                                  ?content rdfs:label ?content_lbl.
+                                } GROUP BY ?subject
+                              }
+                              
+                              OPTIONAL {
+                                SELECT DISTINCT ?subject (GROUP_CONCAT(DISTINCT ?tag_name; SEPARATOR='; ') as ?tags) WHERE{
+                                  ?subject crm:P129_is_about ?tag.
+                                  ?tag rdf:type bg:Subject;
+                                      rdfs:label ?tag_name.
+                                } GROUP BY ?subject
+                              } 
+                            }"
+                          query='
+                              SELECT DISTINCT ?subject ?image ?identifier ?summary ?tags ?label WHERE { 
+                                ?subject a bg:Letter;
+                                  rdfs:label ?label;
+                                  crm:P48_has_preferred_identifier ?identifier_node.
 
-                          <div data-flex-layout="row stretch-stretch">
-                              <div data-flex-self="size-1of3" style="flex: 0 0 20px;">
-                                  <semantic-search-facet
-                                    open-by-default="true"
-                                  ></semantic-search-facet>
-                              </div>
-                              <semantic-search-result-holder>
-                                  <div data-flex-self="md-full">
-                                      <semantic-search-result>
-                                          <mp-sparql-result-counts 
-                                              id='query-count'
-                                              query="SELECT DISTINCT * {}"
-                                              template='{{#if hasLimit}} <bs-alert bs-style="warning">
-                                                  Showing {{numberOfResults}} of {{totalNumberOfResults}} matches. <strong>Please, refine your search.</strong> </bs-alert>
-                                              {{else}}<span> Showing {{numberOfResults}} Letters </span>{{/if}}'>
-                                          </mp-sparql-result-counts>
-                                      </semantic-search-result>
+                                ?identifier_node rdfs:label ?identifier.
 
-                                      <semantic-search-result>
-                                          <semantic-table 
-                                              id='table-result'
-                                              query=' 
-                                                  SELECT DISTINCT ?subject ?image ?identifier ?summary ?tags ?label WHERE { }
-                                                  ORDER BY ASC(?subject) '
-                                              column-configuration='[
-                                                  {"displayName": "", "cellTemplate": "{{>image}}"},
-                                                  {"displayName": "Letter", "cellTemplate": "{{>letter}}"},
-                                                  {"variableName": "summary", "displayName": "Summary"},
-                                                  {"variableName": "tags", "displayName": "Subjects"}
-                                              ]'
-                                              options='{
-                                                  "showFilter":true, 
-                                                  "resultsPerPage":10,
-                                                  "showTableHeading":true
-                                              }'  >
+                                ?page bg:part_of ?subject;
+                                  bg:index "1";
+                                  crm:P183i_has_representation ?image.
 
-                                              <template id="image">
-                                                <img src={{image.value}} class="img-w150" alt="Letter {{identifier.value}}" />
-                                                <p class="letter_id">Letter {{identifier.value}}</p>
-                                              </template>
-                                              <template id="letter">
-                                                <a target="_blank" href="/resource/letter/{{identifier.value}}">{{label.value}}</a>
-                                              </template>
-                                          </semantic-table>
-                                      </semantic-search-result>
+                                ?image crm:P2_has_type bg:thumbnail_img.
+                                
+                                OPTIONAL {
+                                  SELECT DISTINCT ?subject (GROUP_CONCAT(DISTINCT ?content_lbl; SEPARATOR="; ") as ?summary) WHERE {
+                                    ?subject crm:P129i_is_subject_of ?content.
+                                    ?content rdfs:label ?content_lbl.
+                                  } GROUP BY ?subject
+                                }
+                                
+                                OPTIONAL {
+                                  SELECT DISTINCT ?subject (GROUP_CONCAT(DISTINCT ?tag_name; SEPARATOR="; ") as ?tags) WHERE{
+                                    ?subject crm:P129_is_about ?tag.
+                                    ?tag rdf:type bg:Subject;
+                                        rdfs:label ?tag_name.
+                                  } GROUP BY ?subject
+                                } 
 
-                                  </div>
-                              </semantic-search-result-holder>
+                                OPTIONAL {
+                                  SELECT DISTINCT ?subject (GROUP_CONCAT(DISTINCT ?page_text; SEPARATOR="; ") as ?text) WHERE {
+                                    ?subject a bg:Letter.
+                                      ?page bg:part_of ?subject;
+                                      rdf:value ?page_text.
+                                  } GROUP BY ?subject
+                                }
+
+                                FILTER REGEX(?text, ?req, "i")
+                                BIND(CONCAT(" ", ?__token__) as ?req)
+                              }'
+                        ></semantic-search-query-keyword>
+                    </bs-row>
+
+                  </div>
+
+                  <div data-flex-layout="row stretch-stretch">
+                      <div data-flex-self="size-1of3" style="flex: 0 0 20px;">
+                          <semantic-search-facet
+                            open-by-default="true"
+                          ></semantic-search-facet>
+                      </div>
+                      <semantic-search-result-holder>
+                          <div data-flex-self="md-full">
+                              <semantic-search-result>
+                                  <mp-sparql-result-counts 
+                                      id='query-count'
+                                      query="SELECT DISTINCT * {}"
+                                      template='{{#if hasLimit}} <bs-alert bs-style="warning">
+                                          Showing {{numberOfResults}} of {{totalNumberOfResults}} matches. <strong>Please, refine your search.</strong> </bs-alert>
+                                      {{else}}<span> Showing {{numberOfResults}} Letters </span>{{/if}}'>
+                                  </mp-sparql-result-counts>
+                              </semantic-search-result>
+
+                              <semantic-search-result>
+                                  <semantic-table 
+                                      id='table-result'
+                                      query=' 
+                                          SELECT DISTINCT ?subject ?image ?identifier ?summary ?tags ?label WHERE { }
+                                          ORDER BY ASC(?subject) '
+                                      column-configuration='[
+                                          {"displayName": "", "cellTemplate": "{{>image}}"},
+                                          {"displayName": "Letter", "cellTemplate": "{{>letter}}"},
+                                          {"variableName": "summary", "displayName": "Summary"},
+                                          {"variableName": "tags", "displayName": "Subjects"}
+                                      ]'
+                                      options='{
+                                          "showFilter":false,
+                                          "resultsPerPage":10,
+                                          "showTableHeading":true
+                                      }'  >
+
+                                      <template id="image">
+                                        <img src={{image.value}} class="img-w150" alt="Letter {{identifier.value}}" />
+                                        <p class="letter_id">Letter {{identifier.value}}</p>
+                                      </template>
+                                      <template id="letter">
+                                        <a target="_blank" href="/resource/letter/{{identifier.value}}">{{label.value}}</a>
+                                      </template>
+                                  </semantic-table>
+                              </semantic-search-result>
+
                           </div>
+                      </semantic-search-result-holder>
+                  </div>
           </semantic-search>
 
       </div>
