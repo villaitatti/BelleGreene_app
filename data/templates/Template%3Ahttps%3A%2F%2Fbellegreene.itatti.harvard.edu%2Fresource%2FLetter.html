@@ -137,7 +137,7 @@
                     <p>
                      <semantic-query
                         query='
-                            SELECT DISTINCT ?transcriber WHERE { 
+                            SELECT DISTINCT ?t_name WHERE { 
                                 <[[this]]> crm:P16i_was_used_for ?transcription.
                                 ?transcription a crm:E7_Activity;
                                     crm:P01i_is_domain_of ?transcription_activity.
@@ -145,6 +145,8 @@
                                 ?transcription_activity a crm:PC14_carried_out_by;
                                     crm:P14.1_in_the_role_of  <https://bellegreene.itatti.harvard.edu/resource/type/transcriber>;
                                     crm:P02_has_range ?transcriber.
+                                
+                                ?transcriber rdfs:label ?t_name
                             }'
                         template="{{> transcribers}}"
                       > 
@@ -153,7 +155,7 @@
                             {{#if bindings}}
                               <br><strong>Transcribers </strong>
                               {{#each bindings}}
-                                  <mp-label iri="{{transcriber.value}}"></mp-label> <span class="colon">; </span>
+                                  {{t_name.value}} <span class="colon">; </span>
                               {{/each}}
                             {{/if}}
                             <br>
