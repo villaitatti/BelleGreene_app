@@ -164,6 +164,7 @@
                         query='
                             SELECT DISTINCT ?person WHERE { 
                                 <[[this]]> crm:P67_refers_to ?person.
+                                FILTER(?person != <https://bellegreene.itatti.harvard.edu/resource/person/NA>)
                             }'
                         template="{{> people}}"
                       >
