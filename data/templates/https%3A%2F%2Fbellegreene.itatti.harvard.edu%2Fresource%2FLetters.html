@@ -213,7 +213,9 @@
                                       }'  >
 
                                       <template id="image">
-                                        <img src={{image.value}} class="img-w150" alt="Letter {{identifier.value}}" />
+                                        <a target="_blank" href="/resource/letter/{{identifier.value}}">
+                                          <img src={{image.value}} class="img-w150" alt="Letter {{identifier.value}}" />
+                                        </a>
                                         <p class="letter_id">Letter {{identifier.value}}</p>
                                       </template>
                                       <template id="letter">
