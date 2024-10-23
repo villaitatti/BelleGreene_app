@@ -136,39 +136,85 @@
                       }]
                   }'>
 
-                  <semantic-search-query-constant
-                      domain='<https://bellegreene.itatti.harvard.edu/resource/Letter>'
-                      query="
-                          SELECT DISTINCT ?subject ?image ?identifier ?summary ?tags ?label WHERE { 
-                            ?subject a bg:Letter;
-                            crm:P67_refers_to <[[this]]>;
-                            rdfs:label ?label;
-                            crm:P48_has_preferred_identifier ?identifier_node.
+                      <div class="container-fluid" id="header-search">
+                        <bs-row>
+                          <semantic-search-query-keyword
+                                domain='<https://bellegreene.itatti.harvard.edu/resource/Letter>'
+                                placeholder="Full text search in letters ..."
+                                default-query="
+                                  SELECT DISTINCT ?subject ?image ?identifier ?summary ?tags ?label WHERE { 
+                                    ?subject a bg:Letter;
+                                    crm:P67_refers_to <[[this]]>;
+                                    rdfs:label ?label;
+                                    crm:P48_has_preferred_identifier ?identifier_node.
 
-                            ?identifier_node rdfs:label ?identifier.
+                                    ?identifier_node rdfs:label ?identifier.
 
-                            ?page bg:part_of ?subject;
-                            bg:index '1';
-                            crm:P183i_has_representation ?image.
+                                    ?page bg:part_of ?subject;
+                                    bg:index '1';
+                                    crm:P183i_has_representation ?image.
 
-                            ?image crm:P2_has_type bg:thumbnail_img.
-                            
-                            OPTIONAL {
-                              SELECT DISTINCT ?subject (GROUP_CONCAT(DISTINCT ?content_lbl; SEPARATOR='; ') as ?summary) WHERE {
-                                ?subject crm:P129i_is_subject_of ?content.
-                                ?content rdfs:label ?content_lbl.
-                              } GROUP BY ?subject
-                            }
-                            
-                            OPTIONAL {
-                              SELECT DISTINCT ?subject (GROUP_CONCAT(DISTINCT ?tag_name; SEPARATOR='; ') as ?tags) WHERE{
-                                ?subject crm:P129_is_about ?tag.
-                                ?tag rdf:type bg:Subject;
-                                    rdfs:label ?tag_name.
-                              } GROUP BY ?subject
-                            } 
-                          }">
-                  </semantic-search-query-constant>
+                                    ?image crm:P2_has_type bg:thumbnail_img.
+                                    
+                                    OPTIONAL {
+                                      SELECT DISTINCT ?subject (GROUP_CONCAT(DISTINCT ?content_lbl; SEPARATOR='; ') as ?summary) WHERE {
+                                        ?subject crm:P129i_is_subject_of ?content.
+                                        ?content rdfs:label ?content_lbl.
+                                      } GROUP BY ?subject
+                                    }
+                                    
+                                    OPTIONAL {
+                                      SELECT DISTINCT ?subject (GROUP_CONCAT(DISTINCT ?tag_name; SEPARATOR='; ') as ?tags) WHERE{
+                                        ?subject crm:P129_is_about ?tag.
+                                        ?tag rdf:type bg:Subject;
+                                            rdfs:label ?tag_name.
+                                      } GROUP BY ?subject
+                                    } 
+                                  }"
+                                query='
+                                    SELECT DISTINCT ?subject ?image ?identifier ?summary ?tags ?label WHERE { 
+                                      ?subject a bg:Letter;
+                                        crm:P67_refers_to <[[this]]>;
+                                        rdfs:label ?label;
+                                        crm:P48_has_preferred_identifier ?identifier_node.
+
+                                      ?identifier_node rdfs:label ?identifier.
+
+                                      ?page bg:part_of ?subject;
+                                        bg:index "1";
+                                        crm:P183i_has_representation ?image.
+
+                                      ?image crm:P2_has_type bg:thumbnail_img.
+                                      
+                                      OPTIONAL {
+                                        SELECT DISTINCT ?subject (GROUP_CONCAT(DISTINCT ?content_lbl; SEPARATOR="; ") as ?summary) WHERE {
+                                          ?subject crm:P129i_is_subject_of ?content.
+                                          ?content rdfs:label ?content_lbl.
+                                        } GROUP BY ?subject
+                                      }
+                                      
+                                      OPTIONAL {
+                                        SELECT DISTINCT ?subject (GROUP_CONCAT(DISTINCT ?tag_name; SEPARATOR="; ") as ?tags) WHERE{
+                                          ?subject crm:P129_is_about ?tag.
+                                          ?tag rdf:type bg:Subject;
+                                              rdfs:label ?tag_name.
+                                        } GROUP BY ?subject
+                                      } 
+
+                                      OPTIONAL {
+                                        SELECT DISTINCT ?subject (GROUP_CONCAT(DISTINCT ?page_text; SEPARATOR="; ") as ?text) WHERE {
+                                          ?subject a bg:Letter.
+                                            ?page bg:part_of ?subject;
+                                            rdf:value ?page_text.
+                                        } GROUP BY ?subject
+                                      }
+
+                                      FILTER REGEX(?text, ?req, "i")
+                                      BIND(CONCAT(" ", ?__token__) as ?req)
+                                    }'
+                          ></semantic-search-query-keyword>
+                        </bs-row>
+                      </div>
 
                           <div data-flex-layout="row stretch-stretch">
                               <div data-flex-self="size-1of3" style="flex: 0 0 20px;">
@@ -201,13 +247,15 @@
                                                   {"variableName": "tags", "displayName": "Subjects"}
                                               ]'
                                               options='{
-                                                  "showFilter":true, 
+                                                  "showFilter":false, 
                                                   "resultsPerPage":10,
                                                   "showTableHeading":true
                                               }'  >
 
                                               <template id="image">
-                                                <img src={{image.value}} class="img-w150" alt="Letter {{identifier.value}}" />
+                                                <a target="_blank" href="/resource/letter/{{identifier.value}}">
+                                                  <img src={{image.value}} class="img-w150" alt="Letter {{identifier.value}}" />
+                                                </a>
                                                 <p class="letter_id">Letter {{identifier.value}}</p>
                                               </template>
                                               <template id="letter">
