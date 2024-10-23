@@ -164,8 +164,12 @@
                     <p>
                       <semantic-query
                         query='
-                            SELECT DISTINCT ?person WHERE { 
+                            SELECT DISTINCT ?identifier_lbl ?person_lbl WHERE { 
                                 <[[this]]> crm:P67_refers_to ?person.
+                                ?person crm:P1_is_identified_by ?identifier;
+                                  rdfs:label ?person_lbl.
+                                ?identifier rdfs:label ?identifier_lbl;
+                                  crm:P2_has_type  <https://bellegreene.itatti.harvard.edu/resource/type/identifier>.
                                 FILTER(?person != <https://bellegreene.itatti.harvard.edu/resource/person/NA>)
                             }'
                         template="{{> people}}"
@@ -174,7 +178,7 @@
                             {{#if bindings}}
                               <strong>People Mentioned: </strong>
                               {{#each bindings}}
-                                  <semantic-link iri="{{person.value}}"></semantic-link> <span class="colon">; </span>
+                                  <a href="/resource/person/{{identifier_lbl.value}}">{{person_lbl.value}}</a> <span class="colon">; </span>
                               {{/each}}
                             {{/if}}
                             <br>

@@ -1,4 +1,4 @@
-
+[[this]]
 <div id="person">
     <div class="container">
         <semantic-query
@@ -141,6 +141,7 @@
                       query="
                           SELECT DISTINCT ?subject ?image ?identifier ?summary ?tags ?label WHERE { 
                             ?subject a bg:Letter;
+                            crm:P67_refers_to <[[this]]>;
                             rdfs:label ?label;
                             crm:P48_has_preferred_identifier ?identifier_node.
 
