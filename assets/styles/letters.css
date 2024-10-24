@@ -384,6 +384,20 @@ p span.colon:last-of-type {
 .pagination .active a {
   background-color: var(--accent)!important;
   color: white!important;
+  padding: 5px 12px!important;
+}
+
+.pagination {
+  font-size: 20px!important;
+}
+
+.pagination .active a::after {
+  font-size: 20px!important;
+}
+
+.pagination a {
+  font-size: 20px!important;
+  border-radius: 50%;
 }
 
 .search-widget {
@@ -395,3 +409,4 @@ p span.colon:last-of-type {
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
