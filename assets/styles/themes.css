@@ -59,3 +59,19 @@ h4 {
     align-items: start; 
   }
 }
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Specific media query for smaller screens */
+@media only screen and (max-width: 768px) {
+  figure img {
+     width: 100%;
+     height: auto;
+  }
+  .gb-inside-container {
+     padding: 10px;
+  }
+}
