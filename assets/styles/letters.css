@@ -416,6 +416,10 @@ p span.colon:last-of-type {
   margin-bottom: 20px;
 }
 
+tbody tr td:first-child {
+  text-align: center;
+}
+
 @media only screen and (max-width: 767px) {
   div.semantic-facet-holder {
     display: none;
