@@ -416,3 +416,25 @@ p span.colon:last-of-type {
   margin-bottom: 20px;
 }
 
+@media only screen and (max-width: 767px) {
+  div.semantic-facet-holder {
+    display: none;
+  }
+
+  .griddle-footer{
+    width: 100%;
+  }
+
+  .pagination {
+    font-size: 12px!important;
+  }
+  
+  .pagination .active a::after {
+    font-size: 12px!important;
+
+  }
+  
+  .pagination a {
+    font-size: 12px!important;
+  }
+}
