@@ -180,3 +180,18 @@ html {
 *, ::after, ::before {
   box-sizing: inherit;
 }
+
+@media only screen and (max-width: 768px) {
+  .gb-grid-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gb-grid-column {
+    width: 100%;
+  }
+
+  img {
+    margin-top: 10px;
+  }
+}
