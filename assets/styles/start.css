@@ -38,3 +38,12 @@ h1, h2, h3, h4, h5, h6 {
 .letter_popover .popover-content.top > .arrow:after {
   border-top-color: #fff;
 }
+
+.modal-body a:hover, .modal-body a:focus {
+  color: white!important;
+  background-color: var(--accent);
+}
+
+.modal-body a {
+  padding: 5px 10px;
+}
