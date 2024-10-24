@@ -44,3 +44,18 @@
 .container.grid-container{
   width:80%;
 }
+@media only screen and (max-width: 768px) {
+  .gb-grid-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gb-grid-column {
+    width: 100%;
+    margin-bottom: 20px; /* Add some spacing between text and images */
+  }
+
+  img {
+    margin-top: 10px; /* Add margin to give space between text and image */
+  }
+}
