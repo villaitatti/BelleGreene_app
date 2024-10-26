@@ -1,9 +1,9 @@
 /* General Styles */
 .page-hero {
   background-color: rgba(255, 255, 255, 0.78);
-  background-image: url(/assets/images/White-head-back_Princeton.jpg);
+
   background-size: cover;
-  background-image: linear-gradient(0deg, rgba(255,255,255,0.78),rgba(255,255,255,0.78)), url(/assets/images/White-head-back_Princeton.jpg);
+  background-image: linear-gradient(0deg, rgba(255,255,255,0.78),rgba(255,255,255,0.78)), url(/assets/images/3-a-berenson-1903_400_full.jpg);
   background-position: center top;
   background-repeat: no-repeat;
   min-height: 100vh;
