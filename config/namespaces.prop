@@ -1,5 +1,2 @@
-rs = http://www.researchspace.org/ontology/
-bg = https://bellegreene.itatti.harvard.edu/resource/
-Default = https://bellegreene.itatti.harvard.edu/resource/
-Templateontology = Template:http://www.researchspace.org/ontology/
-custom = https://belle-greene.com/resource/custom/
+bellegreene = https://bellegreene.itatti.harvard.edu/resource/
+crm = http://www.cidoc-crm.org/cidoc-crm/

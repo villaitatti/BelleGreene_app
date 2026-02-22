@@ -1,2 +1,0 @@
-shiroAuthenticationFilter=authcBasic,anon,authc
-allowedCrossOrigin=*

@@ -1,0 +1,371 @@
+<semantic-query
+        query='
+            SELECT DISTINCT ?letter ?identifier ?title ?recipient ?place ?begin_date ?letterhead ?n_pages ?notes ?material ?itatti_letter_number ?letter_number ?folder_number ?box_number ?cite ?next_label ?prev_label WHERE { 
+
+                ?letter crm:P16i_was_used_for ?exchange_activity;
+                    crm:P108i_was_produced_by ?production;
+                    rdfs:label ?title;
+                    crm:P1_is_identified_by ?pages;
+                    crm:P48_has_preferred_identifier ?identifier_node.
+
+                ?identifier_node rdfs:label ?identifier.
+
+                ?pages crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/n_pages>;
+                    rdfs:label ?n_pages.
+                
+
+                OPTIONAL {
+                    ?production crm:P7_took_place_at ?place;
+                }
+
+                OPTIONAL {
+                  ?letter crm:P1_is_identified_by ?letterhead.
+                  ?letterhead crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/letterhead>.
+                }
+
+                OPTIONAL {
+                  ?letter crm:P1_is_identified_by ?notes.
+                  ?notes crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/notes>.
+                }
+
+                OPTIONAL {
+                  ?letter crm:P1_is_identified_by ?material.
+                  ?material crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/accompanying_material>.
+                }
+
+                OPTIONAL {
+                  ?letter crm:P1_is_identified_by ?letter_number.
+                  ?letter_number crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/letter_number>.
+                }
+
+                OPTIONAL {
+                  ?letter crm:P1_is_identified_by ?box_number.
+                  ?box_number crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/box_number>.
+                }
+
+                OPTIONAL {
+                  ?letter crm:P1_is_identified_by ?folder_number.
+                  ?folder_number crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/folder_number>.
+                }
+
+                OPTIONAL {
+                  ?letter crm:P1_is_identified_by ?itatti_letter_number.
+                  ?itatti_letter_number crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/itatti_letter_number>.
+                }
+
+                OPTIONAL {
+                  ?letter crm:P1_is_identified_by ?citation.
+                  ?citation crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/citation>.
+                  ?citation rdfs:label ?cite.
+                }
+
+                OPTIONAL {
+                  ?letter <https://bellegreene.itatti.harvard.edu/resource/next> ?next.
+                  ?next crm:P48_has_preferred_identifier ?next_id.
+                  ?next_id rdfs:label ?next_label.
+                }
+
+                OPTIONAL {
+                  ?letter <https://bellegreene.itatti.harvard.edu/resource/prev> ?prev.
+                  ?prev crm:P48_has_preferred_identifier ?prev_id.
+                  ?prev_id rdfs:label ?prev_label.
+                }
+
+                ?production crm:P4_has_time-span ?production_time_span.
+            
+                ?production_time_span rdfs:label ?begin_date.
+
+                ?exchange_activity rdf:type crm:E7_Activity;
+                    crm:P01i_is_domain_of ?recipient_activity.
+
+                ?recipient_activity a crm:PC14_carried_out_by;
+                    crm:P14.1_in_the_role_of  <https://bellegreene.itatti.harvard.edu/resource/type/Recipient>;
+                    crm:P02_has_range ?recipient.
+
+                BIND(<[[this]]> as ?letter)
+                }'
+        template="{{> metadata}}"
+    >
+
+    <template id="metadata">
+
+        {{#each bindings}}
+
+            <div id="letter" class="container">
+
+              <bs-row class="metadata-buttons">
+                <bs-col sm="3">
+                  {{#if prev_label}}
+                    <semantic-link iri="bellegreene:letter/{{prev_label.value}}" class="btn btn-primary">Previous letter</semantic-link> 
+                  {{/if}}
+                </bs-col>
+
+                <bs-col sm-offset="6" sm="3" style="text-align: right;">
+                  {{#if next_label}}
+                    <semantic-link iri="bellegreene:letter/{{next_label.value}}" class="btn btn-primary">Next letter</semantic-link>
+                  {{/if}}
+                </bs-col>
+              </bs-row>
+
+              <bs-row>
+                  <bs-col sm="12" md="12">
+                      <h1 class="heading">{{title.value}}</h1>
+                  </bs-col>
+              </bs-row>
+
+              
+              <bs-row id="letter_metadata">
+                <bs-tabs>
+                  <bs-tab event-key="1" title="GENERAL INFORMATION">
+                    <bs-row>
+                      <bs-col sm="6" md="6">
+                        <p>
+                          {{#if begin_date}}<strong>Date: </strong>{{begin_date.value}}{{/if}}
+                          {{#if recipient}}<br><strong>Recipient: </strong><mp-label iri="{{recipient.value}}"></mp-label>{{/if}}
+                          {{#if place}}<br><strong>Place letter was written: </strong><mp-label iri="{{place.value}}"></mp-label>{{/if}}
+                          {{#if letterhead}}<br><strong>Letterhead: </strong><mp-label iri="{{letterhead.value}}"></mp-label>{{/if}}
+                        </p>
+                      </bs-col>
+                      <bs-col sm="6" md="6">
+                        <p>
+                          {{#if n_pages}}<strong>Number of pages: </strong>{{n_pages.value}}{{/if}}
+                          {{#if notes}}<br><strong>Notes: </strong><mp-label iri="{{notes.value}}"></mp-label>{{/if}}
+                          {{#if material}}<br><strong>Accompanying Material: </strong><mp-label iri="{{material.value}}"></mp-label>{{/if}}
+                        </p>
+                      </bs-col>
+                    </bs-row>
+                    <p>
+                     <semantic-query
+                        query='
+                            SELECT DISTINCT ?t_name WHERE { 
+                                <[[this]]> crm:P16i_was_used_for ?transcription.
+                                ?transcription a crm:E7_Activity;
+                                    crm:P01i_is_domain_of ?transcription_activity.
+                                
+                                ?transcription_activity a crm:PC14_carried_out_by;
+                                    crm:P14.1_in_the_role_of  <https://bellegreene.itatti.harvard.edu/resource/type/transcriber>;
+                                    crm:P02_has_range ?transcriber.
+                                
+                                ?transcriber rdfs:label ?t_name
+                            }'
+                        template="{{> transcribers}}"
+                      > 
+                      
+                       <template id="transcribers">
+                            {{#if bindings}}
+                              <br><strong>Transcribers </strong>
+                              {{#each bindings}}
+                                  {{t_name.value}}<span class="colon">; </span>
+                              {{/each}}
+                            {{/if}}
+                            <br>
+                        </template>
+                    </p>
+                    <p>
+                      <semantic-query
+                        query='
+                            SELECT DISTINCT ?identifier_lbl ?person_lbl WHERE { 
+                                <[[this]]> crm:P67_refers_to ?person.
+                                ?person crm:P1_is_identified_by ?identifier;
+                                  rdfs:label ?person_lbl.
+                                ?identifier rdfs:label ?identifier_lbl;
+                                  crm:P2_has_type  <https://bellegreene.itatti.harvard.edu/resource/type/identifier>.
+                                FILTER(?person != <https://bellegreene.itatti.harvard.edu/resource/person/NA>)
+                            }'
+                        template="{{> people}}"
+                      >
+                        <template id="people">
+                            {{#if bindings}}
+                              <strong>People Mentioned: </strong>
+                              {{#each bindings}}
+                                  <semantic-link iri="bellegreene:person/{{identifier_lbl.value}}">{{person_lbl.value}}</semantic-link> <span class="colon">; </span>
+                              {{/each}}
+                            {{/if}}
+                            <br>
+                        </template>
+                      </semantic-query> 
+                    </p>
+                    <p>
+                      <semantic-query
+                        query='
+                            SELECT DISTINCT ?content_lbl WHERE { 
+                                <[[this]]> crm:P129i_is_subject_of ?content.
+                                ?content rdfs:label ?content_lbl.
+                            }'
+                        template="{{> contents}}"
+                      >
+                        <template id="contents">
+                            {{#if bindings}}
+                              <strong>Letter contents: </strong>
+                              {{#each bindings}} {{content_lbl.value}}<span class="colon">; </span> {{/each}}
+                            {{/if}}
+                            <br>
+                        </template>
+                      </semantic-query> 
+                    </p>
+                    <p>
+                      <semantic-query
+                        query='
+                            SELECT DISTINCT ?sub_lbl ?sub ?sub_id_lbl WHERE { 
+                                <[[this]]> crm:P129_is_about ?sub.
+                                ?sub rdfs:label ?sub_lbl;
+                                  crm:P48_has_preferred_identifier ?sub_id.
+                                ?sub_id rdfs:label ?sub_id_lbl.
+                            }'
+                        template="{{> subjects}}"
+                      >
+                        <template id="subjects">
+                            {{#if bindings}}
+                              <strong>Subjects: </strong>
+                              {{#each bindings}}<a target="_blank" href='/resource/subject/{{sub_id_lbl.value}}'>{{sub_lbl.value}}</semantic-link> <span class="colon">; </span> {{/each}}
+                            {{/if}}
+                            <br>
+                        </template>
+                      </semantic-query> 
+                    </p>
+                  </bs-tab>
+
+
+                  <bs-tab event-key="2" title="ARCHIVAL REFERENCES">
+                    <p>
+                      {{#if letter_number}}<strong>Letter Number: </strong><mp-label iri="{{letter_number.value}}"></mp-label>{{/if}}
+                      {{#if box_number}}<br><strong>Box Number: </strong><mp-label iri="{{box_number.value}}"></mp-label>{{/if}}
+                      {{#if folder_number}}<br><strong>Folder Number: </strong><mp-label iri="{{folder_number.value}}"></mp-label>{{/if}}
+                      {{#if itatti_letter_number}}<br><strong>I Tatti Letter Number: </strong><mp-label iri="{{itatti_letter_number.value}}"></mp-label>{{/if}}
+                    </p>
+                    <p>
+                      {{#if cite}}<br><strong>Cite as: </strong>{{cite.value}} <a href="https://bellegreene.itatti.harvard.edu/resource/letter/{{identifier.value}}">https://bellegreene.itatti.harvard.edu/resource/letter/{{identifier.value}}</semantic-link>.{{/if}}
+                    </p>
+                  </bs-tab>
+                </bs-tabs>
+              </bs-row>
+
+                <bs-row id="pages">
+                    <bs-col sm="12" md="12">
+                        <semantic-table 
+                            id='table-result'
+                            query='SELECT DISTINCT ?subject ?index ?document ?imageIRI ?imageIIIF ?page WHERE { 
+                                ?page bellegreene:part_of ?subject;
+                                    crm:P129i_is_subject_of ?document;
+                                    bellegreene:index ?index;
+                                    crm:P183i_has_representation ?imageIRI;
+                                    crm:P183i_has_representation ?imageIIIF.
+
+                                ?imageIRI crm:P2_has_type bellegreene:thumbnail_img.
+                                ?imageIIIF crm:P2_has_type bellegreene:iiif_img.
+
+                                BIND(xsd:integer(?index) as ?index_num)
+                                BIND(<[[this]]> as ?subject)
+
+                            } ORDER BY ASC(?index_num)'
+
+                            tuple-template="{{> table-row}}"
+                            options='{
+                                "showTableHeading": false,
+                                "showFilter": false
+                            }'
+                            number-of-displayed-rows="50">
+
+                            <template id="table-row">
+                                <bs-row class="row">
+                                    <mp-event-proxy 
+                                        id='proxy-page-{{index.value}}' 
+                                        on-event-source='text-annotation-filter' 
+                                        proxy-event-type='TextAnnotation:highlightText' 
+                                        proxy-targets='["page-{{index.value}}"]'
+                                    ></mp-event-proxy>
+                                    <bs-col sm="7" md="7">
+                                        {{>text}}
+                                    </bs-col>
+                                    <bs-col sm="4" md="4">
+                                        {{>image}}
+                                    </bs-col>
+                                </bs-row>
+                            </template>
+
+                            <template id="text">
+                                <rs-text-annotation-workspace
+                                    id="page-{{index.value}}"
+                                    storage="bellegreene"
+                                    document-iri="{{document.value}}"
+                                    annotation-subject-template="https://belle-greene.com/annotation/{{{{raw}}}}{{UUID}}{{{{/raw}}}}"
+                                    fallback-template="{{> fallback-template}}"
+                                    annotation-tooltip="{{> annotation-tooltip}}">
+
+                                    <template id="fallback-template">
+                                        Missing type for annotation <semantic-link iri="{{ iri.value }}"></semantic-link>
+                                    </template>
+
+                                    <template id="annotation-tooltip">
+                                    <div>
+                                        {{#if allowEdit}}
+                                        <button
+                                        name="edit"
+                                        class="btn btn-xs btn-default"
+                                        data-annotation="{{ iri.value }}"
+                                        title="Edit annotation"
+                                        >
+                                        <span class="fa fa-pencil" style="pointer-events: none;"></span>
+                                        </button>
+                                        {{else}}
+                                        <button
+                                        name="edit"
+                                        class="btn btn-xs btn-default"
+                                        disabled
+                                        title="Edit annotation"
+                                        >
+                                        <span class="fa fa-pencil" style="pointer-events: none;"></span>
+                                        </button>
+                                        {{/if}}
+                                        {{#if allowDelete}}
+                                        <button
+                                        name="delete"
+                                        class="btn btn-xs btn-default"
+                                        data-annotation="{{ iri.value }}"
+                                        title="Delete annotation"
+                                        >
+                                        <span class="fa fa-trash" style="pointer-events: none;"></span>
+                                        </button>
+                                        {{else}}
+                                        <button
+                                        name="delete"
+                                        class="btn btn-xs btn-default"
+                                        disabled
+                                        title="Delete annotation"
+                                        >
+                                        <span class="fa fa-trash" style="pointer-events: none;"></span>
+                                        </button>
+                                        {{/if}}
+                                    </div>
+                                    </template>
+
+                                </rs-text-annotation-workspace>
+                            </template>
+
+                            <template id="image">
+                                <mp-overlay-dialog title="Mirador Viewer" type="modal" bs-size="large">
+                                    <mp-overlay-dialog-trigger><img src="{{imageIRI.value}}" alt=""></mp-overlay-dialog-trigger>
+                                    <mp-overlay-dialog-content>
+                                        <rs-iiif-mirador
+                                            image-or-region='{{imageIIIF.value}}'
+                                            image-id-pattern='BIND( {{imageIIIF}} AS ?imageIRI)
+                                                            BIND("image" AS ?type)
+                                                            BIND(REPLACE(STR(REPLACE(STR(?imageIRI),"/full/full/0/default.jpg","")), "(^.*)\\/(.*)$", "$2") AS ?imageID)'
+                                            iiif-server-url="https://iiif.itatti.harvard.edu/iiif/2">
+                                        </rs-iiif-mirador>
+                                    </mp-overlay-dialog-content>
+                                </mp-overlay-dialog>
+                            </template>
+
+                        </semantic-table>
+                    </bs-col>
+                </bs-row>
+            </div>
+
+        {{/each}}
+
+    </template>
+
+</semantic-query>
+
+

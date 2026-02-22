@@ -1,8 +1,9 @@
-h1 {
+#bellegreene-container h1 {
     font-size: 54px;
     line-height: 1.1em;
 }
-.inside-page-hero > *:last-child {
+
+#bellegreene-container .inside-page-hero > *:last-child {
     margin-bottom: 0px;
 }
 
@@ -12,38 +13,38 @@ h1, h2, h3, h4, h5, h6 {
     color: #3A393A;
     font-family: 54px Montserrat, sans-serif;
 }
-.gb-headline-f5222193{
+#bellegreene-container .gb-headline-f5222193{
     color: #F4EFE4;
 }
 
-.letter_popover {
+#bellegreene-container .letter_popover {
   background-color: rgb(250, 247, 243);
   color: #000;
 }
 
-.letter_popover .popover-content {
+#bellegreene-container .letter_popover .popover-content {
   background-color: rgb(250, 247, 243);
 }
 
-.letter_popover .popover-title{
+#bellegreene-container .letter_popover .popover-title{
   color: var(--accent);
   background-color: rgb(245, 239, 228);
 }
 
 
-.letter_popover .popover-content.top > .arrow {
+#bellegreene-container .letter_popover .popover-content.top > .arrow {
   border-top-color: rgba(0, 0, 0, 0.4); 
 }
           
-.letter_popover .popover-content.top > .arrow:after {
+#bellegreene-container .letter_popover .popover-content.top > .arrow:after {
   border-top-color: #fff;
 }
 
-.modal-body a:hover, .modal-body a:focus {
+#bellegreene-container .modal-body a:hover, .modal-body a:focus {
   color: white!important;
   background-color: var(--accent);
 }
 
-.modal-body a {
+#bellegreene-container .modal-body a {
   padding: 5px 10px;
 }
