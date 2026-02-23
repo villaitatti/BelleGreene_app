@@ -226,12 +226,12 @@ h1{
 
 /* Single letter page */
 
-#letter {
-    margin-top: 150px;
-}
-
 .heading {
     text-align: left;
+}
+
+#letter > .row {
+  margin-top: 20px;
 }
 
 #letter div[role="textbox"] p {
