@@ -48,3 +48,17 @@ h1, h2, h3, h4, h5, h6 {
 #bellegreene-container .modal-body a {
   padding: 5px 10px;
 }
+
+#bellegreene-container .page-hero {
+  position: relative;
+  background-image: url(../../assets/images/start/background_image.jpg);
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 1;
+}

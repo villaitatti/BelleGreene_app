@@ -1,61 +1,70 @@
-<div id="people_mentioned" class="container">
+[[> bellegreene:Header ]]
+
+<div id="bellegreene-container">
+
+  <div id="people_mentioned" class="container">
     <bs-row>
-        <bs-col md="12" sm="12">
-            <h1 class="heading">People mentioned in letters</h1>
-            <semantic-table 
-                id='table-result'
-                query=' 
-                    SELECT DISTINCT ?subject ?label ?image ?identifier_label ?description_label ?dates_label (count(?letter) as ?n_letters) WHERE { 
-                        ?subject a bellegreene:Person;
-                          rdfs:label ?label;
-                          crm:P1_is_identified_by ?identifier.
-                        ?letter crm:P67_refers_to ?subject.
+      <bs-col md="12" sm="12">
+        <h1 class="heading">People mentioned in letters</h1>
+        <semantic-context repository="bellegreene">
+          <semantic-table
+                          id='table-result'
+                          query=' 
+                      SELECT DISTINCT ?subject ?label ?image ?identifier_label ?description_label ?dates_label (count(?letter) as ?n_letters) WHERE { 
+                          ?subject a bellegreene:Person;
+                            rdfs:label ?label;
+                            crm:P1_is_identified_by ?identifier.
+                          ?letter crm:P67_refers_to ?subject.
 
-                        ?identifier rdfs:label ?identifier_label;
-                          crm:P2_has_type  <https://bellegreene.itatti.harvard.edu/resource/type/identifier>.
+                          ?identifier rdfs:label ?identifier_label;
+                            crm:P2_has_type  <https://bellegreene.itatti.harvard.edu/resource/type/identifier>.
 
-                          OPTIONAL {
-                            ?subject crm:P183i_has_representation ?image
-                          }
+                            OPTIONAL {
+                              ?subject crm:P183i_has_representation ?image
+                            }
 
-                          OPTIONAL {
-                            ?subject crm:P1_is_identified_by ?description.
-                            ?description crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/biographical_description>;
-                              rdfs:label ?description_label.
-                          }
+                            OPTIONAL {
+                              ?subject crm:P1_is_identified_by ?description.
+                              ?description crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/biographical_description>;
+                                rdfs:label ?description_label.
+                            }
 
-                          OPTIONAL {
-                            ?subject crm:P1_is_identified_by ?dates.
-                            ?dates crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/life_dates>;
-                              rdfs:label ?dates_label.
-                          }
-                    } 
-                    GROUP BY ?subject ?image ?label ?identifier_label ?description_label ?dates_label
-                    ORDER BY DESC(?n_letters)'
-                column-configuration='[
-                    {"displayName": "", "cellTemplate": "{{>image}}"},
-                    {"displayName": "Name", "cellTemplate": "{{>person}}"},
-                    {"variableName": "description_label", "displayName": "Biographical Description"},
-                    {"variableName": "dates_label", "displayName": "Life Dates"},
-                    {"variableName": "n_letters", "displayName": "Number of letters"}
-                ]'
-                options='{
-                    "showFilter":true, 
-                    "resultsPerPage":10,
-                    "showTableHeading":true
-                }'  >
-                <template id="image">
-                  {{#if image}}
-                    <img src={{image.value}} class="img-thumbnail img-150" alt="Person {{subject.value}}" />
-                  {{else}}
-                    <img src="../../assets/images/150x150.png" class="img-thumbnail img-150" alt=" Unavailable" />
-                  {{/if}}
-                  
-                </template>
-                <template id="person">
-                  <semantic-link style="color: var(--accent);" target="_blank" iri="bellegreene:person/{{identifier_label.value}}">{{label.value}}</semantic-link>
-                </template>
-            </semantic-table>
-        </bs-col>
+                            OPTIONAL {
+                              ?subject crm:P1_is_identified_by ?dates.
+                              ?dates crm:P2_has_type <https://bellegreene.itatti.harvard.edu/resource/type/life_dates>;
+                                rdfs:label ?dates_label.
+                            }
+                      } 
+                      GROUP BY ?subject ?image ?label ?identifier_label ?description_label ?dates_label
+                      ORDER BY DESC(?n_letters)'
+                          column-configuration='[
+                      {"displayName": "", "cellTemplate": "{{>image}}"},
+                      {"displayName": "Name", "cellTemplate": "{{>person}}"},
+                      {"variableName": "description_label", "displayName": "Biographical Description"},
+                      {"variableName": "dates_label", "displayName": "Life Dates"},
+                      {"variableName": "n_letters", "displayName": "Number of letters"}
+                  ]'
+                          options='{
+                      "showFilter":true, 
+                      "resultsPerPage":10,
+                      "showTableHeading":true
+                  }'>
+            <template id="image">
+              {{#if image}}
+              <img src={{image.value}} class="img-thumbnail img-150" alt="Person {{subject.value}}" />
+              {{else}}
+              <img src="../../assets/images/150x150.png" class="img-thumbnail img-150" alt=" Unavailable" />
+              {{/if}}
+
+            </template>
+            <template id="person">
+              <semantic-link style="color: var(--accent);" target="_blank" iri="bellegreene:person/{{identifier_label.value}}">{{label.value}}</semantic-link>
+            </template>
+          </semantic-table>
+        </semantic-context>
+
+      </bs-col>
     </bs-row>
+  </div>
+  <link rel="stylesheet" href="../../../assets/styles/bg-letters.css">
 </div>

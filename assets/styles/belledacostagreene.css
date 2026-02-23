@@ -1,5 +1,5 @@
 /* General Styles */
-.page-hero {
+#bellegreene-container .page-hero {
   background-color: rgba(255, 255, 255, 0.78);
   background-image: url(/assets/images/White-head-back_Princeton.jpg);
   background-size: cover;
@@ -13,59 +13,60 @@
   padding-right: 400px;
 }
 
-.gb-grid-wrapper-84ae3696 > .gb-grid-column {
+#bellegreene-container .gb-grid-wrapper-84ae3696 > .gb-grid-column {
   padding-top: 100px;
   padding-left: 40px;
   padding-bottom: 40px;
   max-width: 600px;
 }
 
-.grid-container {
+#bellegreene-container .grid-container {
   max-width: 960px !important;
 }
 
-.page-hero .inside-page-hero {
+#bellegreene-container .page-hero .inside-page-hero {
   max-width: calc(960px - 400px);
   margin-left: 100px;
   width: 100%;
 }
 
-.container.grid-container {
+#bellegreene-container .container.grid-container {
   width: auto;
 }
 
-.site-content .content-area {
+#bellegreene-container .site-content .content-area {
   width: 100%;
 }
 
-.gb-image {
+#bellegreene-container .gb-image {
   width: 100%;
   max-width: 460px;
   height: auto;
 }
 
-a {
+#bellegreene-container a {
   text-decoration: underline;
 }
 
-.gb-grid-wrapper {
+#bellegreene-container .gb-grid-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0px;
 }
 
-.gb-grid-column-81f2efda, .gb-container-81f2efda {
+#bellegreene-container .gb-grid-column-81f2efda,
+#bellegreene-container .gb-container-81f2efda {
   display: flex;
   flex-wrap: wrap;
 }
 
-.gb-container {
+#bellegreene-container .gb-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-a.gb-button-4441b547 {
+#bellegreene-container a.gb-button-4441b547 {
   background-color: var(--contrast);
   color: #ffffff;
   padding: 10px 20px;
@@ -75,20 +76,20 @@ a.gb-button-4441b547 {
   border-radius: 4px;
 }
 
-h4 {
+#bellegreene-container h4 {
   text-transform: none;
 }
 
 /* Mobile Adjustments */
 @media only screen and (max-width: 768px) {
-  .page-hero {
+  #bellegreene-container .page-hero {
     margin-top: 44px;
     padding-right: 20px;
     padding-left: 20px;
     min-height: 50vh;
   }
 
-  .page-hero .inside-page-hero {
+  #bellegreene-container .page-hero .inside-page-hero {
     margin-left: 0;
     padding-left: 20px;
     padding-right: 20px;
@@ -96,7 +97,7 @@ h4 {
     text-align: center;
   }
 
-  .gb-grid-wrapper-84ae3696 > .gb-grid-column {
+  #bellegreene-container .gb-grid-wrapper-84ae3696 > .gb-grid-column {
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 20px;
@@ -104,38 +105,40 @@ h4 {
     max-width: 100%;
   }
 
-  .gb-grid-wrapper {
+  #bellegreene-container .gb-grid-wrapper {
     display: block;
   }
 
-  .gb-image {
+  #bellegreene-container .gb-image {
     width: 100%;
     height: auto;
   }
 
-  .gb-container {
+  #bellegreene-container .gb-container {
     flex-direction: column;
     text-align: center;
   }
 
-  .gb-button-4441b547 {
+  #bellegreene-container .gb-button-4441b547 {
     display: block;
     width: 100%;
     margin-top: 20px;
     margin-bottom: 20px;
   }
 
-  .gb-container .gb-inside-container {
+  #bellegreene-container .gb-container .gb-inside-container {
     padding-left: 10px;
     padding-right: 10px;
   }
 
-  p, h1, h4 {
+  #bellegreene-container p,
+  #bellegreene-container h1,
+  #bellegreene-container h4 {
     padding-left: 10px;
     padding-right: 10px;
   }
 
-  .gb-container img {
+  #bellegreene-container .gb-container img {
     max-width: 100%;
     height: auto;
   }
