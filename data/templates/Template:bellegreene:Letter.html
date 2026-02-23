@@ -164,7 +164,7 @@
                     <p>
                       <semantic-query
                         query='
-                            SELECT DISTINCT ?identifier_lbl ?person_lbl WHERE { 
+                            SELECT DISTINCT ?person ?person_lbl WHERE { 
                                 <[[this]]> crm:P67_refers_to ?person.
                                 ?person crm:P1_is_identified_by ?identifier;
                                   rdfs:label ?person_lbl.
@@ -178,7 +178,7 @@
                             {{#if bindings}}
                               <strong>People Mentioned: </strong>
                               {{#each bindings}}
-                                  <semantic-link iri="bellegreene:person/{{identifier_lbl.value}}">{{person_lbl.value}}</semantic-link> <span class="colon">; </span>
+                                  <semantic-link iri="{{person.value}}">{{person_lbl.value}}</semantic-link> <span class="colon">; </span>
                               {{/each}}
                             {{/if}}
                             <br>

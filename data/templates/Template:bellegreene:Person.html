@@ -1,8 +1,14 @@
-[[this]]
-<div id="person">
+[[> bellegreene:Header ]]
+
+<div id="bellegreene-container">
+
+  <div id="person">
     <div class="container">
+      <semantic-context repository="bellegreene">
+
+
         <semantic-query
-            query='
+                        query='
             PREFIX bg_type: <https://bellegreene.itatti.harvard.edu/resource/type/>
             SELECT DISTINCT ?subject ?description_lbl ?dates_lbl ?nickname_lbl ?image WHERE { 
                 ?subject 
@@ -30,39 +36,41 @@
                 
                 BIND(<[[this]]> AS ?subject)
             }'
-            template='{{> person-data}}'>
-        >
-            <template id="person-data">
-                {{#each bindings}}
+                        template='{{> person-data}}'>
+          >
+          <template id="person-data">
+            {{#each bindings}}
 
-                    <bs-row>
-                        <bs-col md="12">
-                            <div>
-                                {{#if image}}
-                                  <img class="img-thumbnail" style="max-width: 150px;" src="{{image.value}}" alt=""> 
-                                {{else}}
-                                  <img class="img-thumbnail" style="max-width: 150px;" src="../../assets/images/150x150.png" alt=""> 
-                                {{/if}}
-                                <h1 class="heading"><mp-label iri="{{subject.value}}"></mp-label></h1>
-                                <h4>{{dates_lbl.value}}</h4>
-                                
-                                
-                            </div>
-                            <div>
-                                <p>{{description_lbl.value}}</p>
-                            </div>
-                        </bs-col>
-                    </bs-row>
+            <bs-row>
+              <bs-col md="12">
+                <div>
+                  {{#if image}}
+                  <img class="img-thumbnail" style="max-width: 150px;" src="{{image.value}}" alt="">
+                  {{else}}
+                  <img class="img-thumbnail" style="max-width: 150px;" src="../../assets/images/150x150.png" alt="">
+                  {{/if}}
+                  <h1 class="heading"><mp-label iri="{{subject.value}}"></mp-label></h1>
+                  <h4>{{dates_lbl.value}}</h4>
 
-                {{/each}}
-            </template>
+
+                </div>
+                <div>
+                  <p>{{description_lbl.value}}</p>
+                </div>
+              </bs-col>
+            </bs-row>
+
+            {{/each}}
+          </template>
 
         </semantic-query>
+      </semantic-context>
+
     </div>
     <div class="container-fluid">
-          <semantic-search 
-            id="semantic-search-bg"
-              categories='{
+      <semantic-search
+                       id="semantic-search-bg"
+                       categories='{
                   "<http://www.w3.org/2001/XMLSchema#date>": [{
                       "kind": "date-range",
                       "datatype": "http://www.w3.org/2001/XMLSchema#date",
@@ -76,7 +84,7 @@
                           }"
                       }]
                   }'
-              relations='{
+                       relations='{
                   "<https://bellegreene.itatti.harvard.edu/resource/place>": [{
                       "kind": "resource",
                       "queryPattern": "
@@ -86,7 +94,7 @@
                           }"
                   }]
               }'
-              search-profile='{ 
+                       search-profile='{ 
                   "categories": [
                       {
                           "iri": "<https://bellegreene.itatti.harvard.edu/resource/Letter>",
@@ -136,12 +144,12 @@
                       }]
                   }'>
 
-                      <div class="container-fluid" id="header-search">
-                        <bs-row>
-                          <semantic-search-query-keyword
-                                domain='<https://bellegreene.itatti.harvard.edu/resource/Letter>'
-                                placeholder="Full text search in letters ..."
-                                default-query="
+        <div class="container-fluid" id="header-search">
+          <bs-row>
+            <semantic-search-query-keyword
+                                           domain='<https://bellegreene.itatti.harvard.edu/resource/Letter>'
+                                           placeholder="Full text search in letters ..."
+                                           default-query="
                                   SELECT DISTINCT ?subject ?image ?identifier ?summary ?tags ?label WHERE { 
                                     ?subject a bellegreene:Letter;
                                     crm:P67_refers_to <[[this]]>;
@@ -171,7 +179,7 @@
                                       } GROUP BY ?subject
                                     } 
                                   }"
-                                query='
+                                           query='
                                     SELECT DISTINCT ?subject ?image ?identifier ?summary ?tags ?label WHERE { 
                                       ?subject a bellegreene:Letter;
                                         crm:P67_refers_to <[[this]]>;
@@ -211,63 +219,63 @@
 
                                       FILTER REGEX(?text, ?req, "i")
                                       BIND(CONCAT(" ", ?__token__) as ?req)
-                                    }'
-                          ></semantic-search-query-keyword>
-                        </bs-row>
-                      </div>
+                                    }'></semantic-search-query-keyword>
+          </bs-row>
+        </div>
 
-                          <div data-flex-layout="row stretch-stretch">
-                              <div data-flex-self="size-1of3" style="flex: 0 0 20px;">
-                                  <semantic-search-facet
-                                    open-by-default="false"
-                                  ></semantic-search-facet>
-                              </div>
-                              <semantic-search-result-holder>
-                                  <div data-flex-self="md-full">
-                                      <semantic-search-result>
-                                          <mp-sparql-result-counts 
-                                              id='query-count'
-                                              query="SELECT DISTINCT * {}"
-                                              template='{{#if hasLimit}} <bs-alert bs-style="warning">
+        <div data-flex-layout="row stretch-stretch">
+          <div data-flex-self="size-1of3" style="flex: 0 0 20px;">
+            <semantic-search-facet
+                                   open-by-default="false"></semantic-search-facet>
+          </div>
+          <semantic-search-result-holder>
+            <div data-flex-self="md-full">
+              <semantic-search-result>
+                <mp-sparql-result-counts
+                                         id='query-count'
+                                         query="SELECT DISTINCT * {}"
+                                         template='{{#if hasLimit}} <bs-alert bs-style="warning">
                                                   Showing {{numberOfResults}} of {{totalNumberOfResults}} matches. <strong>Please, refine your search.</strong> </bs-alert>
                                               {{else}}<span> Showing {{numberOfResults}} Letters </span>{{/if}}'>
-                                          </mp-sparql-result-counts>
-                                      </semantic-search-result>
+                </mp-sparql-result-counts>
+              </semantic-search-result>
 
-                                      <semantic-search-result>
-                                          <semantic-table 
-                                              id='table-result'
-                                              query=' 
+              <semantic-search-result>
+                <semantic-table
+                                id='table-result'
+                                query=' 
                                                   SELECT DISTINCT ?subject ?image ?identifier ?summary ?tags ?label WHERE { }
                                                   ORDER BY ASC(?subject) '
-                                              column-configuration='[
+                                column-configuration='[
                                                   {"displayName": "", "cellTemplate": "{{>image}}"},
                                                   {"displayName": "Letter", "cellTemplate": "{{>letter}}"},
                                                   {"variableName": "summary", "displayName": "Summary"},
                                                   {"variableName": "tags", "displayName": "Subjects"}
                                               ]'
-                                              options='{
+                                options='{
                                                   "showFilter":false, 
                                                   "resultsPerPage":10,
                                                   "showTableHeading":true
-                                              }'  >
+                                              }'>
 
-                                              <template id="image">
-                                                <semantic-link target="_blank" iri="bellegreene:letter/{{identifier.value}}">
-                                                  <img src={{image.value}} class="img-w150" alt="Letter {{identifier.value}}" />
-                                                </semantic-link>
-                                                <p class="letter_id">Letter {{identifier.value}}</p>
-                                              </template>
-                                              <template id="letter">
-                                                <semantic-link target="_blank" iri="bellegreene:letter/{{identifier.value}}">{{label.value}}</semantic-link>
-                                              </template>
-                                          </semantic-table>
-                                      </semantic-search-result>
+                  <template id="image">
+                    <semantic-link target="_blank" iri="{{subject.value}}">
+                      <img src={{image.value}} class="img-w150" alt="Letter {{identifier.value}}" />
+                    </semantic-link>
+                    <p class="letter_id">Letter {{identifier.value}}</p>
+                  </template>
+                  <template id="letter">
+                    <semantic-link target="_blank" iri="{{subject.value}}">{{label.value}}</semantic-link>
+                  </template>
+                </semantic-table>
+              </semantic-search-result>
 
-                                  </div>
-                              </semantic-search-result-holder>
-                          </div>
-          </semantic-search>
+            </div>
+          </semantic-search-result-holder>
+        </div>
+      </semantic-search>
 
-    </div>      
+    </div>
+  </div>
+
 </div>
