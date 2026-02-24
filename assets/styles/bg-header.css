@@ -37,17 +37,16 @@
   box-sizing: inherit;
 }
 
-body, button, input, select, textarea {
+#bellegreene-container {
   font-family: Montserrat, sans-serif;
   font-weight: 500;
   letter-spacing: 1px;
+  line-height: 1.4;
 }
 
-body { line-height: 1.4; }
-
-h1, h2, h3, h4, h5, h6 { font-weight: 700; line-height: 1.2; color: #3a393a; }
-h4 { font-weight: 600; }
-h1 { font-size: 54px; line-height: 1.1em; }
+#bellegreene-container h1, #bellegreene-container h2, #bellegreene-container h3, #bellegreene-container h4, #bellegreene-container h5, #bellegreene-container #bellegreene-container h6 { font-weight: 700; line-height: 1.2; color: #3a393a; }
+#bellegreene-container h4 { font-weight: 600; }
+#bellegreene-container h1 { font-size: 54px; line-height: 1.1em; }
 
 /* -----------------------------------------------------------------------------
    GLOBAL LINKS & CONTAINER
