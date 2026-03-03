@@ -347,10 +347,11 @@
                                     <mp-overlay-dialog-trigger><img src="{{imageIRI.value}}" alt=""></mp-overlay-dialog-trigger>
                                     <mp-overlay-dialog-content>
                                         <rs-iiif-mirador
-                                            image-or-region='{{imageIIIF.value}}'
-                                            image-id-pattern='BIND( {{imageIIIF}} AS ?imageIRI)
+                                            image-or-region='{"{{imageIIIF.value}}":["{{imageIIIF.value}}"]}'
+                                            image-id-pattern='BIND( <{{imageIIIF.value}}> AS ?imageIRI)
                                                             BIND("image" AS ?type)
-                                                            BIND(REPLACE(STR(REPLACE(STR(?imageIRI),"/full/full/0/default.jpg","")), "(^.*)\\/(.*)$", "$2") AS ?imageID)'
+                                                            BIND(REPLACE(REPLACE(REPLACE(STR(?imageIRI), "/full/full/0/default.jpg", ""), "\\?.*$", ""), "(^.*)\\/(.*)$", "$2") AS ?imageID)
+                                                            BIND(?imageIRI AS ?carrierImageIRI)'
                                             iiif-server-url="https://iiif.itatti.harvard.edu/iiif/2">
                                         </rs-iiif-mirador>
                                     </mp-overlay-dialog-content>
