@@ -181,7 +181,6 @@ a:hover, a:focus, a:active { color: var(--contrast); }
   align-items: center;
   justify-content: center;
   height: 100%;
-  padding-right: 100px;
 }
 
 /* -----------------------------------------------------------------------------
@@ -454,7 +453,6 @@ a:hover, a:focus, a:active { color: var(--contrast); }
 #bellegreene-container .metadata-buttons .btn-primary { background-color: rgb(245, 239, 228); border-color: rgb(245, 239, 228); }
 #bellegreene-container .heading                       { text-align: left; }
 #bellegreene-container .mirador                       { min-height: 800px !important; }
-#bellegreene-container .modal-body                    { padding-right: 30px !important; }
 
 /* Facets */
 #bellegreene-container .facet__category-selector-holder { display: none; }

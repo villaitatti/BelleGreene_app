@@ -346,6 +346,7 @@
                                 <mp-overlay-dialog title="Mirador Viewer" type="modal" bs-size="large">
                                     <mp-overlay-dialog-trigger><img src="{{imageIRI.value}}" alt=""></mp-overlay-dialog-trigger>
                                     <mp-overlay-dialog-content>
+                                        <div style="height: 70vh; width: 100%;">
                                         <rs-iiif-mirador
                                             image-or-region='{"{{imageIIIF.value}}":["{{imageIIIF.value}}"]}'
                                             image-id-pattern='BIND( <{{imageIIIF.value}}> AS ?imageIRI)
@@ -354,6 +355,7 @@
                                                             BIND(?imageIRI AS ?carrierImageIRI)'
                                             iiif-server-url="https://iiif.itatti.harvard.edu/iiif/2">
                                         </rs-iiif-mirador>
+                                        </div>
                                     </mp-overlay-dialog-content>
                                 </mp-overlay-dialog>
                             </template>
