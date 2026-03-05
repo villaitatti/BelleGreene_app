@@ -9,13 +9,13 @@
    ----------------------------------------------------------------------------- */
 
 :root {
-  --contrast:   #3a393a;
-  --contrast-2: #5b6376;
-  --contrast-3: #808e6f;
-  --base:       #f4d689;
-  --base-2:     #f4efe4;
-  --base-3:     #faf7f3;
-  --accent:     #ed6b5c;
+  --contrast:   #1a1a1a;
+  --contrast-2: #444444;
+  --contrast-3: #888888;
+  --base:       #f0f0f0;
+  --base-2:     #f5f5f5;
+  --base-3:     #ffffff;
+  --accent:     #333333;
   --wp--preset--font-size--normal: 16px;
   --wp--preset--font-size--huge:   42px;
 }
@@ -38,13 +38,18 @@
 }
 
 #bellegreene-container {
-  font-family: Montserrat, sans-serif;
-  font-weight: 500;
-  letter-spacing: 1px;
-  line-height: 1.4;
+  font-family: var(--itatti-font-body);
+  font-weight: 400;
+  line-height: var(--itatti-leading-normal);
 }
 
-#bellegreene-container h1, #bellegreene-container h2, #bellegreene-container h3, #bellegreene-container h4, #bellegreene-container h5, #bellegreene-container #bellegreene-container h6 { font-weight: 700; line-height: 1.2; color: #3a393a; }
+#bellegreene-container h1, #bellegreene-container h2, #bellegreene-container h3,
+#bellegreene-container h4, #bellegreene-container h5, #bellegreene-container h6 {
+  font-family: var(--itatti-font-heading);
+  font-weight: 700;
+  line-height: var(--itatti-leading-tight);
+  color: #3a393a;
+}
 #bellegreene-container h4 { font-weight: 600; }
 #bellegreene-container h1 { font-size: 54px; line-height: 1.1em; }
 
@@ -60,7 +65,7 @@ a:hover, a:focus, a:active { color: var(--contrast); }
   width: 100%;
   background-color: var(--base-3);
   color: var(--contrast);
-  padding-top: 95px;
+  padding-top: 164px; /* 84px RS bar + 80px project nav */
 }
 
 #bellegreene-container img    { height: auto; max-width: 100%; }
@@ -69,73 +74,17 @@ a:hover, a:focus, a:active { color: var(--contrast); }
 
 /* -----------------------------------------------------------------------------
    HEADER (#bellegreene-menu)
+   Layout, positioning, and interactive states are handled by .itatti-navbar
+   in collection/navbar.css. Only Belle Greene-specific overrides live here.
    ----------------------------------------------------------------------------- */
 
-#bellegreene-menu {
-  background-color: #faf7f3;
-  border-bottom: 1px solid #e8e0d4;
-  min-height: 80px !important;
-  height: auto !important;
-  margin-top: 84px;
-}
-
-#bellegreene-menu .rs-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 80px;
-  padding: 0 20px;
-  width: 100%;
-}
-
-#bellegreene-menu .logo-flex {
-  display: flex;
-  align-items: center;
-  text-decoration: none !important;
-  flex-shrink: 0;
-}
-
+/* Logo image size */
 #bellegreene-menu .header-logo { height: 55px; width: auto; object-fit: contain; }
 
-#bellegreene-menu .navbar-nav > li > a {
-  color: #3a393a;
-  font-family: Montserrat, sans-serif;
-  font-weight: 600;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 30px 14px;
-}
+/* No underline on the logo link */
+#bellegreene-menu .nav-logo { text-decoration: none !important; }
 
-#bellegreene-menu .navbar-nav > li > a:hover,
-#bellegreene-menu .navbar-nav > li > a:focus,
-#bellegreene-menu .navbar-nav > li.open > a,
-#bellegreene-menu .navbar-nav > li.open > a:hover,
-#bellegreene-menu .navbar-nav > li.open > a:focus { color: var(--accent) !important; background-color: transparent; }
-
-#bellegreene-menu .dropdown-menu {
-  background-color: #f4d689;
-  border: none;
-  border-radius: 0;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-#bellegreene-menu .dropdown-menu > li > a {
-  color: #3a393a;
-  font-family: Montserrat, sans-serif;
-  font-weight: 500;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  padding: 8px 20px;
-}
-
-#bellegreene-menu .dropdown-menu > li > a:hover,
-#bellegreene-menu .dropdown-menu > li > a:focus,
-#bellegreene-menu .dropdown-menu > li.active > a,
-#bellegreene-menu .dropdown-menu > li.active > a:hover { background-color: transparent; color: var(--accent) !important; }
-
-/* Right-align dropdowns so they don't overflow the viewport on the right */
+/* Right-align last dropdown so it doesn't overflow viewport edge */
 #bellegreene-menu .pull-right .dropdown-menu { right: 0; left: auto; }
 
 /* -----------------------------------------------------------------------------
@@ -226,10 +175,6 @@ a:hover, a:focus, a:active { color: var(--contrast); }
 #bellegreene-container blockquote p {
   font-size: 1.4em;
   font-style: italic;
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-  background-image: linear-gradient(43deg, #E4C769 0%, #A9892F 33%, #E4C769 64%, #A98930 71%, #8A7000 90%);
 }
 
 #bellegreene-container blockquote cite        { font-size: .8em; font-style: normal; }
@@ -257,7 +202,7 @@ a:hover, a:focus, a:active { color: var(--contrast); }
   padding: 20px; transition: 0.3s; font-size: 1.15em; color: #3A393A;
 }
 
-#bellegreene-container .tab button:hover        { color: #ED6B5C; }
+#bellegreene-container .tab button:hover        { color: var(--accent); }
 #bellegreene-container .tab button.active       { background-color: #F4EFE4; }
 #bellegreene-container .tab button.active:after { content: none; }
 #bellegreene-container .tabcontent              { display: none; padding: 20px; border: none; background-color: #F4EFE4; }
@@ -494,7 +439,7 @@ a:hover, a:focus, a:active { color: var(--contrast); }
 
 /* Table */
 #bellegreene-container .table > thead > tr > th,
-#bellegreene-container .table > thead > tr > td { border-bottom: 2px solid #3A393A; padding: 12px 8px; color: #ED6B5C; font-size: 16px; line-height: 1.2; }
+#bellegreene-container .table > thead > tr > td { border-bottom: 2px solid #3A393A; padding: 12px 8px; color: var(--accent); font-size: 16px; line-height: 1.2; }
 #bellegreene-container .table      { table-layout: fixed; max-width: 100%; border-collapse: collapse; }
 #bellegreene-container tr > td > span { color: #333; }
 #bellegreene-container td:has(> img) { text-align: center; }
@@ -658,7 +603,7 @@ a:hover, a:focus, a:active { color: var(--contrast); }
 #bellegreene-container .gb-headline-text {
   line-height: 1.2;
   color: #3a393a;
-  font-family: Montserrat, sans-serif;
+  font-family: var(--itatti-font-heading);
   font-size: 1.3em;
   margin-top: 2em;
   margin-bottom: 0.5em;
@@ -681,9 +626,11 @@ a:hover, a:focus, a:active { color: var(--contrast); }
 #bellegreene-container .purpose-header { text-align: center; padding: 60px 20px 40px; }
 
 #bellegreene-container .purpose-quote-dark { background-color: var(--contrast); padding: 80px 0; }
-#bellegreene-container .purpose-quote-dark blockquote cite { color: var(--base-2); }
+#bellegreene-container .purpose-quote-dark blockquote { color: var(--base-2)!important }
 
 #bellegreene-container .purpose-quote-light { background-color: var(--base-2); padding: 80px 0; }
+
+
 
 /* -----------------------------------------------------------------------------
    PURPOSE AND RATIONALE PAGE
@@ -829,3 +776,4 @@ a:hover, a:focus, a:active { color: var(--contrast); }
 @media (max-width: 600px) {
   #bellegreene-container .table { font-size: 14px; }
 }
+
