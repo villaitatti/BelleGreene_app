@@ -234,7 +234,11 @@
                       {{#if itatti_letter_number}}<br><strong>I Tatti Letter Number: </strong><mp-label iri="{{itatti_letter_number.value}}"></mp-label>{{/if}}
                     </p>
                     <p>
-                      {{#if cite}}<br><strong>Cite as: </strong>{{cite.value}} <a href="https://bellegreene.itatti.harvard.edu/resource/letter/{{identifier.value}}">https://bellegreene.itatti.harvard.edu/resource/letter/{{identifier.value}}</semantic-link>.{{/if}}
+                      {{#if cite}}<br><strong>Cite as: </strong>{{cite.value}}
+                      
+                      <semantic-link iri="https://bellegreene.itatti.harvard.edu/resource/letter/{{identifier.value}}">
+                        https://bellegreene.itatti.harvard.edu/resource/letter/{{identifier.value}}
+                      </semantic-link>{{/if}}
                     </p>
                   </bs-tab>
                 </bs-tabs>

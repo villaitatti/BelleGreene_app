@@ -87,6 +87,15 @@ a:hover, a:focus, a:active { color: var(--contrast); }
 /* Right-align last dropdown so it doesn't overflow viewport edge */
 #bellegreene-menu .pull-right .dropdown-menu { right: 0; left: auto; }
 
+/* Make entire dropdown row clickable — semantic-link is inline by default,
+   so Bootstrap's li > a block style never reaches the anchor inside it. */
+#bellegreene-menu bs-menu-item semantic-link { display: block; }
+#bellegreene-menu bs-menu-item semantic-link > a {
+  display: block;
+  padding: 3px 20px;
+  width: 100%;
+}
+
 /* -----------------------------------------------------------------------------
    SELECT / AUTOCOMPLETE COMPONENTS
    ----------------------------------------------------------------------------- */
@@ -775,5 +784,157 @@ a:hover, a:focus, a:active { color: var(--contrast); }
 
 @media (max-width: 600px) {
   #bellegreene-container .table { font-size: 14px; }
+}
+
+/* =============================================================================
+   INTRODUCTION PAGE — full-viewport scroll-snap sections
+   ============================================================================= */
+
+html:has(#bellegreene-container.intro-page) {
+  scroll-snap-type: y mandatory;
+  scroll-padding-top: 164px;
+  scroll-behavior: smooth;
+}
+
+#bellegreene-container.intro-page { padding-bottom: 0; }
+
+.intro-section {
+  scroll-snap-align: start;
+  min-height: calc(100vh - 250px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 0 80px;
+  position: relative;
+}
+
+#intro-s1 .container {
+  margin-top: -200px;
+}
+
+.intro-section.bg-white { background-color: var(--base-3); }
+.intro-section.bg-light { background-color: var(--base-2); }
+.intro-section.bg-mid   { background-color: var(--base); }
+.intro-section.bg-dark  { background-color: var(--contrast); color: var(--base-2); }
+
+.intro-section.bg-dark h1,
+.intro-section.bg-dark h2,
+.intro-section.bg-dark h3,
+.intro-section.bg-dark h4,
+.intro-section.bg-dark p                        { color: var(--base-2); }
+.intro-section.bg-dark blockquote p,
+.intro-section.bg-dark blockquote cite          { color: var(--base-2) !important; }
+
+/* Down-arrow navigation button */
+.intro-down-btn {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  text-decoration: none !important;
+  color: inherit;
+  opacity: 0.45;
+  transition: opacity 0.2s, transform 0.2s;
+  font-size: 18px;
+  line-height: 1;
+}
+.intro-down-btn:hover,
+.intro-down-btn:focus {
+  opacity: 0.9;
+  transform: translateX(-50%) translateY(4px);
+  color: inherit;
+}
+.intro-section.bg-dark .intro-down-btn { color: var(--base-2); }
+
+/* Override .no-sidebar centre-align rule for section-based intro layout */
+#bellegreene-container.intro-page.no-sidebar > .intro-section > .container > h1,
+#bellegreene-container.intro-page.no-sidebar > .intro-section > .container > h4 {
+  text-align: center;
+}
+
+/* =============================================================================
+   BIO PAGES — alternating section bands (Berenson / Belle Greene)
+   ============================================================================= */
+
+.bio-band           { padding: 100px 0; }
+.bio-band.bg-white  { background-color: var(--base-3); }
+.bio-band.bg-light  { background-color: var(--base-2); }
+.bio-band.bg-mid    { background-color: var(--base); }
+.bio-band.bg-dark   { background-color: var(--contrast); color: var(--base-2); }
+
+.bio-band.bg-dark h4,
+.bio-band.bg-dark p                 { color: var(--base-2); }
+
+.bio-band .bio-pair                 { display: flex; flex-wrap: wrap; align-items: center; }
+.bio-band .bio-pair > [class*="col-"] { float: none; }
+.bio-band .bio-pair img             { width: 100%; height: auto; display: block; }
+.bio-band .bio-cta                  { text-align: center; padding: 0; }
+
+/* =============================================================================
+   EDITORIAL NOTES / PURPOSE & RATIONALE — banded sections
+   ============================================================================= */
+
+.editorial-band           { padding: 70px 0; }
+.editorial-band.bg-white  { background-color: var(--base-3); }
+.editorial-band.bg-light  { background-color: var(--base-2); }
+.editorial-band.bg-mid    { background-color: var(--base); }
+.editorial-band.bg-dark   { background-color: var(--contrast); color: var(--base-2); }
+
+.editorial-band.bg-dark h3,
+.editorial-band.bg-dark p           { color: var(--base-2); }
+
+.editorial-band .editorial-content  { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+.editorial-band .editorial-content h1 { text-align: center; margin-bottom: 50px; margin-top: 0; }
+.editorial-band .editorial-content h3 { margin-top: 0; margin-bottom: 0.8em; }
+.editorial-band .editorial-content p  { line-height: 1.7; margin-bottom: 1.2em; }
+
+/* =============================================================================
+   RESOURCES PAGES — alternating section bands
+   ============================================================================= */
+
+.resources-band           { padding: 50px 0; }
+.resources-band.bg-white  { background-color: var(--base-3); }
+.resources-band.bg-light  { background-color: var(--base-2); }
+
+.resources-band .container h1.entry-title   { padding-bottom: 20px; margin-top: 0; }
+.resources-band .container h3.gb-headline-text { margin-top: 0; padding-top: 0; }
+.resources-band .container bs-row            { display: block; margin-bottom: 0.4em; }
+
+/* =============================================================================
+   HANDWRITING PAGE — alternating section bands
+   ============================================================================= */
+
+.handwriting-band           { padding: 80px 0; }
+.handwriting-band.bg-white  { background-color: var(--base-3); }
+.handwriting-band.bg-light  { background-color: var(--base-2); }
+.handwriting-band.bg-mid    { background-color: var(--base); }
+
+.handwriting-band .hw-pair                    { display: flex; flex-wrap: wrap; align-items: center; }
+.handwriting-band .hw-pair > [class*="col-"]  { float: none; }
+.handwriting-band .hw-pair img                { width: 100%; height: auto; display: block; }
+.handwriting-band .hw-pair p                  { line-height: 1.7; margin-bottom: 1.2em; }
+
+/* =============================================================================
+   RESPONSIVE — bands & scroll-snap
+   ============================================================================= */
+
+@media only screen and (max-width: 768px) {
+  html:has(#bellegreene-container.intro-page) {
+    scroll-snap-type: none;
+    scroll-padding-top: 0;
+  }
+  .intro-section    { min-height: auto; padding: 60px 0 80px; }
+  .intro-down-btn   { display: none; }
+  .bio-band         { padding: 60px 0; }
+  .editorial-band   { padding: 40px 0; }
+  .resources-band   { padding: 30px 0; }
+  .handwriting-band { padding: 40px 0; }
 }
 
