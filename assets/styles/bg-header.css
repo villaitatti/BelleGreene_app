@@ -503,6 +503,17 @@ a:hover, a:focus, a:active { color: var(--contrast); }
 #bellegreene-container .gb-image            { max-width: 460px; }
 #bellegreene-container .gb-block-image      { margin-bottom: 10px; }
 
+/* Letter links in themes grid — coral accent */
+#bellegreene-container:has(.gb-container-d2beccfa) .has-small-font-size a,
+#bellegreene-container:has(.gb-container-d2beccfa) .has-small-font-size semantic-link > a {
+  color: #d4633f;
+  text-decoration: underline;
+}
+#bellegreene-container:has(.gb-container-d2beccfa) .has-small-font-size a:hover,
+#bellegreene-container:has(.gb-container-d2beccfa) .has-small-font-size semantic-link > a:hover {
+  color: #b84e2b;
+}
+
 /* -----------------------------------------------------------------------------
    HANDWRITING PAGE  (#handwriting)
    ----------------------------------------------------------------------------- */
